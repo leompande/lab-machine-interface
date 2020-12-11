@@ -1,0 +1,88 @@
+<div class="row login-page">
+    <div class="row d-flex justify-content-center">
+  
+      <div class="col-lg-6 form-container-2" style="
+      margin-top: 100px;">
+        <div class="form-container">
+            <br>
+            <h1 class="text-center login-form-header">Sign Boards Management</h1>
+            <!-- <img style="width: 40%; margin-left:30%; margin-right: 30%" src="/assets/images/angular.png"> -->
+          </div>
+        <br>
+        <div class="login-form-section">
+  
+          <!-- <app-login-header (formSelected)="onNavigate($event)" [login_clicked]="login_clicked" [register_clicked]="register_clicked"></app-login-header> -->
+          <br>
+  
+          <form class="form-login-1" *ngIf="loadedForm === 'login'" ngNativeValidate>
+              
+                  <mat-form-field appearance="outline">
+                      <input matInput type="text" placeholder="Email" #userEmail required autofocus>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline">
+                      <input matInput type="password" placeholder="Password" #userPassword required>
+                  </mat-form-field>
+                  <app-loader *ngIf="loading" message="Logging in.."></app-loader>
+                  <div class="submit-button">
+                      <button mat-raised-button style="display: none;" type="submit" (click)="login(userEmail.value, userPassword.value)">Login</button>
+                      <div class="login-button">Login</div>
+                      <a style="text-decoration: none;cursor: pointer;font-family: nunitoLight;color:rgb(117, 186, 255);">Forgot password?</a>
+                  </div>
+          </form>
+          <div *ngIf="loadedForm === 'register'" class="example-container">
+            <mat-grid-list cols="2" gutterSize="15" rowHeight="80px">
+              <mat-grid-tile>
+                <mat-form-field>
+                  <input matInput required placeholder="First Name" type="text" [(ngModel)]="object.firstName">
+                  <mat-icon matSuffix>account_circle</mat-icon>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile>
+                <mat-form-field>
+                  <input matInput required placeholder="Surname" type="text" [(ngModel)]="object.surName">
+                  <mat-icon matSuffix>account_circle</mat-icon>
+                </mat-form-field>
+              </mat-grid-tile>
+  
+              <mat-grid-tile [colspan]="2">
+                <mat-form-field>
+                  <input matInput required placeholder="Email" type="text" [(ngModel)]="object.email">
+                  <mat-icon matSuffix>alternate_email</mat-icon>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="2">
+                <mat-form-field>
+                  <input matInput required placeholder="Phone Number" type="text" [(ngModel)]="object.phoneNumber">
+                  <mat-icon matSuffix>phone</mat-icon>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="2">
+                <mat-form-field>
+                  <input [(ngModel)]="new_password" matInput required placeholder="Enter Password" [type]="hide ? 'password' : 'text'">
+                  <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </mat-form-field>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="2">
+                <mat-form-field>
+                  <input [(ngModel)]="confirm_password" matInput required placeholder="Confirm Password" [type]="hide ? 'password' : 'text'">
+                  <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </mat-form-field>
+              </mat-grid-tile>
+            </mat-grid-list>
+            <div class="submit-button">
+              <mat-error @fadeIn *ngIf="password_not_equal">Password are not equal</mat-error>
+              <!-- <app-loader @fadeIn *ngIf="signingUp" message="signing you up..."></app-loader> -->
+              <button mat-raised-button type="submit" (click)="onSignUp()">SIGN UP</button>
+            </div>
+          </div>
+        </div>
+        <br>
+        <br>
+        <br>
+      </div>
+    </div>
+    <br>
+    <!--<app-login-footer (formSelected)="onNavigate($event)"></app-login-footer>-->
+  </div>
+  
+  

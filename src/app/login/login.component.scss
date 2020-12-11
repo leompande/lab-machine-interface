@@ -1,0 +1,93 @@
+html, body {
+    height: 100%;
+  }
+
+  .login-page {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+}
+
+.login-page:before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(229,188,155,0.3);
+    background: linear-gradient(rgba(97,172,247), rgba(97,172,247,0.1)),  url('/assets/images/billboard.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+    // opacity: .4;
+}
+ 
+.login-form-section{
+    // height: 40vh;
+    margin-left: 5%; margin-right: 5%;
+    background-color: white;//rgb(234,119,104);
+    padding-left:10vw;
+    padding-right: 10vw;
+    border-radius: 10px;
+    padding-top:30px;
+    padding-bottom: 30px;
+    margin-top: 50px;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
+  
+}
+
+.login-button{
+    padding:10px;
+    background-color: rgba(97,172,247);
+    text-align: center;
+    color: white;
+    font-family: nunitoBold;
+    border-radius: 20px;
+    cursor: pointer;
+    -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
+}
+
+.login-button:hover{
+
+    -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.5) !important;
+}
+.login-button:active{
+    background-color: rgb(117, 186, 255);
+}
+
+form{
+    
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}
+
+.mat-input-element  { 
+    background-color: rgb(234,119,104)!important;
+  }
+
+  .cdk-text-field-autofilled{
+    background-color: rgb(234,119,104)!important;
+  }
+
+  input:-webkit-autofill {
+    -webkit-box-shadow:0 0 0 50px white inset; /* Change the color to your own background color */
+    -webkit-text-fill-color: #333;
+}
+
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 50px white inset;
+    -webkit-text-fill-color: #333;
+}  
+
+.form-container{
+    font-family: nunitoSemiBold;
+}
+
+.login-form-header{
+    // color: rgb(97,172,247);
+    color: white
+}

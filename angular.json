@@ -127,5 +127,9 @@
       }
     }
   },
-  "defaultProject": "signboard-private-operator"
+  "defaultProject": "signboard-private-operator",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics",
+    "analytics": false
+  }
 }
