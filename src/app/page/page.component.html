@@ -1,1 +1,92 @@
-<p>page works!</p>
+<nav class="main-nav mat-elevation-z6">
+    <mat-toolbar class="toolbar no-print" color="primary">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+  
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="isOpen = !isOpen" title="Toggle Menu"
+        *ngIf="!(isHandset$ | async)">
+        <mat-icon class="secondary-color" aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+      <!-- <span class="secondary-color">
+        <img src="assets/images/logo1.png" style="height: 44px; width: 130px; margin-left: 10px">
+      </span> -->
+      <span style="display: inline-block; margin-top: 0px; margin-left: 17px; font-size: 33px">
+        SIGN BOARDS
+      </span>
+  
+      <!-- This fills the remaining space of the current row -->
+      <span class="example-fill-remaining-space"></span>
+  
+      <mat-menu #appMenu="matMenu">
+        <a (click)="logout()" mat-menu-item>Logout</a>
+      </mat-menu>
+  
+      <button mat-button [matMenuTriggerFor]="appMenu">
+        <span class="secondary-color"><i class="fa fa-user-circle-o"> </i>
+          {{ (user$ | async)?.firstName }} {{ (user$ | async)?.surName }}
+        </span>
+      </button>
+    </mat-toolbar>
+  </nav>
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #drawer class="sidenav no-print" fixedInViewport="false" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async) && isOpen">
+      <mat-toolbar>FHI 360</mat-toolbar>
+      <mat-nav-list>
+        <ng-container>
+          <ng-container>
+            <a
+              mat-list-item
+              [routerLink]="['/dashboard']"
+              routerLinkActive="active-menu"
+              *ngIf="(user$ | async)?.user_level != 'normal'"
+            >
+              <i class="fa fa-dashboard"></i>
+               &nbsp; Dashboard
+            </a>
+            <a
+              mat-list-item
+              [routerLink]="['/applications']"
+              routerLinkActive="active-menu"
+              *ngIf="(user$ | async)?.user_level != 'normal'"
+            >
+              <i class="fa fa-tablet"></i> &nbsp; Applications
+            </a>
+            <a mat-list-item
+               [routerLink]="['/signboards']"
+               routerLinkActive="active-menu"
+               *ngIf="(user$ | async)?.user_level != 'normal'"
+            >
+              <i class="fa fa-list-ol"></i> &nbsp; Sign Boards
+            </a>
+            <a
+              mat-list-item
+               [routerLink]="['/apply']"
+               routerLinkActive="active-menu"
+              *ngIf="(user$ | async)?.user_level == 'normal'"
+            >
+              <i class="fa fa-th-large"></i> &nbsp; My Application
+            </a>
+            <a
+              mat-list-item
+               [routerLink]="['/reports']"
+               routerLinkActive="active-menu"
+              *ngIf="(user$ | async)?.user_level != 'normal'"
+            >
+              <i class="fa fa-bar-chart"></i> &nbsp; Reports
+            </a>
+            <mat-divider></mat-divider>
+          </ng-container>
+        </ng-container>
+  
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div class="content" style="margin-top: 69px"
+           [@routeAnimations]="o.isActivated ? o.activatedRoute : ''">
+        <router-outlet #o="outlet"></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  
