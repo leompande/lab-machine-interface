@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -65,7 +65,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatPaginatorModule,
     MatRadioModule,
     MatStepperModule,
-    DragDropModule,
+    DragDropModule
   ],
   declarations: [],
   entryComponents: [],

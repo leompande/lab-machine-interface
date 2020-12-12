@@ -17,7 +17,7 @@ html, body {
     left: 0;
     right: 0;
     background-color: rgba(229,188,155,0.3);
-    background: linear-gradient(rgba(97,172,247), rgba(97,172,247,0.1)),  url('/assets/images/billboard.jpg') no-repeat center center fixed;
+    background: linear-gradient(rgba(97,172,247,1.0), rgba(97,172,247,0.1)),  url('/assets/images/bg.jpg') no-repeat center center fixed;
     -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -65,12 +65,16 @@ form{
   line-height: normal;
 }
 
+.forgot-password{
+    text-decoration: none;cursor: pointer;font-family: nunitoLight;color:rgb(117, 186, 255);
+}
+
 .mat-input-element  { 
-    background-color: rgb(234,119,104)!important;
+    background-color: white !important;
   }
 
   .cdk-text-field-autofilled{
-    background-color: rgb(234,119,104)!important;
+    background-color: white !important;
   }
 
   input:-webkit-autofill {

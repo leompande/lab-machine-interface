@@ -71,10 +71,15 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     try {
       const userData = await this.dataStoreService.signIn(email, password);
+      
     } catch (e) {
       this.loading = false;
       this.dataStoreService.showError('Incorrect Username or Password');
     }
+  }
+
+  attemptLogin(){
+    document.getElementById('loginButton')?.click();
   }
 
 

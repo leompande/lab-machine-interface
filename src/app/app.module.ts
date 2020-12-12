@@ -32,9 +32,11 @@ import { ApplicationComponent } from './modules/application/application.componen
 import { ReportComponent } from './modules/report/report.component';
 import { SettingComponent } from './modules/setting/setting.component';
 import { SharedModule } from './shared/shared.module';
+import { LoaderComponent } from './shared/components/loader/loader.component';
 
 @NgModule({
   declarations: [
+    LoaderComponent,
     AppComponent,
     LoginComponent,
     PageComponent,
@@ -60,6 +62,7 @@ import { SharedModule } from './shared/shared.module';
     EffectsModule.forRoot([UserEffects, SignBoardEffects, ApplicationEffects, OrganisationEffects, UserRoleEffects]),
   ],
   exports:[
+    SharedModule
   ],
   providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
   bootstrap: [AppComponent]
