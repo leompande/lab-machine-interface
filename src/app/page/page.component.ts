@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../store/user/reducers/user';
 import { FirebaseDataService } from '../shared/services/firebase-data.service';
+import { menus } from '../shared/constants';
 
 @Component({
   selector: 'app-page',
@@ -20,7 +21,7 @@ export class PageComponent  {
   isHandset$: Observable<boolean> = this.breakpointObserver
   .observe(Breakpoints.Handset)
   .pipe(map(result => result.matches));
-
+menus = menus;
 isOpen = true;
 user$!: Observable<User>;
 loading$!: Observable<boolean>;

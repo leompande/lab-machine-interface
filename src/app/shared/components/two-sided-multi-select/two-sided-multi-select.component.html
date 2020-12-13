@@ -1,0 +1,33 @@
+<div style="margin-bottom: 20px;">
+    <div class="row">
+        <div class="col">
+            <p>{{label}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <mat-form-field appearance="outline">
+                <mat-label>Search Available</mat-label>
+                <input matInput placeholder="Available" (keydown)="filterAvailable($event)"> 
+              </mat-form-field>
+              <br/>
+              <div class="list-container">
+                  <div class="list-item" @fadeIn [ngClass]="{'active-item': item.chosed}" *ngFor="let item of availableItems| filterItems: availableFilterValue" id="{{item.id}}" (click)="chooseItem(item.id)" (dblclick)="selectItem(item.id,'left')">{{item.name}}</div>
+              </div>
+              <br/>
+              <div><a class="action-button" (click)="selectAllItems('left')"><img style="width:20px;height: 20px;"  src="assets/icons/double-arrow-right.png"></a><a class="action-button" (click)="selectItem(null,'left')"><img  style="width:20px;height: 20px;"  src="assets/icons/arrow-right.png"></a></div>
+        </div>
+        <div class="col">
+            <mat-form-field appearance="outline">
+                <mat-label>Search Selected</mat-label>
+                <input matInput placeholder="Selected"  (keydown)="filterSelected($event)">
+              </mat-form-field>
+              <br/>
+              <div class="list-container">
+                <div class="list-item" @fadeIn  [ngClass]="{'active-item': item.chosed}"  *ngFor="let item of selectedItems| filterItems: selectedFilterValue" id="{{item.id}}" (click)="chooseItem(item.id)" (dblclick)="selectItem(item.id,'right')">{{item.name}}</div>
+              </div>
+              <br/>
+              <div><a class="action-button"  (click)="selectAllItems('right')"><img style="width:20px;height: 20px;" src="assets/icons/double-arrow-left.png"></a><a class="action-button" (click)="selectItem(null,'right')"><img  style="width:20px;height: 20px;"  src="assets/icons/arrow-left.png"></a></div>
+        </div>
+    </div>
+</div>

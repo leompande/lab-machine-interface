@@ -1,0 +1,23 @@
+
+
+// .custom-button:active{
+//     background-color: rgb(117, 186, 255);
+// }
+
+.yes, .no{
+ padding:5px;
+ border-radius:30px;
+ cursor: pointer;
+ font-weight: bold;
+ text-decoration: none;
+ color: white;
+ margin: 5px;
+}
+
+.no{
+    background-color: red;
+}
+
+.yes{
+    background-color: green;
+}

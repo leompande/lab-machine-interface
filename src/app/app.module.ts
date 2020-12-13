@@ -33,17 +33,41 @@ import { ReportComponent } from './modules/report/report.component';
 import { SettingComponent } from './modules/setting/setting.component';
 import { SharedModule } from './shared/shared.module';
 import { LoaderComponent } from './shared/components/loader/loader.component';
+import { OrganisationComponent } from './modules/organisation/organisation.component';
+import { AgencyComponent } from './modules/agency/agency.component';
+import { AgencyContainerComponent } from './modules/agency/agency-container/agency-container.component';
+import { UserContainerComponent } from './modules/user/user-container/user-container.component';
+import { UserComponent } from './modules/user/user.component';
+import { OrganisationContainerComponent } from './modules/organisation/organisation-container/organisation-container.component';
+import { HeaderComponent } from './shared/components/header/header.component';
+import { SaveAreaComponent } from './shared/components/save-area/save-area.component';
+import { AddEditOrganisationComponent } from './modules/organisation/add-edit/add-edit.component';
+import { AddEditAgencyComponent } from './modules/agency/add-edit/add-edit.component';
+import { AddEditUserComponent } from './modules/user/add-edit/add-edit.component';
+import { MainDataTableComponent } from './shared/components/main-data-table/main-data-table.component';
 
 @NgModule({
   declarations: [
     LoaderComponent,
+    HeaderComponent,
+    MainDataTableComponent,
     AppComponent,
     LoginComponent,
     PageComponent,
     DashboardComponent,
     ApplicationComponent,
     ReportComponent,
-    SettingComponent
+    SettingComponent,
+    OrganisationComponent,
+    AgencyComponent,
+    AgencyContainerComponent,
+    UserContainerComponent,
+    UserComponent,
+    OrganisationContainerComponent,
+    SaveAreaComponent,
+    AddEditOrganisationComponent,
+    AddEditAgencyComponent,
+    AddEditUserComponent
   ],
   imports: [
     BrowserModule,

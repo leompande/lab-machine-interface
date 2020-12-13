@@ -1,0 +1,79 @@
+.card-1 {
+  border-radius: 2px;
+  background-color: rgba(255, 255, 255, 0.75) !important;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  font-family: nunitoRegular;
+}
+
+.card-1:hover {
+  border-top: 1px solid rgba(0, 0, 0, 0.4) !important;
+  box-shadow: 0 14px 28px rgba(3, 31, 35, 0.12),
+    0 10px 10px rgba(3, 31, 35, 0.22) !important;
+  transform: scale(1.01) !important;
+  background-color: rgba(255, 255, 255, 0.85) !important;
+}
+
+table {
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  font-family: nunitoRegular;
+
+  td {
+    padding-left: 10px !important;
+    font-family: nunitoRegular;
+  }
+
+  th {
+    padding-left: 10px !important;
+    color: black !important;
+    font-weight: bolder !important;
+    font-family: nunitoRegular;
+  }
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.table-cover {
+  margin: 0px;
+}
+.top-area {
+  display: grid;
+  grid-template-columns: 10fr 2fr;
+
+  .search-area {
+    align-self: end;
+  }
+
+  .excel-button {
+    justify-self: end;
+    align-self: center;
+    margin-bottom: 8px;
+  }
+  .mat-cell {
+    display: flex;
+    justify-content: end;
+  }
+}
+th{
+  text-align: center!important;
+}
+.right-align {
+  text-align: right!important;
+  padding: 5px;
+}
+
+.left-align{
+  text-align: left!important;
+  padding: 5px;
+}
+
+.center-align {
+  text-align: center!important;
+  padding: 5px;
+}
+::ng-deep .mat-sort-header-container {
+  display:flex;
+  justify-content:center;
+}

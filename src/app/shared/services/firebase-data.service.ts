@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { SourceService } from './Source.service';
+import { SourceService } from './source.service';
 import { User } from 'src/app/store/user/reducers/user';
 import { Upload } from '../models/upload.model';
 

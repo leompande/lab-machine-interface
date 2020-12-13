@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { User } from 'src/app/store/user/reducers/user';
 import { ApplicationState } from 'src/app/store';
-import { SourceService } from './Source.service';
+import { SourceService } from './source.service';
 
 @Injectable({
   providedIn: 'root'

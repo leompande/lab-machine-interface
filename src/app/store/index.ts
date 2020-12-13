@@ -11,6 +11,7 @@ import {
   import * as fromUserRole from './user-role/reducers/user-role.reducer';
   import * as fromSignBoard from './sign-board/reducers/sign-board.reducer';
   import * as fromOrganisation from './organisation/reducers/organisation.reducer';
+  import * as fromAgency from './agency/reducers/agency.reducer';
   import * as fromApplication from './application/reducers/application.reducer';
 
   import { environment } from '../../environments/environment';
@@ -23,6 +24,7 @@ import { RouterStateUrl } from './router/router.reducer';
     signBoard: fromSignBoard.State;
     application: fromApplication.State;
     organisation: fromOrganisation.State;
+    agency: fromAgency.State;
   }
   
   export const reducers: ActionReducerMap<ApplicationState> = {
@@ -32,6 +34,7 @@ import { RouterStateUrl } from './router/router.reducer';
     signBoard: fromSignBoard.reducer,
     application: fromApplication.reducer,
     organisation: fromOrganisation.reducer,
+    agency: fromAgency.reducer,
   };
   
   export const metaReducers: MetaReducer<

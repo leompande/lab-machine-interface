@@ -1,0 +1,40 @@
+<div style="margin-bottom: 20px;">
+    <div class="row" *ngIf="config?.label">
+        <div class="col">
+            <p>{{config?.label}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+              <div class="display-container" (click)="toggle()">
+                  <div class="content section">
+                      <span *ngFor="let selectedItem of selected" class="selected-pill">{{selectedItem.name}}</span>
+                  </div><div class="carret section">
+                      <div class="carret-button">
+                          <mat-icon style="margin: 10px auto;">expand_more</mat-icon>
+                      </div>
+                  </div>
+              </div>
+              <div @fadeIn *ngIf="showRender" class="list-render-container">
+                 <div class="row">
+                     <div class="col">
+                         <div class="search-area">
+                            <mat-form-field appearance="legacy">
+                                <mat-label>Search</mat-label>
+                                <input matInput placeholder="Search" (keydown)="filterSelected($event)">
+                                <mat-icon matSuffix>search</mat-icon>
+                              </mat-form-field>
+                         </div>
+                         <div class="items-area">
+                            <div *ngFor="let item of items| filterItems: searchText" class="item" (click)="selectItem(item)">
+                                <div>{{item.name}}</div><div>
+                                    <mat-icon *ngIf="item.chosed">check</mat-icon>
+                                </div>
+                            </div>
+                         </div>
+                     </div>
+                 </div>
+              </div>
+        </div>
+    </div>
+</div>

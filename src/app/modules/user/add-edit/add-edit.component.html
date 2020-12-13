@@ -1,0 +1,66 @@
+<div class="form-container">
+    <div class="form-header">
+        <p ><img src="/assets/icons/users.png" style="width:25px"> 
+        <span *ngIf="!isUpdate">New User Form</span>
+        <span *ngIf="isUpdate">Update User Form</span>
+        </p>
+    </div>
+    <mat-divider></mat-divider>
+    <br/>
+    <div class="form-body">
+        <form>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>First Name</mat-label>
+                        <input matInput placeholder="First Name">
+                      </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Middle Name</mat-label>
+                        <input matInput placeholder="Middle Name">
+                      </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Last Name</mat-label>
+                        <input matInput placeholder="Last Name">
+                      </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Email">
+                      </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Phone</mat-label>
+                        <input matInput placeholder="Phone">
+                      </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <app-one-sided-multi-select  [items]="[]" [selected]="[]" [config]="{label:'Organisation'}"></app-one-sided-multi-select>
+                </div>
+                <div class="col">
+                    <app-one-sided-multi-select [items]="[]" [selected]="[]"  [config]="{label:'Agency'}"></app-one-sided-multi-select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <app-two-sided-multi-select [availableItems]="[]" [selectedItems]="[]" [label]="'Roles'"></app-two-sided-multi-select>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br/>
+    <div class="form-footer">
+        <app-save-area [isUpdate]="isUpdate" [loading]="loading" (onCancel)="cancel()" (onSave)="save()"></app-save-area>
+        <button id="closeButton" mat-button mat-dialog-close style="display: none;">Cancel</button>
+    </div>
+</div>

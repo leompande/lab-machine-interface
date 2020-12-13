@@ -31,6 +31,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatStepperModule } from '@angular/material/stepper';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDividerModule } from '@angular/material/divider';
 
 @NgModule({
   imports: [
@@ -65,7 +66,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatPaginatorModule,
     MatRadioModule,
     MatStepperModule,
-    DragDropModule
+    DragDropModule,
+    MatDividerModule
   ],
   declarations: [],
   entryComponents: [],
@@ -101,7 +103,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatPaginatorModule,
     MatRadioModule,
     MatStepperModule,
-    DragDropModule
+    DragDropModule,
+    MatDividerModule
   ]
 })
 export class MaterialModule { }

@@ -68,7 +68,7 @@ $sign-board-theme: mat-light-theme((
         
   html, body { 
     height: 100%; 
-    font-family: nunito!important;
+    font-family: nunitoLight!important;
     // background-color: rgb(243, 242, 242);
   }
   body { margin: 0; }
@@ -76,6 +76,8 @@ $sign-board-theme: mat-light-theme((
   ::ng-deep .mat-focused .mat-form-field-underline .mat-form-field-ripple{
     background-color: white !important;
   }
+
+  
 
   
 
@@ -173,4 +175,88 @@ $sign-board-theme: mat-light-theme((
   .warning {
     background-color: rgba(250, 207, 26, 0.54) !important;
   }
+  .floating-action{
+    position: fixed !important;
+    right: 10px;
+    bottom: 20px;
+  }
+
+  .no-click-backdrop {
+    pointer-events: none;
+  }
   
+.form-container{
+  padding:10px;
+}
+
+.form-header{
+  font-family: nunitoBold;
+}
+
+.form-footer{
+  padding-top:10px;
+  padding-bottom: 5px;
+}
+
+.custom-button{
+  padding:10px;
+  text-align: center;
+  font-family: nunitoBold;
+  border-radius: 20px;
+  cursor: pointer;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
+  display: inline;
+}
+
+.custom-button:hover{
+
+  -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.5) !important;
+}
+
+.primary-custom-button-color{
+  color: white;
+  background-color: rgba(97,172,247);
+}
+
+.primary-custom-button-color:active{
+  color: white;
+  background-color: rgb(117, 186, 255);
+}
+
+.secondary-custom-button-color{
+  color: white;
+background-color: #656565;
+}
+.secondary-custom-button-color:active{
+  background-color: #525151;
+  color: white;
+  }
+
+.warning-custom-button-color{
+background-color:rgb(248,204,81);
+color: white;
+}
+
+.warning-custom-button-color:active{
+  background-color:rgb(248, 198, 61);
+  }
+
+.danger-custom-button-color{
+  background-color:rgb(255, 0, 0);
+  color: white;
+}
+
+.danger-custom-button-color:active{
+  background-color:rgb(247, 101, 101);
+  color: white;
+
+}
+.display-pane{
+  padding:5px;
+  background-color: white;
+  // margin-top: px;
+  margin: 4px;
+  margin-top: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.3) !important;
+}
