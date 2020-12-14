@@ -4,8 +4,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {fadeIn} from '../shared/animations/router-animation';
 import { User } from '../store/user/reducers/user';
 import { UserService } from '../shared/services/model-services/user.service';
-import { FirebaseDataService } from '../shared/services/firebase-data.service';
-import { AuthService } from '../shared/services/auth-service';
+import { AuthService } from '../shared/services/firebase/auth-service';
 
 
 @Component({
@@ -31,9 +30,7 @@ export class LoginComponent implements OnInit {
   loginError = false;
   constructor(
     private http: HttpClient,
-    private authService: AuthService,
     private userService: UserService,
-    private dataStoreService: FirebaseDataService
   ) { }
 
   ngOnInit() {}
@@ -47,10 +44,10 @@ export class LoginComponent implements OnInit {
     } else {
       this.signingUp = true;
     }
-    this.authService.signupUser(user.email, this.new_password).then((data: any) => {
-      this.authService.temp_user = user;
+    // this.authService.signupUser(user.email, this.new_password).then((data: any) => {
+      // this.authService.temp_user = user;
       // this.dataStoreService.savedb('User')
-    });
+    // });
   }
 
   onNavigate(data: any[]) {
@@ -60,21 +57,24 @@ export class LoginComponent implements OnInit {
   }
 
   saveUser(user: User) {
-    this.userService.saveUser(user)
-      .then((data) => {
-        console.log('user registered');
-      })
-      .catch((error) => console.log(error));
+    // this.userService.saveUser(user)
+    //   .then((data) => {
+    //     console.log('user registered');
+    //   })
+    //   .catch((error) => console.log(error));
   }
 
-  async login(email: string, password: string) {
+  async login(username: string, password: string) {
     this.loading = true;
     try {
-      const userData = await this.dataStoreService.signIn(email, password);
+      const userData = await this.userService.login({username,password}).toPromise();
       
+      // const userData = await this.dataStoreService.signIn(email, password);
+      console.log(userData);
+
     } catch (e) {
       this.loading = false;
-      this.dataStoreService.showError('Incorrect Username or Password');
+      // this.dataStoreService.showError('Incorrect Username or Password');
     }
   }
 

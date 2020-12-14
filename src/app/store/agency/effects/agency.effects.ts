@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { catchError, map, concatMap } from 'rxjs/operators';
-import { EMPTY, of } from 'rxjs';
-import { LoadAgenciesFailure, LoadAgenciesSuccess, AgencyActionTypes, AgencyActions } from '../actions/agency.actions';
+import { catchError, map, concatMap, switchMap } from 'rxjs/operators';
+import { EMPTY, of, Observable } from 'rxjs';
+import { LoadAgenciesFailure, LoadAgenciesSuccess, AgencyActionTypes, AgencyActions, LoadAgencies } from '../actions/agency.actions';
+import { Agency } from '../reducers/agency';
+import { AgencyService } from 'src/app/shared/services/model-services/agency.service';
 
 
 
@@ -11,18 +13,19 @@ import { LoadAgenciesFailure, LoadAgenciesSuccess, AgencyActionTypes, AgencyActi
 export class AgencyEffects {
 
   @Effect()
-  loadAgencies$ = this.actions$.pipe(
+  loadAgencies$: Observable<any> = this.actions$.pipe(
     ofType(AgencyActionTypes.LoadAgencies),
-    concatMap(() =>
-      /** An EMPTY observable only emits completion. Replace with your own observable API request */
-      EMPTY.pipe(
-        map(data => new LoadAgenciesSuccess({ Agencies: data })),
-        catchError(error => of(new LoadAgenciesFailure({ error }))))
+    switchMap((action: LoadAgencies) =>
+      this.agencyService.listAgencies().pipe(
+        map((agencies: Agency[]) => new LoadAgenciesSuccess({Agencies:agencies})),
+        catchError((error: any) => of(new LoadAgenciesFailure(error)))
+      )
     )
   );
 
 
 
-  constructor(private actions$: Actions<AgencyActions>) {}
+
+  constructor(private actions$: Actions<AgencyActions>,private agencyService: AgencyService) {}
 
 }

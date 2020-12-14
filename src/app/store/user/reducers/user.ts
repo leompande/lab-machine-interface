@@ -3,9 +3,16 @@ export class User {
     firstName!: string;
     middleName!: string;
     lastName!: string;
+    username!: string;
+    password!: string;
     email!: string;
     phone!: string;
+    role!: string;
+    roleId!: string;
     organisation!: string;
+    dhisOrganisationUnitId!: string;
+    dhisCredentialsId!: string;
+    dhisRoleId!: string;
     agency!: string;
     isAgencyUser!: boolean;
     isOrganisationUser!: boolean;

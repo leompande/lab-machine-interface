@@ -1,7 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditOrganisationComponent } from '../organisation/add-edit/add-edit.component';
 import { Observable } from 'rxjs';
+import { Organisation } from 'src/app/store/organisation/reducers/organisation';
+import { Store } from '@ngrx/store';
+import { ApplicationState } from 'src/app/store';
+import { DeleteOrganisation } from 'src/app/store/organisation/actions/organisation.actions';
+import { OrganisationService } from 'src/app/shared/services/model-services/organisation.service';
 
 @Component({
   selector: 'app-organisation',
@@ -9,7 +14,9 @@ import { Observable } from 'rxjs';
   styleUrls: ['./organisation.component.scss']
 })
 export class OrganisationComponent implements OnInit {
-
+  @Input()
+  organisations!: Organisation[];
+  @Input() organisationEntities: any;
   loading$!: Observable<boolean>;
 
   tableConfigurations = {
@@ -27,43 +34,39 @@ export class OrganisationComponent implements OnInit {
     tableNotifications: '',
     showBorder: true,
     allowPagination: true,
-    actionIcons: { edit: false, delete: false, more: false },
+    actionIcons: { edit: true, delete: true, more: false },
     doneLoading: false,
     showSearch: true,
     deleting: {},
-    empty_msg: 'No Organisation'
+    empty_msg: 'No Organisations'
   };
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private organisationService: OrganisationService) { }
 
   ngOnInit(): void {
   }
 
 
 
-  async onTableAction(action: { name: string, object: any }) {
 
-    if (action.name == 'edit') {
-      const dialogRef = this.dialog.open(AddEditOrganisationComponent, {
-        data:{
-          currentObject:{name:""},
+  updateOrganisation(organisationId: string) {
+    const dialogRef = this.dialog.open(AddEditOrganisationComponent, {
+      data: {
+        currentObject: this.organisations.find(organisation => organisation.id == organisationId), 
+      },
+      width: '80%',
+      maxHeight: '80%',
+      disableClose: true,
+      hasBackdrop: true,
+      closeOnNavigation: true
+    });
 
-        },
-        width: '80%',
-        maxHeight: '80%',
-        disableClose: true,
-        hasBackdrop: true, 
-        closeOnNavigation: true
-      });
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
 
-      dialogRef.afterClosed().subscribe(result => {
-      });
-    }
-
-    if (action.name == 'delete') {
-      // const reponse = await this.stockServce.delete(action.object.id).toPromise();
-    }
-
+  async deleteOrganisation(organisationId: any) {
+    await this.organisationService.deleteOrganisation(organisationId).toPromise();
   }
 
   openDialog() {
@@ -71,7 +74,7 @@ export class OrganisationComponent implements OnInit {
       width: '95%',
       maxHeight: '80%',
       disableClose: true,
-      hasBackdrop: true, data: {name:""},
+      hasBackdrop: true, data: {  },
       closeOnNavigation: true
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -79,7 +82,7 @@ export class OrganisationComponent implements OnInit {
   }
 
 
- 
+
 
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from '../shared/services/auth-service';
+import { AuthService } from '../shared/services/firebase/auth-service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { UserService } from '../shared/services/model-services/user.service';
 import { Store, select } from '@ngrx/store';
@@ -8,8 +8,10 @@ import { routeAnimations } from '../shared/animations/router-animation';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../store/user/reducers/user';
-import { FirebaseDataService } from '../shared/services/firebase-data.service';
 import { menus } from '../shared/constants';
+import { LoadOrganisations } from '../store/organisation/actions/organisation.actions';
+import { LoadAgencies } from '../store/agency/actions/agency.actions';
+import { LoadUsers } from '../store/user/actions/user.actions';
 
 @Component({
   selector: 'app-page',
@@ -30,12 +32,14 @@ loading$!: Observable<boolean>;
     private breakpointObserver: BreakpointObserver,
     private userService: UserService,
     private store: Store<ApplicationState>,
-    private dataService: FirebaseDataService
   ) {
-    // this.user$ = this.store.pipe(select(selectCurrentUser));
+    localStorage.getItem('sb-web-token') !=null?this.userService.subject.next({isLogedIn: true, userData:null}):this.userService.subject.next({isLogedIn: false, userData:null});
+    this.store.dispatch(new LoadOrganisations());
+    this.store.dispatch(new LoadAgencies());
+    this.store.dispatch(new LoadUsers);
   }
 
   logout() {
-    this.dataService.logout();
+    this.userService.logout();
   }
 }

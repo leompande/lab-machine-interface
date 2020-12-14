@@ -8,6 +8,7 @@ export class Agency {
     phone!: string;
     logo!: string;
     organisationId!: string;
+    organisationName!: string;
     dateCreated!: string;
     createdBy!: string;
 }

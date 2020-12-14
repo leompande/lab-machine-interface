@@ -1,2 +1,4 @@
 <app-header [title]="'Agency'" [label]="'assets/icons/agents.png'"></app-header>
-<app-agency></app-agency>
+<app-agency 
+[agencies]="agencies$|async" [agencyEntities]="agencyEntities$|async"
+[organisations]="organisations$|async" [organisationEntities]="organisationEntities$|async"></app-agency>

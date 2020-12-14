@@ -8,24 +8,24 @@
     <mat-divider></mat-divider>
     <br/>
     <div class="form-body">
-        <form>
+        <form [formGroup]="form">
             <div class="row">
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>First Name</mat-label>
-                        <input matInput placeholder="First Name">
+                        <input matInput placeholder="First Name" formControlName="firstName">
                       </mat-form-field>
                 </div>
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Middle Name</mat-label>
-                        <input matInput placeholder="Middle Name">
+                        <input matInput placeholder="Middle Name" formControlName="middleName">
                       </mat-form-field>
                 </div>
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Last Name</mat-label>
-                        <input matInput placeholder="Last Name">
+                        <input matInput placeholder="Last Name" formControlName="lastName">
                       </mat-form-field>
                 </div>
             </div>
@@ -33,27 +33,42 @@
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Email</mat-label>
-                        <input matInput placeholder="Email">
+                        <input matInput placeholder="Email" formControlName="email">
                       </mat-form-field>
                 </div>
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Phone</mat-label>
-                        <input matInput placeholder="Phone">
+                        <input matInput placeholder="Phone" formControlName="phone">
                       </mat-form-field>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <app-one-sided-multi-select  [items]="[]" [selected]="[]" [config]="{label:'Organisation'}"></app-one-sided-multi-select>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Username</mat-label>
+                        <input matInput placeholder="Username" formControlName="username">
+                      </mat-form-field>
                 </div>
                 <div class="col">
-                    <app-one-sided-multi-select [items]="[]" [selected]="[]"  [config]="{label:'Agency'}"></app-one-sided-multi-select>
+                    <mat-form-field appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input matInput placeholder="Password" type="password" formControlName="password">
+                      </mat-form-field>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <app-two-sided-multi-select [availableItems]="[]" [selectedItems]="[]" [label]="'Roles'"></app-two-sided-multi-select>
+                    <app-one-sided-multi-select  [items]="availableOrganisations" [selected]="[]" (onChange)="onSelectionOrganisationDone($event)" [config]="{label:'Organisation',allowMultiple: false, autoDismiss:true}"></app-one-sided-multi-select>
+                </div>
+                <div class="col">
+                    <app-one-sided-multi-select [items]="availableAgencies" [selected]="[]" (onChange)="onSelectionAgencyDone($event)" [config]="{label:'Agency',allowMultiple: false, autoDismiss:true}"></app-one-sided-multi-select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <app-one-sided-multi-select [items]="availableRoles" [selected]="[]" (onChange)="onSelectionRoleDone($event)" [config]="{label:'Roles',allowMultiple: false, autoDismiss:true}"></app-one-sided-multi-select>
+                    <!-- <app-two-sided-multi-select [availableItems]="availableItems" [selectedItems]="[]" [label]="'Roles'"></app-two-sided-multi-select> -->
                 </div>
             </div>
         </form>

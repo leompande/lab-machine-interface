@@ -3,8 +3,10 @@
         <vvs-main-data-table
         *ngIf="tableConfigurations.tableColumns"
         [tableConfigurations]="tableConfigurations"
-        [tableList]="[]"
+        [tableList]="agencies"
         (rowPreview)="printArrival($event)"
+        (rowUpdate)="updateAgency($event)"
+        (rowDelete)="deleteAgency($event)"
         [loading]="loading$ | async">
       </vvs-main-data-table>
     </div>

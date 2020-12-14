@@ -3,7 +3,7 @@ export const menus: any = [
         name: 'Dashboard',
         url: 'dashboard',
         icon: 'dashboards.png',
-        access: 'MODULE_DASHBOARD'
+        access: 'SUPER_USER,ORGANISATION_ADMIN,AGENCY_ADMIN'
     },
     // {
     //     name: 'Applications',
@@ -21,18 +21,18 @@ export const menus: any = [
         name: 'Organisation',
         url: 'organisation',
         icon: 'organisations.png',
-        access: 'MODULE_DATA_ENTRY'
+        access: 'SUPER_USER'
     },
     {
         name: 'Agency',
         url: 'agency',
         icon: 'agents.png',
-        access: 'MODULE_DATA_ENTRY'
+        access: 'SUPER_USER,ORGANISATION_ADMIN'
     },{
         name: 'Users',
         url: 'users',
         icon: 'users.png',
-        access: 'MODULE_DATA_ENTRY'
+        access: 'SUPER_USER,ORGANISATION_ADMIN,AGENCY_ADMIN'
     },
     // {
     //     name: 'Sign Boards',
@@ -47,3 +47,11 @@ export const menus: any = [
     //     access: 'MODULE_REPORTING'
     // }
 ];
+
+export const roles = [
+    {id:'SUPER_USER',name:'Super User',value:'SUPER_USER'},
+    {id:'ORGANISATION_ADMIN',name:'Organisation Administrator',value:'ORGANISATION_ADMIN'},
+    {id:'ORGANISATION_VERIFIER',name:'Organisation Verifier',value:'ORGANISATION_VERIFIER'},
+    {id:'AGENCY_NORMAL_USER',name:'Agency Normal User ',value:'AGENCY_NORMAL_USER'},
+    {id:'AGENCY_ADMIN',name:'Agency Administrator',value:'AGENCY_ADMIN'},
+]

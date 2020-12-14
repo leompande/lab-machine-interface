@@ -58,7 +58,17 @@ export class OneSidedMultiSelectComponent implements OnInit {
       this.selected = this.selected.filter((itemIn) => itemIn.id != item.id);
     } else {
       if (this.config.allowMultiple == false && this.selected.length > 0) {
-
+        this.items = this.items.map(itemIn => {
+          itemIn.chosed = false;
+          return itemIn;
+        });
+        item.chosed = true;
+        this.selected = [
+          item
+        ];
+        if (this.config.autoDismiss) {
+          this.toggle();
+        }
       } else {
         item.chosed = true;
         this.selected = [

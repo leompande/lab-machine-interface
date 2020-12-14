@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AddEditUserComponent } from './add-edit/add-edit.component';
 import { Observable } from 'rxjs';
+import { Agency } from 'src/app/store/agency/reducers/agency';
+import { Organisation } from 'src/app/store/organisation/reducers/organisation';
+import { User } from 'src/app/store/user/reducers/user';
+import { UserService } from 'src/app/shared/services/model-services/user.service';
 
 @Component({
   selector: 'app-user',
@@ -10,6 +14,16 @@ import { Observable } from 'rxjs';
 })
 export class UserComponent implements OnInit {
 
+  @Input()
+  users!: User[];
+  @Input() userEntities: any;
+  @Input()
+  agencies!: Agency[];
+  @Input() agencyEntities: any;
+  @Input()
+  organisations!: Organisation[];
+  @Input() organisationEntities: any;
+  
   loading$!: Observable<boolean>;
 
 
@@ -19,32 +33,36 @@ export class UserComponent implements OnInit {
       { name: 'middleName', label: 'Middle Name' },
       { name: 'lastName', label: 'Last Name' },
       { name: 'email', label: 'Email' },
+      {name: 'phone', label: 'Phone'},
+      { name: 'username', label: 'Username' },
+      { name: 'organisation', label: 'Organisation' },
+      { name: 'agency', label: 'Agency' },
+      { name: 'role', label: 'Role' },
 
     ],
     tableCaption: ' ',
     tableNotifications: '',
     showBorder: true,
     allowPagination: true,
-    actionIcons: { edit: false, delete: false, more: false },
+    actionIcons: { edit: true, delete: true, more: false },
     doneLoading: false,
     showSearch: true,
     deleting: {},
     empty_msg: 'No users'
   };
   
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private userService: UserService) { }
 
   ngOnInit(): void {
   }
 
+  updateUser(userId: string) {
 
-
-  async onTableAction(action: { name: string, object: any }) {
-
-    if (action.name == 'edit') {
       const dialogRef = this.dialog.open(AddEditUserComponent, {
         data:{
-          currentObject:{name:""},
+          currentObject:this.users.find(user => user.id == userId), 
+          agencies: this.agencies,
+          organisations: this.organisations
 
         },
         width: '80%',
@@ -56,12 +74,11 @@ export class UserComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(result => {
       });
-    }
 
-    if (action.name == 'delete') {
-      // const reponse = await this.stockServce.delete(action.object.id).toPromise();
-    }
+  }
 
+  async deleteUser(userId: any) {
+    await this.userService.deleteUser(userId).toPromise();
   }
 
   openDialog() {
@@ -69,7 +86,12 @@ export class UserComponent implements OnInit {
       width: '95%',
       maxHeight: '80%',
       disableClose: true,
-      hasBackdrop: true, data: {name:""},
+      hasBackdrop: true, data: {
+        
+        currentObject:null,
+        agencies: this.agencies,
+        organisations: this.organisations
+      },
       closeOnNavigation: true
     });
     dialogRef.afterClosed().subscribe(result => {

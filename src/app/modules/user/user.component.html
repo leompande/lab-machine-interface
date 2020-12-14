@@ -1,10 +1,12 @@
 <div class="user-container">
     <div class="display-pane">
         <vvs-main-data-table
-        *ngIf="tableConfigurations.tableColumns"
+        *ngIf="tableConfigurations.tableColumns && users"
         [tableConfigurations]="tableConfigurations"
-        [tableList]="[]"
+        [tableList]="users"
         (rowPreview)="printArrival($event)"
+        (rowDelete)="deleteUser($event)"
+        (rowUpdate)="updateUser($event)"
         [loading]="loading$ | async">
       </vvs-main-data-table>
     </div>

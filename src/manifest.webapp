@@ -1,0 +1,44 @@
+{
+    "version": "1.0.0",
+    "name": "Sign Boards Management System",
+    "description": "Sign Boards Management System",
+    "appType": "APP",
+    "launch_path": "index.html",
+    "icons": {
+        "16": "assets/images/Icon-16.png",
+        "48": "assets/images/Icon-48.png",
+        "128": "assets/images/icon-128x128.png"
+    },
+    "developer": {
+        "name": "MonitAfrica",
+        "url": "https://monitafrica.com"
+    },
+    "default_locale": "en",
+    "activities": {
+        "dhis": {
+            "href": "http://localhost:8080/api/"
+        }
+    },
+     "authorities": [
+         "SB_MODULE_DASHBOARD",
+         "SB_MODULE_WARNINGS",
+         "SB_MODULE_ARRIVAL",
+         "SB_MODULE_RECIEVE_VACCINE",
+         "SB_MODULE_ARRIVAL",
+         "SB_MODULE_DISPATCH",
+         "SB_MODULE_REPORT_USAGE",
+         "SB_MODULE_PACKAGE_SUMMARY",
+         "SB_MODULE_REQUISITION",
+         "SB_MODULE_STOCKING",
+         "SB_MODULE_ADJUSTMENT",
+         "SB_MODULE_REPORT",
+         "SB_MODULE_PHYSICAL_INVENTORY",
+         "SB_MODULE_INITIAL_INVENTORY",
+         "SB_MODULE_COLD_CHAIN",
+         "SB_MODULE_PRE_ADVICE",
+         "SB_MODULE_BASIC_DATA",
+         "SB_MODULE_RECEPIENT",
+         "SB_MODULE_DEMOGRAPHICS",
+         "SB_MODULE_CONFIGURATION"
+     ]
+}

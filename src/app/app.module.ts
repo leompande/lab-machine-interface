@@ -45,6 +45,7 @@ import { AddEditOrganisationComponent } from './modules/organisation/add-edit/ad
 import { AddEditAgencyComponent } from './modules/agency/add-edit/add-edit.component';
 import { AddEditUserComponent } from './modules/user/add-edit/add-edit.component';
 import { MainDataTableComponent } from './shared/components/main-data-table/main-data-table.component';
+import { AgencyEffects } from './store/agency/effects/agency.effects';
 
 @NgModule({
   declarations: [
@@ -83,7 +84,7 @@ import { MainDataTableComponent } from './shared/components/main-data-table/main
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     NgbModule,
-    EffectsModule.forRoot([UserEffects, SignBoardEffects, ApplicationEffects, OrganisationEffects, UserRoleEffects]),
+    EffectsModule.forRoot([UserEffects,AgencyEffects, SignBoardEffects, ApplicationEffects, OrganisationEffects, UserRoleEffects]),
   ],
   exports:[
     SharedModule

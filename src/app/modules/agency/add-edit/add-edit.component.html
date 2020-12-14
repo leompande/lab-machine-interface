@@ -8,24 +8,24 @@
     <mat-divider></mat-divider>
     <br/>
     <div class="form-body">
-        <form>
+        <form [formGroup]="form">
             <div class="row">
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Name</mat-label>
-                        <input matInput placeholder="Name">
+                        <input matInput placeholder="Name" formControlName="name">
                       </mat-form-field>
                 </div>
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>TIN</mat-label>
-                        <input matInput placeholder="TIN">
+                        <input matInput placeholder="TIN" formControlName="tin">
                       </mat-form-field>
                 </div>
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>VRN</mat-label>
-                        <input matInput placeholder="VRN">
+                        <input matInput placeholder="VRN" formControlName="vrn">
                       </mat-form-field>
                 </div>
             </div>
@@ -33,25 +33,26 @@
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Address</mat-label>
-                        <input matInput placeholder="Address">
+                        <input matInput placeholder="Address" formControlName="address">
                       </mat-form-field>
                 </div>
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Email</mat-label>
-                        <input matInput placeholder="Email">
+                        <input matInput placeholder="Email" formControlName="email">
                       </mat-form-field>
                 </div>
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Phone</mat-label>
-                        <input matInput placeholder="Phone">
+                        <input matInput placeholder="Phone" formControlName="phone">
                       </mat-form-field>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <app-one-sided-multi-select [items]="[]" [selected]="[]"  [config]="{label:'Organisation'}"></app-one-sided-multi-select>
+                    <app-one-sided-multi-select [items]="availableItems" [selected]="[]"  [config]="{label:'Organisation',allowMultiple: false,
+                    autoDismiss: true}" (onChange)="onSelectionDone($event)"></app-one-sided-multi-select>
                 </div>
             </div>
             <div class="row">

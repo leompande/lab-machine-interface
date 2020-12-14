@@ -6,7 +6,7 @@ import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firest
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { FirebaseDataService } from './firebase-data.service';
-import { UserService } from './model-services/user.service';
+import { UserService } from '../model-services/user.service';
 interface User {
   uid: string;
   firstName: string;
