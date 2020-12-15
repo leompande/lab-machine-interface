@@ -21,7 +21,7 @@ export const menus: any = [
         name: 'Organisation',
         url: 'organisation',
         icon: 'organisations.png',
-        access: 'SUPER_USER'
+        access: 'SUPER_USER,ORGANISATION_VERIFIER'
     },
     {
         name: 'Agency',
@@ -55,3 +55,4 @@ export const roles = [
     {id:'AGENCY_NORMAL_USER',name:'Agency Normal User ',value:'AGENCY_NORMAL_USER'},
     {id:'AGENCY_ADMIN',name:'Agency Administrator',value:'AGENCY_ADMIN'},
 ]
+

@@ -23,9 +23,9 @@ export class PageComponent  {
   isHandset$: Observable<boolean> = this.breakpointObserver
   .observe(Breakpoints.Handset)
   .pipe(map(result => result.matches));
-menus = menus;
+menus = [];
 isOpen = true;
-user$!: Observable<User>;
+user!: User;
 loading$!: Observable<boolean>;
   constructor(
     private authService: AuthService,
@@ -34,6 +34,14 @@ loading$!: Observable<boolean>;
     private store: Store<ApplicationState>,
   ) {
     localStorage.getItem('sb-web-token') !=null?this.userService.subject.next({isLogedIn: true, userData:null}):this.userService.subject.next({isLogedIn: false, userData:null});
+    if (localStorage.getItem('sb-user')){
+      this.user = new Function("return "+localStorage.getItem('sb-user'))();
+      this.menus = menus.filter((menu:any)=>menu.access.indexOf(this.user.roleId)>=0);
+      console.log(this.menus);
+      console.log(this.user);
+    }else{
+      this.userService.logout();
+    }
     this.store.dispatch(new LoadOrganisations());
     this.store.dispatch(new LoadAgencies());
     this.store.dispatch(new LoadUsers);
