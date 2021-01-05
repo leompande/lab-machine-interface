@@ -1,9 +1,21 @@
 
 <div class="batch-info">
-    Batch Information <div style="display: inline-block;font-size: 16px;padding:5px!important" class="pull-right custom-button" (click)="cancel()">close</div>
+    <div style="display: inline-block;font-size:14px;">
+        <div><span style="font-family: nunitoBold;">Batch Ref#:</span> {{batch.batch_reference_number}}.</div>
+        <div><span style="font-family: nunitoBold;"> District:</span> {{batch.district_council_name}}.</div>
+        <div><span style="font-family: nunitoBold;"> Agency:</span> {{batch.agency_name}}.</div>
+        <div><span style="font-family: nunitoBold;"> Width:</span> {{batch.board_width}}, Height: {{batch.board_height}}.</div>
+        <div><span style="font-family: nunitoBold;"> Total Quantity:</span> {{batch.signboard_quantity}}.</div>
+    </div><div style="display: inline-block;font-size: 16px;padding:5px!important" class="pull-right custom-button" (click)="cancel()">close</div>
 </div>
 <div class="batch-item-container">
-    <mat-tab-group>
+    <app-sign-board-table *ngIf="tableConfigurations.tableColumns && boardItems"
+                    [tableConfigurations]="tableConfigurations"
+                    [tableList]="boardItems"
+                    (rowPreview)="previewSignBoard(campaign,$event)" (rowDelete)="deleteSignBoard($event)"
+                    (rowUpdate)="updateSignBoard(campaign,$event)" [loading]="loading$ | async">
+                </app-sign-board-table>
+    <!-- <mat-tab-group>
         <mat-tab label="All Sign Boards">
             <ng-template matTabContent>
                 <app-sign-board-table *ngIf="tableConfigurations.tableColumns && boardItems"
@@ -32,6 +44,6 @@
                 </app-sign-board-table>
             </ng-template>
         </mat-tab>
-    </mat-tab-group>
+    </mat-tab-group> -->
     <button id="closeButton" mat-button mat-dialog-close style="display: none;">Cancel</button>
 </div>

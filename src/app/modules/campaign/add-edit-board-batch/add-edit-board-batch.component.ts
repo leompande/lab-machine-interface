@@ -112,8 +112,6 @@ export class AddEditBoardBatchComponent implements OnInit {
   }
 
   onSelectionOutletDone(event) {
-    console.log("selected outlet");
-    console.log(event);
     this.selectedOutlet = event[0].name;
   }
   async save() {

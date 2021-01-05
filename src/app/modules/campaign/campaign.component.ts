@@ -46,8 +46,7 @@ export class CampaignComponent implements OnInit {
     const reference = currentObject ? currentObject.reference : await this.campaignService.getReference().toPromise();
     const dialogRef = this.dialog.open(AddEditCampaignComponent, {
       data: {
-        currentObject: null,
-        agencies: this.agencies,
+        currentObject: currentObject,
         reference: reference,
         organisation: this.campaignService.user.organisation
       },
@@ -62,7 +61,7 @@ export class CampaignComponent implements OnInit {
   }
 
   editingCampaign(campaign: any) {
-    console.log(campaign);
+    this.createEditCampaign(campaign);
   }
   deletingCampaign(campaign: any) {
     console.log(campaign);

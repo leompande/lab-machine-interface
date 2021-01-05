@@ -22,14 +22,14 @@ export class AddEditCampaignComponent implements OnInit {
   availableAgencies: ListItem[];
   selectedAgency: string;
   constructor(@Inject(MAT_DIALOG_DATA) public data: { currentObject: any, agencies: Agency[], reference: string, organisation: string }, private campaignService: CampaignService) {
-    this.availableAgencies = data.agencies.map((agency) => {
-      return {
-        id: agency.id,
-        name: agency.name,
-        value: agency.name,
-        chosed: false
-      }
-    });
+    // this.availableAgencies = data.agencies.map((agency) => {
+    //   return {
+    //     id: agency.id,
+    //     name: agency.name,
+    //     value: agency.name,
+    //     chosed: false
+    //   }
+    // });
     this.isUpdate = data.currentObject != null;
     this.form = new FormGroup({
       id: new FormControl(this.isUpdate ? data.currentObject.id : makeId()),
@@ -37,7 +37,7 @@ export class AddEditCampaignComponent implements OnInit {
       campaign_name: new FormControl(this.isUpdate ? data.currentObject.campaign_name : ''),
       start_date: new FormControl(this.isUpdate ? data.currentObject.start_date : ''),
       end_date: new FormControl(this.isUpdate ? data.currentObject.end_date : ''),
-      agency!: new FormControl(this.isUpdate ? data.currentObject.agency : ''),
+      // agency!: new FormControl(this.isUpdate ? data.currentObject.agency : ''),
       organisation!: new FormControl(this.data.organisation)
     });
   }
@@ -57,7 +57,8 @@ export class AddEditCampaignComponent implements OnInit {
       end_date: moment(this.form.value.end_date).toISOString(),
       agency: this.selectedAgency
     };
-    let trackedEntityInstanceId, eventDate;
+    let trackedEntityInstanceId = this.data.currentObject.trackedEntityInstance?this.data.currentObject.trackedEntityInstance:null;
+    let eventDate;
     await this.campaignService.saveUpdateCampaign(this.isUpdate,formValues,trackedEntityInstanceId, eventDate).toPromise();
     this.loading = false;
     this.cancel();
