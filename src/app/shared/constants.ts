@@ -5,6 +5,17 @@ export const menus: any = [
         icon: 'dashboards.png',
         access: 'SUPER_USER,ORGANISATION_ADMIN,AGENCY_ADMIN'
     },
+    {
+        name: 'Campaigns',
+        url: 'campaigns',
+        icon: 'campaign.png',
+        access: 'ORGANISATION_ADMIN'
+    },{
+        name: 'Outlets',
+        url: 'outlets',
+        icon: 'outlet.png',
+        access: 'ORGANISATION_ADMIN'
+    },
     // {
     //     name: 'Applications',
     //     url: 'applications',
@@ -28,18 +39,18 @@ export const menus: any = [
         url: 'agency',
         icon: 'agents.png',
         access: 'SUPER_USER,ORGANISATION_ADMIN'
+    },
+    {
+        name: 'Sign Boards',
+        url: 'signboards',
+        icon: 'planted.png',
+        access: 'AGENCY_ADMIN'
     },{
         name: 'Users',
         url: 'users',
         icon: 'users.png',
         access: 'SUPER_USER,ORGANISATION_ADMIN,AGENCY_ADMIN'
     },
-    // {
-    //     name: 'Sign Boards',
-    //     url: 'signboards',
-    //     icon: 'signboards.png',
-    //     access: 'MODULE_DATA_ENTRY'
-    // },
     // {
     //     name: 'Reports',
     //     url: 'reports',

@@ -1,0 +1,93 @@
+<div class="form-container">
+    <div class="form-header">
+        <p><img src="/assets/icons/all.png" style="width:25px">
+            <span *ngIf="!isUpdate">New Batch Form</span>
+            <span *ngIf="isUpdate">Update Batch Form</span>
+        </p>
+    </div>
+    <mat-divider></mat-divider>
+    <br />
+    <div class="form-body">
+        <form [formGroup]="form">
+            <div class="row">
+                <div class="col">
+                    <div class="org-unit-error-message" *ngIf="showOrgUnitSelectionError">Select only district level
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <tulonge-org-unit-filter-closed #ouSelector [startingOus]="startingOus"
+                        [orgunit_tree_config]="orgunit_tree_config" (orgUnitUpdate)="onOrgunitSelected($event)">
+                    </tulonge-org-unit-filter-closed>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="col">
+                    <app-one-sided-multi-select [items]="filteredOutlets" [selected]="[]"
+                        (onChange)="onSelectionOutletDone($event)"
+                        [config]="{label:'Outlets',allowMultiple: false, autoDismiss:true}"></app-one-sided-multi-select>
+                </div>
+            
+                <div class="col">
+                    <app-one-sided-multi-select [items]="availableAgencies" [selected]="[]"
+                        (onChange)="onSelectionAgencyDone($event)"
+                        [config]="{label:'Agency',allowMultiple: false, autoDismiss:true}"></app-one-sided-multi-select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Board Height</mat-label>
+                        <input matInput type="number" min="0" placeholder="Board Height" formControlName="board_height">
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Board Width</mat-label>
+                        <input matInput type="number" min="0" placeholder="Board Width" formControlName="board_width">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Sign Boards Quantity</mat-label>
+                        <input matInput type="number" min="0" placeholder="Sign Boards Quantity"
+                            formControlName="signboard_quantity">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Start Date</mat-label>
+                        <input matInput [matDatepicker]="start_date" formControlName="start_date">
+                        <mat-datepicker-toggle matSuffix [for]="start_date" placeholder="Start Date">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker touchUi #start_date></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>End Date</mat-label>
+                        <input matInput [matDatepicker]="end_date" formControlName="end_date">
+                        <mat-datepicker-toggle matSuffix [for]="end_date" placeholder="End Date">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker touchUi #end_date></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br />
+    <div class="form-footer">
+        <app-save-area [isUpdate]="isUpdate" [isEnabled]="form.value.signboard_quantity 
+        && form.value.board_width
+        && form.value.board_height
+        && selectedAgency && selectedOutlet && organisation_unit_id" [loading]="loading" (onCancel)="cancel()" (onSave)="save()">
+        </app-save-area>
+        <button id="closeButton" mat-button mat-dialog-close style="display: none;">Cancel</button>
+    </div>
+</div>

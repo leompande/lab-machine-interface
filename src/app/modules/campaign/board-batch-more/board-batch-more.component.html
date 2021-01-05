@@ -1,0 +1,37 @@
+
+<div class="batch-info">
+    Batch Information <div style="display: inline-block;font-size: 16px;padding:5px!important" class="pull-right custom-button" (click)="cancel()">close</div>
+</div>
+<div class="batch-item-container">
+    <mat-tab-group>
+        <mat-tab label="All Sign Boards">
+            <ng-template matTabContent>
+                <app-sign-board-table *ngIf="tableConfigurations.tableColumns && boardItems"
+                    [tableConfigurations]="tableConfigurations"
+                    [tableList]="boardItems"
+                    (rowPreview)="previewSignBoard(campaign,$event)" (rowDelete)="deleteSignBoard($event)"
+                    (rowUpdate)="updateSignBoard(campaign,$event)" [loading]="loading$ | async">
+                </app-sign-board-table>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Planted Sign Boards">
+            <ng-template matTabContent>
+                <app-sign-board-table *ngIf="tableConfigurations.tableColumns && boardItems"
+                    [tableConfigurations]="tableConfigurations" [tableList]="[]" (rowPreview)="previewSignBoard($event)"
+                    (rowDelete)="deleteSignBoard($event)" (rowUpdate)="updateSignBoard(campaign,$event)"
+                    [loading]="loading$ | async">
+                </app-sign-board-table>
+            </ng-template>
+        </mat-tab>
+        <mat-tab label="Verified Sign Boards">
+            <ng-template matTabContent>
+                <app-sign-board-table *ngIf="tableConfigurations.tableColumns && boardItems"
+                    [tableConfigurations]="tableConfigurations" [tableList]="[]" (rowPreview)="previewSignBoard($event)"
+                    (rowDelete)="deleteSignBoard($event)" (rowUpdate)="updateSignBoard(campaign,$event)"
+                    [loading]="loading$ | async">
+                </app-sign-board-table>
+            </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+    <button id="closeButton" mat-button mat-dialog-close style="display: none;">Cancel</button>
+</div>

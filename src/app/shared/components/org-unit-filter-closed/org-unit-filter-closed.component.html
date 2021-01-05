@@ -1,0 +1,28 @@
+<div
+  style="padding-left: 10px;padding-right: 3px; width: 100%; margin-top: 5px"
+  appClickOutside
+  (clickOutside)="showOu = false"
+  class="main-div cursor"
+>
+  <a
+    class="open-ou cursor btn"
+    (click)="showOu = !showOu"
+    title="Click Admin.units to select one or more administrative units, including by levels and groups"
+  >
+    <img src="assets/images/tree.png" height="15" /> &nbsp; &nbsp;
+    <span *ngIf="name && !orgunit_tree_config.loading">{{ name }}</span>
+    <span *ngIf="!name && !orgunit_tree_config.loading">{{ orgunit_tree_config?.placeholder }}</span>
+    <span *ngIf="orgunit_tree_config.loading">{{ orgunit_tree_config?.loading_message }}</span>
+    <a class="pull-right"><i class="fa fa-caret-down"></i> </a>
+  </a>
+  <div [ngClass]="{ hideData: !showOu }" class="dropdownField">
+    <tulonge-org-unit-filter
+      (orgUnitModelUpdate)="onOrgUnitModelUpdate($event)"
+      (orgUnitInit)="onOrgUnitInit($event)"
+      (orgUnitUpdate)="onOrgUnitUpdate($event)"
+      [orgunit_model]="orgunit_model"
+      [startingOus]="startingOus"
+      [orgunit_tree_config]="orgunit_tree_config"
+    ></tulonge-org-unit-filter>
+  </div>
+  </div>

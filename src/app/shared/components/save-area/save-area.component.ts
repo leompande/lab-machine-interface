@@ -10,6 +10,7 @@ import { fadeIn, fadeSmooth } from '../../animations/router-animation';
 export class SaveAreaComponent implements OnInit {
   @Input() isUpdate: boolean = false;
   @Input() loading: boolean= false;
+  @Input() isEnabled: boolean = true;
   @Output() onSave = new EventEmitter();
   @Output() onCancel = new EventEmitter();
   confirmButtonsVisible: boolean = false;
@@ -23,7 +24,9 @@ export class SaveAreaComponent implements OnInit {
   }
 
   attempSave() {
-    this.confirmButtonsVisible = true;
+    if (this.isEnabled){
+      this.confirmButtonsVisible = true;
+    }
   }
 
   continue() {

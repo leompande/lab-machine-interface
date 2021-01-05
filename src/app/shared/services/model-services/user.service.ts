@@ -95,6 +95,7 @@ export class UserService {
                 observer.next('Login successful..');
                 observer.complete();
               });
+              
             },
               error1 => {
                 const errorMessage = error1.message;
@@ -116,6 +117,8 @@ export class UserService {
     localStorage.removeItem('sb-web-token');
     localStorage.removeItem('sb-user-id');
     localStorage.removeItem('sb-user-organisation-unit');
+    localStorage.removeItem('currentRoute');
+    localStorage.removeItem('sb-user');
     this.subject.next({ isLogedIn: false, userData: null })
   }
 

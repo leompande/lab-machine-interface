@@ -3,9 +3,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { AddEditOrganisationComponent } from '../organisation/add-edit/add-edit.component';
 import { Observable } from 'rxjs';
 import { Organisation } from 'src/app/store/organisation/reducers/organisation';
-import { Store } from '@ngrx/store';
-import { ApplicationState } from 'src/app/store';
-import { DeleteOrganisation } from 'src/app/store/organisation/actions/organisation.actions';
 import { OrganisationService } from 'src/app/shared/services/model-services/organisation.service';
 
 @Component({

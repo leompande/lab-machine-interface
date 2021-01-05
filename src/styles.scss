@@ -17,6 +17,7 @@
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
 // Be sure that you only ever include this mixin once!
+@import '~@circlon/angular-tree-component/css/angular-tree-component.css';
 @include mat-core();
 
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
@@ -251,6 +252,11 @@ color: white;
   color: white;
 
 }
+
+.disabled-custom-button-color{
+  background-color: #e4e4e4;
+}
+
 .display-pane{
   padding:5px;
   background-color: white;
@@ -259,4 +265,24 @@ color: white;
   margin-top: 10px;
   border-radius: 10px;
   -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+.mat-tab-label-active {
+  font-weight: bolder !important;
+  background-color: rgba($color: #000000, $alpha: 0.1) !important;
+  border-top-right-radius: 5px !important;
+  border-top-left-radius: 5px !important;
+  opacity: 0.8 !important;
+  height: 35px!important;
+  font-family: nunitoBold;
+}
+
+.mat-tab-label {
+  border-top-right-radius: 5px !important;
+  border-top-left-radius: 5px !important;
+  margin-right: 8px;
+  border: 1px solid rgba($color: #000000, $alpha: 0.2) !important;
+  border-bottom: 0px !important;
+  height: 35px!important;
+  font-family: nunitoBold;
 }

@@ -50,7 +50,25 @@
         </div>
     </div>
     <div class="middle-visualizations">
-        <div class="middle-visualization-map-card">GIS</div>
+        <div class="middle-visualization-map-card">
+            <div class="map-title" style="padding:10px">Planted & Verified Sign Boards</div>
+            <google-map
+                height="504px"
+                width="100%"
+                [zoom]="zoom"
+                [center]="center"
+                [options]="options"
+                >
+                <map-marker
+                    *ngFor="let marker of markers"
+                    [position]="marker.position"
+                    [label]="marker.label"
+                    [title]="marker.title"
+                    [options]="marker.options"
+                >
+                </map-marker>
+            </google-map>
+        </div>
         <div class="middle-visualization-status-card">Status</div>
     </div>
 </div>

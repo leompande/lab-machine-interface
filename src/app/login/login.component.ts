@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {fadeIn} from '../shared/animations/router-animation';
+import { HttpClient } from '@angular/common/http';
+import { fadeIn } from '../shared/animations/router-animation';
 import { User } from '../store/user/reducers/user';
 import { UserService } from '../shared/services/model-services/user.service';
-import { AuthService } from '../shared/services/firebase/auth-service';
 
 
 @Component({
@@ -16,7 +14,7 @@ import { AuthService } from '../shared/services/firebase/auth-service';
 export class LoginComponent implements OnInit {
   loadedForm = 'login';
 
- 
+
   user!: User;
   login_clicked = true;
   register_clicked = false;
@@ -33,21 +31,17 @@ export class LoginComponent implements OnInit {
     private userService: UserService,
   ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   onSignUp(user: User) {
     if (this.confirm_password !== this.new_password) {
       this.password_not_equal = true;
       setTimeout(() => {
         this.password_not_equal = false;
-        }, 3000);
+      }, 3000);
     } else {
       this.signingUp = true;
     }
-    // this.authService.signupUser(user.email, this.new_password).then((data: any) => {
-      // this.authService.temp_user = user;
-      // this.dataStoreService.savedb('User')
-    // });
   }
 
   onNavigate(data: any[]) {
@@ -57,28 +51,18 @@ export class LoginComponent implements OnInit {
   }
 
   saveUser(user: User) {
-    // this.userService.saveUser(user)
-    //   .then((data) => {
-    //     console.log('user registered');
-    //   })
-    //   .catch((error) => console.log(error));
   }
 
   async login(username: string, password: string) {
     this.loading = true;
     try {
-      const userData = await this.userService.login({username,password}).toPromise();
-      
-      // const userData = await this.dataStoreService.signIn(email, password);
-      console.log(userData);
-
+      const userData = await this.userService.login({ username, password }).toPromise();
     } catch (e) {
       this.loading = false;
-      // this.dataStoreService.showError('Incorrect Username or Password');
     }
   }
 
-  attemptLogin(){
+  attemptLogin() {
     document.getElementById('loginButton')?.click();
   }
 

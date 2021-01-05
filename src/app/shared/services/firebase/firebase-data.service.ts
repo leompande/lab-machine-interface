@@ -158,7 +158,6 @@ export class FirebaseDataService implements SourceService {
         ...item
       }, { merge: true})
       .then(() => {
-        console.log('hapa nafikaga');
         resolve();
         // observer.complete();
       }, (error) => {

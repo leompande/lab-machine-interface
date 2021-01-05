@@ -14,11 +14,11 @@
     <div class="col-3">
         
         <div class="pull-right">
-            <div fadeSmooth class="custom-button danger-custom-button-color" *ngIf="!confirmButtonsVisible"  (click)="cancel()">Cancel</div>&nbsp;
-            <div fadeSmooth class="custom-button primary-custom-button-color" *ngIf="!isUpdate && !confirmButtonsVisible" (click)="attempSave()">Save</div>
-            <div fadeSmooth class="custom-button warning-custom-button-color" *ngIf="isUpdate && !confirmButtonsVisible"  (click)="attempSave()">Update</div>
+            <div @fadeSmooth class="custom-button danger-custom-button-color" *ngIf="!confirmButtonsVisible"  (click)="cancel()">Cancel</div>&nbsp;
+            <div @fadeSmooth class="custom-button primary-custom-button-color" [ngClass]="{'primary-custom-button-color':isEnabled, 'disabled-custom-button-color':!isEnabled}" *ngIf="!isUpdate && !confirmButtonsVisible" (click)="attempSave()">Save</div>
+            <div @fadeSmooth class="custom-button warning-custom-button-color" [ngClass]="{'primary-custom-button-color':isEnabled, 'disabled-custom-button-color':!isEnabled}" *ngIf="isUpdate && !confirmButtonsVisible"  (click)="attempSave()">Update</div>
             
-            <div *ngIf="confirmButtonsVisible" style="margin-top: 10px;" fadeSmooth>Confirm <span *ngIf="!isUpdate">Save</span><span *ngIf="isUpdate">Update</span> ?
+            <div *ngIf="confirmButtonsVisible" style="margin-top: 10px;" @fadeSmooth>Confirm <span *ngIf="!isUpdate">Save</span><span *ngIf="isUpdate">Update</span> ?
             <a (click)="continue()" class="yes">Yes</a>
             <a (click)="stop()" class="no">No</a>
             </div>

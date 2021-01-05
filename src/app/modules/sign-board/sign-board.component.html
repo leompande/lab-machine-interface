@@ -1,0 +1,34 @@
+<div class="user-container">
+    <div class="display-pane">
+        <mat-tab-group>
+            <mat-tab label="Newly Assigned">
+                <ng-template matTabContent>
+                    <vvs-main-data-table 
+                    *ngIf="allTableConfigurations.tableColumns && signBoards"
+                        [tableConfigurations]="allTableConfigurations"
+                        (rowUpdate)="editNewlyAssigned($event)"
+                        [tableList]="signBoards">
+                    </vvs-main-data-table>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Planted">
+                <ng-template matTabContent>
+                    <vvs-main-data-table 
+                    *ngIf="plantedTableConfigurations.tableColumns && signBoards"
+                        [tableConfigurations]="plantedTableConfigurations"
+                        [tableList]="signBoards">
+                    </vvs-main-data-table>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Verified">
+                <ng-template matTabContent>
+                    <vvs-main-data-table 
+                    *ngIf="verifiedTableConfigurations.tableColumns && signBoards"
+                        [tableConfigurations]="verifiedTableConfigurations"
+                        [tableList]="signBoards">
+                    </vvs-main-data-table>
+                </ng-template>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

@@ -20,7 +20,6 @@ export class AddEditAgencyComponent implements OnInit {
   selectedItems!: any[];
   constructor(@Inject(MAT_DIALOG_DATA) public data: { currentObject: Agency, organisations: Organisation[], agencies: Agency[] }, private agencyService: AgencyService) {
     this.isUpdate = data.currentObject != null;
-    console.log(data);
     this.availableItems = (data.organisations||[]).map(organisation=>{
       return {id: organisation.id,
         name: organisation.name,
@@ -50,7 +49,6 @@ export class AddEditAgencyComponent implements OnInit {
 
   onSelectionDone(event: any[]){
     this.selectedItems = event;
-    console.log(event);
   }
 
   async save() {

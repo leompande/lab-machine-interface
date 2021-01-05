@@ -20,11 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from './store/user/effects/user.effects';
 import { SignBoardEffects } from './store/sign-board/effects/sign-board.effects';
-import * as fromApplication from './store/application/reducers/application.reducer';
 import { ApplicationEffects } from './store/application/effects/application.effects';
-import * as fromOrganisation from './store/organisation/reducers/organisation.reducer';
 import { OrganisationEffects } from './store/organisation/effects/organisation.effects';
-import * as fromUserRole from './store/user-role/reducers/user-role.reducer';
 import { UserRoleEffects } from './store/user-role/effects/user-role.effects';
 import { PageComponent } from './page/page.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
@@ -39,18 +36,25 @@ import { AgencyContainerComponent } from './modules/agency/agency-container/agen
 import { UserContainerComponent } from './modules/user/user-container/user-container.component';
 import { UserComponent } from './modules/user/user.component';
 import { OrganisationContainerComponent } from './modules/organisation/organisation-container/organisation-container.component';
-import { HeaderComponent } from './shared/components/header/header.component';
-import { SaveAreaComponent } from './shared/components/save-area/save-area.component';
 import { AddEditOrganisationComponent } from './modules/organisation/add-edit/add-edit.component';
 import { AddEditAgencyComponent } from './modules/agency/add-edit/add-edit.component';
 import { AddEditUserComponent } from './modules/user/add-edit/add-edit.component';
 import { MainDataTableComponent } from './shared/components/main-data-table/main-data-table.component';
 import { AgencyEffects } from './store/agency/effects/agency.effects';
+import { AddEditCampaignComponent } from './modules/campaign/add-edit/add-edit.component';
+import { CampaignEffects } from './store/campaign/effects/campaign.effects';
+import { SignBoardComponent } from './modules/sign-board/sign-board.component';
+import { SignBoardContainerComponent } from './modules/sign-board/sign-board-container/sign-board-container.component';
+import { SignBoardMoreComponent } from './modules/sign-board/sign-board-more/sign-board-more.component';
+import { OutletComponent } from './modules/outlet/outlet.component';
+import { OutletContainerComponent } from './modules/outlet/outlet-container/outlet-container.component';
+import { AddEditOutletComponent } from './modules/outlet/add-edit/add-edit.component';
+import { effects } from './store/effects';
+import { OutletMapPreviewComponent } from './modules/outlet/outlet-map-preview/outlet-map-preview.component';
 
 @NgModule({
   declarations: [
     LoaderComponent,
-    HeaderComponent,
     MainDataTableComponent,
     AppComponent,
     LoginComponent,
@@ -65,10 +69,17 @@ import { AgencyEffects } from './store/agency/effects/agency.effects';
     UserContainerComponent,
     UserComponent,
     OrganisationContainerComponent,
-    SaveAreaComponent,
     AddEditOrganisationComponent,
     AddEditAgencyComponent,
-    AddEditUserComponent
+    AddEditUserComponent,
+    AddEditCampaignComponent,
+    SignBoardComponent,
+    SignBoardContainerComponent,
+    SignBoardMoreComponent,
+    OutletComponent,
+    OutletContainerComponent,
+    AddEditOutletComponent,
+    OutletMapPreviewComponent
   ],
   imports: [
     BrowserModule,
@@ -84,7 +95,7 @@ import { AgencyEffects } from './store/agency/effects/agency.effects';
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     NgbModule,
-    EffectsModule.forRoot([UserEffects,AgencyEffects, SignBoardEffects, ApplicationEffects, OrganisationEffects, UserRoleEffects]),
+    EffectsModule.forRoot(effects),
   ],
   exports:[
     SharedModule

@@ -1,0 +1,27 @@
+
+.hideData {
+  display: none;
+}
+
+.main-div {
+  border: 1px solid rgba(0,0,0,0.1);
+  padding: 4px;
+  width: 100%;
+  border-radius: 5px;
+
+}
+
+.dropdownField {
+  position: absolute;
+  margin-top: 3px;
+  padding-top: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  width: 400px;
+  z-index: 100;
+  background-color: whitesmoke;
+  border-radius: 5px;
+}
+
+.open-ou {
+  width: 100%;
+}

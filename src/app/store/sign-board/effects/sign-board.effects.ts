@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { catchError, map, concatMap } from 'rxjs/operators';
-import { EMPTY, of } from 'rxjs';
-import { LoadSignBoardsFailure, LoadSignBoardsSuccess, SignBoardActionTypes, SignBoardActions } from '../actions/sign-board.actions';
+import { catchError, map, concatMap, switchMap } from 'rxjs/operators';
+import { EMPTY, of, Observable } from 'rxjs';
+import { LoadSignBoardsFailure, LoadSignBoardsSuccess, SignBoardActionTypes, SignBoardActions, LoadSignBoards } from '../actions/sign-board.actions';
+import { SignBoard } from '../reducers/sign-board';
+import { SignBoardService } from 'src/app/shared/services/model-services/signboard.service';
 
 
 
@@ -11,18 +13,19 @@ import { LoadSignBoardsFailure, LoadSignBoardsSuccess, SignBoardActionTypes, Sig
 export class SignBoardEffects {
 
   @Effect()
-  loadSignBoards$ = this.actions$.pipe(
+  loadSignBoards$: Observable<any> = this.actions$.pipe(
     ofType(SignBoardActionTypes.LoadSignBoards),
-    concatMap(() =>
-      /** An EMPTY observable only emits completion. Replace with your own observable API request */
-      EMPTY.pipe(
-        map(data => new LoadSignBoardsSuccess({ SignBoards: data })),
-        catchError(error => of(new LoadSignBoardsFailure({ error }))))
+    switchMap((action: LoadSignBoards) =>
+      this.signBoardService.listSignBoards().pipe(
+        map((signBoards: SignBoard[]) => new LoadSignBoardsSuccess({SignBoards:signBoards})),
+        catchError((error: any) => of(new LoadSignBoardsFailure(error)))
+      )
     )
   );
 
 
 
-  constructor(private actions$: Actions<SignBoardActions>) {}
+
+  constructor(private actions$: Actions<SignBoardActions>, private signBoardService: SignBoardService) {}
 
 }

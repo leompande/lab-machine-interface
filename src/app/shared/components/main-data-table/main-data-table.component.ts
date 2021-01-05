@@ -36,6 +36,7 @@ export class MainDataTableComponent implements OnInit, OnChanges {
     showSearch: boolean;
     showBorder: boolean;
     empty_msg: string;
+    showMap: boolean;
     hideExport: boolean;
   } = {
     tableColumns: [],
@@ -55,6 +56,7 @@ export class MainDataTableComponent implements OnInit, OnChanges {
     showSearch: true,
     showBorder: true,
     empty_msg: 'No Data',
+    showMap: true,
     hideExport: false
   };
   @Input()
@@ -70,6 +72,9 @@ export class MainDataTableComponent implements OnInit, OnChanges {
   rowPreview: EventEmitter<any> = new EventEmitter();
   @Output()
   rowPrint: EventEmitter<any> = new EventEmitter();
+
+  @Output()
+  mapPreview: EventEmitter<any> = new EventEmitter();
 
   @Input()
   loadingMessage!: string;
@@ -212,6 +217,10 @@ export class MainDataTableComponent implements OnInit, OnChanges {
     });
 
     new Angular5Csv(data, 'My Report', {headers: this.tableConfigurations.tableColumns.map(col => col.label)});
+  }
+
+  mapPriview(){
+      this.mapPreview.emit(this.tableList);
   }
 
   browserPrint() {

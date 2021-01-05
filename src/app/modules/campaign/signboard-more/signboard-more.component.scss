@@ -1,0 +1,113 @@
+.org-unit-error-message{
+    font-family: nunitoRegular;
+    color: red;
+    font-size: 14px;
+}
+
+.uploadfilecontainer {
+    background-image: url("/assets/images/cloud.png");
+    background-repeat: no-repeat;
+    background-size: 100px;
+    background-position: center;
+    height: 200px;
+    width: 80%;
+    margin: 20px auto;
+    border: 2px dashed #1C8ADB;
+    border-radius: 10px;
+  }
+  
+  .uploadfilecontainer:hover {
+    cursor: pointer;
+    background-color: #9ecbec !important;
+    opacity: 0.8;
+  }
+  
+  .files-list {
+      display: flex;
+    width: 80%;
+    height: 160px;
+    margin: 10px auto;
+    background: #ffffff;
+    border: 1px dashed;
+    border-radius: 12px;
+    padding: 5px;
+    color: #1c8adb;
+  }
+  
+  .files-list .delete-file {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+  }
+  .files-list .delete-file img{
+    width:30px;
+  }
+
+  .form-footer{
+      text-align: right;
+  }
+
+  .location-letters-info{
+      display: grid;
+      grid-gap: 5px;
+
+    grid-template-columns: auto auto auto auto;
+  }
+
+  .status-info{
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: auto auto auto auto auto auto;
+  }
+.map-body{
+    display: block!important;
+    margin: 5px 0px 5px 0px;
+}
+  .map-container{
+      display: block!important;
+      height: 200px;
+      width: 100%;
+  }
+
+  .label{
+      padding:5px;
+      background-color: #fafafa;
+      border-radius: 10px;
+      border: 1px solid rgb(212, 212, 212);
+      display: inline-block;
+  }
+
+  .image-and-bar-code{
+      display: grid;
+      grid-gap: 5px;
+      grid-template-columns: auto;
+      margin-top: 5px;
+  }
+
+  .location-map-info{
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: auto auto;
+  }
+
+  .bar-code-holder{
+      padding:5px;
+      border: 1px solid #d4d4d4;
+      border-radius: 10px;
+      display: inline-block;
+      text-align: center;
+  }
+
+  .image-holder{
+    padding:5px;
+    text-align: center;
+  }
+
+  .image-body{
+    display: block!important;
+    margin: 5px 0px 5px 0px;
+  }
+
+  .notify-pill{
+    font-weight: bolder;
+  }

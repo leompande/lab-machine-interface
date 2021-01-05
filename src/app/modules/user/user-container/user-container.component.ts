@@ -25,7 +25,6 @@ export class UserContainerComponent implements OnInit {
   agencyEntities$: Observable<{[id: string]: Agency}>;
   constructor(private store: Store<ApplicationState>) {  
     this.users$ = this.store.pipe(select(userSelector.selectAll));
-    this.users$.subscribe(users=>console.log(users));
     this.userEntities$ = this.store.pipe(select(userSelector.selectEntities));
     this.agencies$ = this.store.pipe(select(agencySelector.selectAll));
     this.agencyEntities$ = this.store.pipe(select(agencySelector.selectEntities)); 

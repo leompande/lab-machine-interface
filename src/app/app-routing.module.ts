@@ -9,6 +9,8 @@ import { AgencyContainerComponent } from './modules/agency/agency-container/agen
 import { OrganisationContainerComponent } from './modules/organisation/organisation-container/organisation-container.component';
 import { UserContainerComponent } from './modules/user/user-container/user-container.component';
 import { AuthGuardService as AuthGuard } from './shared/services/auth-guard.service';
+import { SignBoardContainerComponent } from './modules/sign-board/sign-board-container/sign-board-container.component';
+import { OutletContainerComponent } from './modules/outlet/outlet-container/outlet-container.component';
 
 const routes: Routes = [{
   path: '',
@@ -17,34 +19,52 @@ const routes: Routes = [{
     {
       path: 'dashboard',
       component: DashboardComponent,
-      data: { state: 'dashboard', roles:'SUPER_USER,ORGANISATION_ADMIN,AGENCY_ADMIN'}
+      data: { state: 'dashboard', roles: 'SUPER_USER,ORGANISATION_ADMIN,AGENCY_ADMIN' }
+    },
+    {
+      path: 'campaigns',
+      loadChildren:
+        () => import('./modules/campaign/campaign.module')
+          .then(mod => mod.CampaignModule),
+      data: { state: 'campaigns', roles: 'ORGANISATION_ADMIN' }
+    }, {
+      path: 'outlets',
+      component: OutletContainerComponent,
+      data: { state: 'outlets', roles: 'ORGANISATION_ADMIN' },
+      canActivate: [AuthGuard]
     },
     {
       path: 'applications',
       component: ApplicationComponent,
-      data: { state: 'applications' ,roles:''},
+      data: { state: 'applications', roles: '' },
       canActivate: [AuthGuard]
     },
     {
       path: 'reports',
       component: ReportComponent,
-      data: { state: 'reports' ,roles:'ORGANISATION_ADMIN,ORGANISATION_VERIFIER' }
+      data: { state: 'reports', roles: 'ORGANISATION_ADMIN,ORGANISATION_VERIFIER' },
+      canActivate: [AuthGuard]
     },
     {
       path: 'agency',
       component: AgencyContainerComponent,
-      data: { state: 'agency' ,roles:'SUPER_USER,ORGANISATION_ADMIN' },
+      data: { state: 'agency', roles: 'SUPER_USER,ORGANISATION_ADMIN' },
       canActivate: [AuthGuard]
     },
     {
       path: 'organisation',
       component: OrganisationContainerComponent,
-      data: { state: 'organisation' ,roles:'SUPER_USER' },
+      data: { state: 'organisation', roles: 'SUPER_USER' },
       canActivate: [AuthGuard]
-    },{
+    }, {
       path: 'users',
       component: UserContainerComponent,
-      data: { state: 'users' ,roles:'SUPER_USER,ORGANISATION_ADMIN,AGENCY_ADMIN' },
+      data: { state: 'users', roles: 'SUPER_USER,ORGANISATION_ADMIN,AGENCY_ADMIN' },
+      canActivate: [AuthGuard]
+    }, {
+      path: 'signboards',
+      component: SignBoardContainerComponent,
+      data: { state: 'Sign Boards', roles: 'AGENCY_ADMIN' },
       canActivate: [AuthGuard]
     }
   ]

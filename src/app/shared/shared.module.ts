@@ -9,26 +9,55 @@ import { SearchPipe } from './pipes/search.pipe';
 import { SplitToArrayPipe } from './pipes/split-to-array.pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormatNumberPipe } from './pipes/format-number.pipe';
+import { HeaderComponent } from './components/header/header.component';
+import { SaveAreaComponent } from './components/save-area/save-area.component';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { OrgUnitFilterClosedComponent } from './components/org-unit-filter-closed/org-unit-filter-closed.component';
+import { OrgUnitFilterComponent } from './components/org-unit-filter/org-unit-filter.component';
+import { TreeModule } from '@circlon/angular-tree-component';
+import { DragDropDirective } from './directives/drag-drop.directive';
+import { FilterSignBoardPipe } from './pipes/filter-sign-board.pipe';
+import { NgxBarcode6Module } from 'ngx-barcode6';
 @NgModule({
-  declarations: [OneSidedMultiSelectComponent, TwoSidedMultiSelectComponent, FilterItemsPipe,
+  declarations: [
+    OneSidedMultiSelectComponent, 
+    TwoSidedMultiSelectComponent,
+    OrgUnitFilterClosedComponent,
+    OrgUnitFilterComponent,
+    HeaderComponent, 
+    FilterItemsPipe,
     FilterMultPipe,
     SearchPipe,
-    SplitToArrayPipe,FormatNumberPipe],
+    SaveAreaComponent,
+    SplitToArrayPipe,FormatNumberPipe,DragDropDirective, FilterSignBoardPipe],
   imports: [
     CommonModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GoogleMapsModule,
+    TreeModule,
+    NgxBarcode6Module,
   ],
   exports: [
     MaterialModule,
     OneSidedMultiSelectComponent,
-    TwoSidedMultiSelectComponent, FilterItemsPipe,
+    TwoSidedMultiSelectComponent,
+    OrgUnitFilterClosedComponent,
+    OrgUnitFilterComponent,
+    SaveAreaComponent,
+    HeaderComponent, 
+    FilterItemsPipe,
     FilterMultPipe,
     SearchPipe,
+    DragDropDirective,
+    FilterSignBoardPipe,
     SplitToArrayPipe,FormatNumberPipe,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GoogleMapsModule,
+    TreeModule,
+    NgxBarcode6Module
   ],
   entryComponents: [],
 

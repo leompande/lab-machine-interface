@@ -1,0 +1,15 @@
+<div>
+    <app-sign-board-table
+        *ngIf="tableConfigurations.tableColumns && tableList"
+        [tableConfigurations]="tableConfigurations"
+        [tableList]="tableList"
+        (rowPreview)="rowPreview($event)"
+        (rowDelete)="rowDelete($event)"
+        [loading]="loading$ | async">
+      </app-sign-board-table>
+</div>
+
+
+<!-- (rowPreview)="printArrival($event)"
+(rowDelete)="deleteOrganisation($event)"
+(rowUpdate)="updateOrganisation($event)" -->

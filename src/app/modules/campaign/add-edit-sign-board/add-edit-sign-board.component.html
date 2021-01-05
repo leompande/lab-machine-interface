@@ -1,0 +1,92 @@
+<div class="form-container">
+    <div class="form-header">
+        <p><img src="/assets/icons/all.png" style="width:25px">
+            <span *ngIf="!isUpdate">New Sign Board Form</span>
+            <span *ngIf="isUpdate">Update Sign Board Form</span>
+        </p>
+    </div>
+    <mat-divider></mat-divider>
+    <br />
+    <div class="form-body">
+        <form [formGroup]="form">
+            <div class="row">
+                <div class="col">
+                    <div class="org-unit-error-message" *ngIf="showOrgUnitSelectionError">Select only district level</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <tulonge-org-unit-filter-closed
+                        #ouSelector
+                        [startingOus]="startingOus"
+                        [orgunit_tree_config]="orgunit_tree_config"
+                        (orgUnitUpdate)="onOrgunitSelected($event)"
+                    ></tulonge-org-unit-filter-closed>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Street Name/Location</mat-label>
+                        <input matInput placeholder="Street Name/Location" formControlName="street_name">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Board Height</mat-label>
+                        <input matInput placeholder="Board Height" formControlName="board_height">
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Board Width</mat-label>
+                        <input matInput placeholder="Board Width" formControlName="board_width">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Date to be planted</mat-label>
+                        <input matInput [matDatepicker]="date_to_be_planted" formControlName="date_to_be_planted">
+                        <mat-datepicker-toggle matSuffix [for]="date_to_be_planted" placeholder="Date to be planted">
+                        </mat-datepicker-toggle>
+                        <mat-datepicker touchUi #date_to_be_planted></mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Description</mat-label>
+                        <textarea matInput placeholder="Description" formControlName="description_to_agency"></textarea>
+                      </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div>
+                        <p>Sample Sign Board Image</p>
+                        <div *ngIf="files.length==0" class="uploadfilecontainer" (click)="fileInput.click()" appDragDrop (onFileDropped)="uploadFile($event)">
+                            <input hidden type="file" accept=".png,.jpg,.jpeg" #fileInput (change)="uploadFile($event.target.files)">
+                          </div>
+                            <div  class="files-list" *ngFor="let file of files;let i=index">
+                              <div>
+                                <img [src]="imageUrl" height="150px" width="80%">
+                              </div>
+                              <button class="delete-file" (click)="deleteAttachment(i)">
+                                <img src="/assets/images/delete.png">
+                              </button>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br />
+    <div class="form-footer">
+        <app-save-area [isUpdate]="isUpdate" [loading]="loading" (onCancel)="cancel()" (onSave)="save()">
+        </app-save-area>
+        <button id="closeButton" mat-button mat-dialog-close style="display: none;">Cancel</button>
+    </div>
+</div>

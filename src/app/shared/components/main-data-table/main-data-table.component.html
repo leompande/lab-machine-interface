@@ -10,6 +10,10 @@
       </mat-form-field>
     </div>
     <div class="excel-button">
+      <div class="custom-button" (click)="mapPriview()" *ngIf="tableConfigurations.showMap">
+        <i style="margin-bottom: 5px; color: black" class="fa fa-map"></i>
+        Map
+      </div> &nbsp;
       <div class="custom-button" (click)="downloadToCsv()" *ngIf="!tableConfigurations.hideExport">
         <i style="margin-bottom: 5px; color: green" class="fa fa-file-excel-o"></i>
         Export
@@ -41,7 +45,7 @@
     <ng-container matColumnDef="action">
       <th mat-header-cell *matHeaderCellDef></th>
       <td mat-cell *matCellDef="let tableListItem">
-        <div class="float-right" role="group" aria-label="Basic example"
+        <div class="pull-right" role="group" aria-label="Basic example"
           *ngIf="tableConfigurations.actionIcons.edit || tableConfigurations.actionIcons.print || tableConfigurations.actionIcons.delete || tableConfigurations.actionIcons.more || tableConfigurations.actionIcons.cancel">
           <a @fadeIn class="cursor text-primary action-button mr-1 btn-float" title="print"
             (click)="printItem(!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn])"
@@ -49,19 +53,19 @@
             *ngIf="tableConfigurations?.actionIcons?.print && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
             <i class="fa fa-print"></i>
           </a>
-          <a @fadeIn class="btn btn-sm btn-light action-button mr-1 btn-float" title="view details"
+          <a @fadeIn mat-mini-fab style="color:black!important; background-color: white; border-radius: 50%!important;"
+            title="view details"
             (click)="viewItemDetails(!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn])"
-            style="border-radius: 50%"
             *ngIf="tableConfigurations?.actionIcons?.more && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
             <i class="fa fa-list"></i>
-          </a>
-          <a @fadeIn  title="edit"
+          </a>&nbsp;
+          <a @fadeIn title="edit"
             (click)="editItem(!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn])"
             mat-mini-fab style="color:black!important; background-color: white; border-radius: 50%!important;"
             *ngIf="tableConfigurations?.actionIcons?.edit && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
             <i class="fa fa-pencil"></i>
           </a> &nbsp;
-          <a @fadeIn  
+          <a @fadeIn
             (click)="showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]] = true"
             mat-mini-fab style="color: white; background-color: red; border-radius: 50%!important;"
             *ngIf="tableConfigurations?.actionIcons?.delete && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
@@ -145,13 +149,15 @@
               *ngIf="tableConfigurations?.actionIcons?.print && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
               <i class="fa fa-print"></i>
             </a>
-            <a @fadeIn class="btn btn-sm btn-light action-button mr-1 btn-float" title="view details"
+            <a @fadeIn mat-mini-fab
+              style="color:black!important; background-color: white; border-radius: 50%!important;" title="view details"
               (click)="viewItemDetails(!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn])"
               style="border-radius: 50%"
               *ngIf="tableConfigurations?.actionIcons?.more && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
               <i class="fa fa-list"></i>
             </a>
-            <a @fadeIn class="btn btn-sm btn-light action-button mr-1 btn-float" title="edit"
+            <a @fadeIn mat-mini-fab
+              style="color:black!important; background-color: white; border-radius: 50%!important;" title="edit"
               (click)="editItem(!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn])"
               style="border-radius: 50%"
               *ngIf="tableConfigurations?.actionIcons?.edit && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
@@ -247,10 +253,6 @@
       </td>
     </tr>
   </table>
-
-
-
-
 
   <!--end of header goes here -->
   <table [ngClass]="{'table table-bordered': true}"

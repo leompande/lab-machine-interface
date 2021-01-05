@@ -9,7 +9,7 @@ export class SearchPipe implements PipeTransform {
     var newListItems = [];
     newListItems = !searchString || searchString == "" ? listItems : listItems.filter(listItem => {
       return listHeaders.findIndex(listHeader => {
-        return listItem[listHeader['name']].toLowerCase() == (searchString || "").toLowerCase() || listItem[listHeader['name']].toLowerCase().indexOf((searchString || "").toLowerCase())>-1;
+        return listItem[listHeader['name']] && (listItem[listHeader['name']].toLowerCase() == (searchString || "").toLowerCase() || listItem[listHeader['name']].toLowerCase().indexOf((searchString || "").toLowerCase())>-1);
       }) > -1
     });
 

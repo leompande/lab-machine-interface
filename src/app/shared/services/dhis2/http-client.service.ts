@@ -5,16 +5,14 @@ import {
   HttpHeaders
 } from '@angular/common/http';
 import { ManifestService } from './manifest.service';
-import { SystemInfoService } from './system-info.service';
 import { Observable, throwError } from 'rxjs';
-import { catchError, map, mergeMap, switchMap } from 'rxjs/internal/operators';
+import { catchError,  mergeMap } from 'rxjs/internal/operators';
 
 @Injectable({ providedIn: 'root' })
 export class HttpClientService {
   constructor(
     private httpClient: HttpClient,
-    private manifestService: ManifestService,
-    private systemInfoService: SystemInfoService
+    private manifestService: ManifestService
   ) {}
 
   createDHISAuthorizationHeader(token: string) {

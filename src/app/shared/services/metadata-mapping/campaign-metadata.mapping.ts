@@ -1,5 +1,5 @@
-export const Metadata = {
-    id: 'gvShouyPy0s',
+export const campaignMetadata = {
+    id: 'Hx0Vldq4YQF',
     name: 'Campaigns',
     program: 'gvShouyPy0s',
     attributes: [
@@ -24,7 +24,18 @@ export const Metadata = {
             name: 'Agency name',
             id: 'DfHE0niLTb9',
             valueType: 'TEXT',
-            key: 'agency_name'
+            key: 'agency'
+        },{
+            name: 'Start Date',
+            id: 'dfhqlFItBfb',
+            valueType: 'TEXT',
+            key: 'start_date'
+        },
+        {
+            name: 'End Date',
+            id: 'Al7FVVC6179',
+            valueType: 'TEXT',
+            key: 'end_date'
         }
     ],
     stage: {
@@ -51,6 +62,15 @@ export const Metadata = {
                     name: 'Company VRN',
                     id: 'xdngoBh5gyT',
                     key: 'company_vrn'
+                },{
+                    name: 'Company Phone',
+                    id: 'Y30oFKnni3b',
+                    key: 'company_phone'
+                },
+                {
+                    name: 'Company Email',
+                    id: 'yF7ebEHszOH',
+                    key: 'company_email'
                 },
                 {
                     name: 'Signboard Id',

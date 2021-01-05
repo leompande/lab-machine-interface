@@ -1,0 +1,12 @@
+<div class="user-container">
+    <div class="display-pane">
+        <vvs-main-data-table *ngIf="tableConfigurations.tableColumns && outlets"
+            [tableConfigurations]="tableConfigurations" [tableList]="outlets" (rowPreview)="printArrival($event)"
+            (rowDelete)="deleteOutlet($event)" (mapPreview)="mapPreview($event)" (rowUpdate)="updateOutlet($event)" [loading]="loading$ | async">
+        </vvs-main-data-table>
+    </div>
+    <button class="floating-action" (click)="openDialog()" mat-fab color="primary"
+        aria-label="Example icon button with a delete icon">
+        <mat-icon>add</mat-icon>
+    </button>
+</div>

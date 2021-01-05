@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClientService } from './http-client.service';
-import {catchError, first, mergeMap, pluck, share, shareReplay, switchMap, tap} from 'rxjs/operators';
+import {first} from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ManifestService } from './manifest.service';
 
@@ -77,10 +77,8 @@ setUser() {
             headers: headers
           } )
             .subscribe((data: any) => {
-              console.log('user data',data);
               localStorage.setItem('sb-web-token', token);
-              this.dataStoreService.getData('users',data.id).subscribe(userData=>{
-                console.log('Store user data',userData);
+              this.dataStoreService.getData('users',data.id).subscribe((userData: any)=>{
               localStorage.setItem('sb-user-id', data.id);
               localStorage.setItem('sb-user-organisation-unit', this.getUserOu(data));
               observer.next('Login successful..');

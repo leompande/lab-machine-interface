@@ -1,0 +1,6 @@
+<app-header [title]="'Outlets'" [label]="'assets/icons/outlet.png'"></app-header>
+<app-outlet
+[outlets]="outlets$ | async"
+[outletEntities]="outletEntities$ | async"
+></app-outlet>
+

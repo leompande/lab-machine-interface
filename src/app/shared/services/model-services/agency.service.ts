@@ -85,16 +85,5 @@ export class AgencyService {
         observer.complete();
       });
     });
-
-    // return Observable.create((observer: any) => {
-    //   this.dataStore.deleteData(this.datastorePath, organisationId).subscribe((results) => {
-    //     this.store.dispatch(new LoadAgencies());
-    //     observer.next(results);
-    //     observer.complete();
-    //   }, (error) => {
-    //     observer.error(error);
-    //     observer.complete();
-    //   });
-    // });
   }
 }
