@@ -1,0 +1,5 @@
+<app-header [title]="'Baches'" [label]="'assets/icons/all.png'"></app-header>
+<app-sign-board-batch 
+[signBoardBatches]="signBoardBatches$|async"
+[outlets]="outlets$|async"
+></app-sign-board-batch>

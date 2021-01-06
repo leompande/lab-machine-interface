@@ -6,11 +6,13 @@
         <div @fadeIn *ngIf="!detailsVisible"><span style="font-family: nunitoBold;"> Total Quantity:</span>
             {{batch?.signboard_quantity}}.</div>
     </div>
+    
     <div @fadeIn *ngIf="!detailsVisible" style="display: inline-block;font-size: 16px;padding:5px!important"
-        class="pull-right custom-button" (click)="cancel()">close</div>
+        class="pull-right custom-button" (click)="cancel()">close</div>&nbsp;
     <div @fadeIn *ngIf="detailsVisible" style="display: inline-block;font-size: 16px;padding:5px!important"
         class="pull-right custom-button" (click)="back()"><img src="assets/icons/arrow-left.png"
-            style="width:15px;height:15px" /> Back</div>
+            style="width:15px;height:15px" /> Back</div>&nbsp;&nbsp;
+            
 </div>
 <div @fadeIn *ngIf="!detailsVisible" class="batch-item-container">
     <app-sign-board-table *ngIf="tableConfigurations.tableColumns && boardItems"
@@ -76,10 +78,21 @@
             <div><span style="font-family: nunitoBold;">Oultet:</span> {{outlet?.name}}.</div>
             <div><span style="font-family: nunitoBold;">Status:</span> {{boardItem?.sign_board_status}}</div>
             <br />
-            <div>
-                <ngx-barcode6 [bc-format]="'CODE128B'" [bc-value]="boardItem?.bar_code" [bc-display-value]="false"
+            <div class="lower-position">
+                <div >
+                    <ngx-barcode6 [bc-format]="'CODE128B'" [bc-value]="boardItem?.bar_code" [bc-display-value]="false"
                     [bc-width]="1" [bc-font-size]="14">
-                </ngx-barcode6>
+                </ngx-barcode6> 
+                </div>
+                <div style="display: flex;align-items: flex-end;padding: 10px;">
+                    <ng-template [authorizable]="'AGENCY_ADMIN'">
+                    <div @fadeIn *ngIf="detailsVisible && boardItem?.sign_board_status == 'PENDING' && boardItem?.latitude && boardItem?.longitude"  style="display: inline-block;font-size: 16px;padding:5px!important;margin-right: 5px;"
+                    class="pull-right custom-button y-center x-right" (click)="approveSignBoard()"><img src="assets/icons/approve.png"
+                        style="width:15px;height:15px" /> Approve Planting</div>
+                    </ng-template>
+                    
+                </div>
+                
             </div>
         </div>
     </div>

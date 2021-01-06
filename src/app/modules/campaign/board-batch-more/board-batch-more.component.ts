@@ -106,6 +106,10 @@ export class BoardBatchMoreComponent implements OnInit {
     });
   }
 
+  approveSignBoard(){
+    console.log(this.boardItem);
+  }
+
 
   previewSignBoard(rowId: string) {
     this.boardItem = this.data.boardItems.find((item: SignBoardBatchItem) => item.id == rowId);

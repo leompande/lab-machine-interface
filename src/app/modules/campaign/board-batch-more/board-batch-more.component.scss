@@ -143,3 +143,17 @@
   border-radius: 5px;
   padding: 5px;
 }
+
+.lower-position{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+}
+
+.y-center {
+  flex: 1;
+}
+
+.x-right {
+  justify-content: flex-end;
+}

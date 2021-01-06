@@ -38,11 +38,23 @@ export const signBoardBatchMetadata = {
             key: 'signboard_quantity'
         },
         {
+            name: 'Region',
+            id: 'dUPwDVJmVdN',
+            valueType: 'TEXT',
+            key: 'region'
+        },
+        {
+            name: 'Street Name',
+            id: 'SiznptCVia0',
+            valueType: 'TEXT',
+            key: 'street_name'
+        },
+        {
             name: 'District Council Name',
             id: 'fcVt79oD6bQ',
             valueType: 'TEXT',
             key: 'district_council_name'
-        },{
+        }, {
             name: 'Outlet',
             id: 'IbzXhCEzN6I',
             valueType: 'TEXT',
@@ -94,7 +106,7 @@ export const signBoardBatchMetadata = {
                     id: 'wIzd7zkWtAr',
                     valueType: 'TEXT',
                     key: 'board_width'
-                },{
+                }, {
                     name: 'Outlet',
                     id: 'tUGUdDwLzCz',
                     valueType: 'TEXT',
@@ -111,12 +123,12 @@ export const signBoardBatchMetadata = {
                     id: 'asy6U6KHp1l',
                     valueType: 'TEXT',
                     key: 'sign_board_status'
-                },{
+                }, {
                     name: 'Batch reference number',
                     id: 'QJfLcJdS664',
                     valueType: 'TEXT',
                     key: 'batch_reference_number'
-                },{
+                }, {
                     name: 'Campaign reference number',
                     id: 'JkSJvN39Myf',
                     valueType: 'TEXT',

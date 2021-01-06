@@ -3,6 +3,7 @@ export class SignBoardBatch {
     enrollment_id: string;
     organisation_unit_id: string;
     trackedEntityInstance?: string;
+    region?: string;
     district_council_name: string;
     batch_reference_number: string;
     campaign_reference_number: string;

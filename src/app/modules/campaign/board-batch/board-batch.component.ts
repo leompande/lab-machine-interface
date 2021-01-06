@@ -22,6 +22,7 @@ export class BoardBatchComponent implements OnInit {
   tableConfigurations = {
     tableColumns: [
       { name: 'batch_reference_number', label: 'Batch No.' },
+      { name: 'region', label: 'Region' },
       { name: 'district_council_name', label: 'District Council' },
       // { name: 'board_height', label: 'Board Height' },
       // { name: 'board_width', label: 'Board Width' },
@@ -54,9 +55,7 @@ export class BoardBatchComponent implements OnInit {
   }
 
   rowPreview(rowId: string) {
-
     const batch: SignBoardBatch = this.tableList.find((item: any) => item.id == rowId);
-    console.log(batch);
     this.signBoardBatchItem.listSignBoardBatchItems(batch.organisation_unit_id).subscribe((boardItems) => {
       const dialogRef = this.dialog.open(BoardBatchMoreComponent, {
         width: '95%',
@@ -69,9 +68,9 @@ export class BoardBatchComponent implements OnInit {
         },
         closeOnNavigation: true
       });
-      dialogRef.afterClosed().subscribe(result => {
+      dialogRef.afterClosed().subscribe((result: any) => {
       });
-    }, (error) => {
+    }, (error: any) => {
     });
   }
 

@@ -19,6 +19,7 @@ import { DragDropDirective } from './directives/drag-drop.directive';
 import { FilterSignBoardPipe } from './pipes/filter-sign-board.pipe';
 import { NgxBarcode6Module } from 'ngx-barcode6';
 import { BoardCollectorComponent } from './components/board-collector/board-collector.component';
+import { AuthorizableActionDirective } from './directives/authorizable-action.directive';
 @NgModule({
   declarations: [
     OneSidedMultiSelectComponent,
@@ -34,7 +35,7 @@ import { BoardCollectorComponent } from './components/board-collector/board-coll
     FormatNumberPipe, 
     DragDropDirective, 
     FilterSignBoardPipe, 
-    BoardCollectorComponent],
+    BoardCollectorComponent,AuthorizableActionDirective],
   imports: [
     CommonModule,
     MaterialModule,
@@ -60,6 +61,7 @@ import { BoardCollectorComponent } from './components/board-collector/board-coll
     FilterSignBoardPipe,
     SplitToArrayPipe, 
     FormatNumberPipe,
+    AuthorizableActionDirective,
     FormsModule,
     ReactiveFormsModule,
     GoogleMapsModule,

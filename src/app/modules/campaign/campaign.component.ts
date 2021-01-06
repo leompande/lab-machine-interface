@@ -5,12 +5,10 @@ import { CampaignService } from 'src/app/shared/services/model-services/campaign
 import { Agency } from 'src/app/store/agency/reducers/agency';
 import { Campaign } from 'src/app/store/campaign/reducers/campaign';
 import { fadeIn, fadeSmooth } from 'src/app/shared/animations/router-animation';
-import { Observable } from 'rxjs';
 import { AddEditSignBoardComponent } from './add-edit-sign-board/add-edit-sign-board.component';
 import { Organisation } from 'src/app/store/organisation/reducers/organisation';
 import { SignBoard } from 'src/app/store/sign-board/reducers/sign-board';
 import { SignBoardService } from 'src/app/shared/services/model-services/signboard.service';
-import { SignboardMoreComponent } from './signboard-more/signboard-more.component';
 import { AddEditBoardBatchComponent } from './add-edit-board-batch/add-edit-board-batch.component';
 import { SignBoardBatchService } from 'src/app/shared/services/model-services/signboardbatch.service';
 import { SignBoardBatch } from 'src/app/store/sign-board-batch/reducers/sign-board-batch';
@@ -30,8 +28,9 @@ export class CampaignComponent implements OnInit {
   @Input() userOrganisation: Organisation;
   @Input() signBoards: SignBoard[];
   @Input() outlets: Outlet[];
+  @Input() outletEntities: { [id: string]: Outlet };
   @Input() signBoardBatches: SignBoardBatch[];
-  @Input() signBoardBatchesEntities: { [id: string]: SignBoardBatch };
+  @Input() signBoardBatchEntities: { [id: string]: SignBoardBatch };
   allSignBoards: any[] = [];
 
 

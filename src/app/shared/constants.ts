@@ -41,8 +41,8 @@ export const menus: any = [
         access: 'SUPER_USER,ORGANISATION_ADMIN'
     },
     {
-        name: 'Sign Boards',
-        url: 'signboards',
+        name: 'Baches',
+        url: 'signboardbaches',
         icon: 'planted.png',
         access: 'AGENCY_ADMIN'
     },{

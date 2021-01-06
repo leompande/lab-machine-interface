@@ -11,6 +11,7 @@ import { UserContainerComponent } from './modules/user/user-container/user-conta
 import { AuthGuardService as AuthGuard } from './shared/services/auth-guard.service';
 import { SignBoardContainerComponent } from './modules/sign-board/sign-board-container/sign-board-container.component';
 import { OutletContainerComponent } from './modules/outlet/outlet-container/outlet-container.component';
+import { SignBoardBatchContainerComponent } from './modules/sign-board-batch/sign-board-bach-container/sign-board-batch-container.component';
 
 const routes: Routes = [{
   path: '',
@@ -62,9 +63,9 @@ const routes: Routes = [{
       data: { state: 'users', roles: 'SUPER_USER,ORGANISATION_ADMIN,AGENCY_ADMIN' },
       canActivate: [AuthGuard]
     }, {
-      path: 'signboards',
-      component: SignBoardContainerComponent,
-      data: { state: 'Sign Boards', roles: 'AGENCY_ADMIN' },
+      path: 'signboardbaches',
+      component: SignBoardBatchContainerComponent,
+      data: { state: 'Sign Board Baches', roles: 'AGENCY_ADMIN' },
       canActivate: [AuthGuard]
     }
   ]

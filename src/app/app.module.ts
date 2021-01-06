@@ -51,6 +51,8 @@ import { OutletContainerComponent } from './modules/outlet/outlet-container/outl
 import { AddEditOutletComponent } from './modules/outlet/add-edit/add-edit.component';
 import { effects } from './store/effects';
 import { OutletMapPreviewComponent } from './modules/outlet/outlet-map-preview/outlet-map-preview.component';
+import { SignBoardBatchContainerComponent } from './modules/sign-board-batch/sign-board-bach-container/sign-board-batch-container.component';
+import { SignBoardBatchComponent } from './modules/sign-board-batch/sign-board-batch.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +81,9 @@ import { OutletMapPreviewComponent } from './modules/outlet/outlet-map-preview/o
     OutletComponent,
     OutletContainerComponent,
     AddEditOutletComponent,
-    OutletMapPreviewComponent
+    OutletMapPreviewComponent,
+    SignBoardBatchComponent,
+    SignBoardBatchContainerComponent
   ],
   imports: [
     BrowserModule,
@@ -90,14 +94,14 @@ import { OutletMapPreviewComponent } from './modules/outlet/outlet-map-preview/o
     SharedModule,
     StoreRouterConnectingModule.forRoot(),
     StoreModule.forRoot(reducers, { metaReducers }),
-    !environment.production ? StoreDevtoolsModule.instrument() : [], 
+    !environment.production ? StoreDevtoolsModule.instrument() : [],
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     NgbModule,
     EffectsModule.forRoot(effects),
   ],
-  exports:[
+  exports: [
     SharedModule
   ],
   providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],

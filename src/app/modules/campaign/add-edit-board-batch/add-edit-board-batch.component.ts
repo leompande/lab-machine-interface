@@ -9,6 +9,7 @@ import { SignBoardBatchService } from 'src/app/shared/services/model-services/si
 import { makeId } from 'src/app/shared/helpers';
 import { Outlet } from 'src/app/store/outlet/reducers/outlet';
 import { SignBoardBatch } from 'src/app/store/sign-board-batch/reducers/sign-board-batch';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-edit-board-batch',
@@ -47,8 +48,12 @@ export class AddEditBoardBatchComponent implements OnInit {
   chosedAgency: ListItem[];
   chosedOutlet: ListItem[];
   boards_config: string = "";
+  orgUnitData: {
+    district: string,
+    region: string
+  };
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { currentObject: SignBoardBatch, campaign: Campaign, organisation: Organisation, agencies: Agency[], outlets: Outlet[], reference: string }, private signBoardBatchService: SignBoardBatchService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { currentObject: SignBoardBatch, campaign: Campaign, organisation: Organisation, agencies: Agency[], outlets: Outlet[], reference: string }, private signBoardBatchService: SignBoardBatchService, private http: HttpClient) {
     this.isUpdate = data.currentObject != null;
     console.log(data.currentObject);
     this.startingOus = this.isUpdate ? [data.currentObject.organisation_unit_id] : [];
@@ -91,6 +96,7 @@ export class AddEditBoardBatchComponent implements OnInit {
       board_height: new FormControl(this.isUpdate ? data.currentObject.board_height : ''),
       board_width!: new FormControl(this.isUpdate ? data.currentObject.board_width : ''),
       signboard_quantity!: new FormControl(this.isUpdate ? data.currentObject.signboard_quantity : ''),
+      region!: new FormControl(this.isUpdate ? data.currentObject.region : ''),
       district_council_name!: new FormControl(this.isUpdate ? data.currentObject.district_council_name : ''),
       outlet!: new FormControl(this.isUpdate ? data.currentObject.outlet : ''),
       agency_name!: new FormControl(this.isUpdate ? data.currentObject.agency_name : ''),
@@ -103,6 +109,18 @@ export class AddEditBoardBatchComponent implements OnInit {
   }
 
 
+  // async onOrgunitSelected(event: any) {
+  //   if (event.value) {
+  //     const data = await this.http.get("/api/organisationUnits/" + event.value + ".json?fields=id,name,parent[id,name,parent[id,name]]").toPromise();
+  //     this.orgUnitData = {
+  //       wardId: data['id'],
+  //       ward: data ? data['name'] : "",
+  //       district: data ? data['parent'] ? data['parent']['name'] : "" : "",
+  //       region: data ? data['parent'] ? data['parent']['parent'] ? data['parent']['parent']['name'] : "" : "" : "",
+  //     };
+  //   }
+
+  // }
 
   async onOrgunitSelected(event) {
     const selectedOrganisationUnit = event.items[0];
@@ -111,7 +129,11 @@ export class AddEditBoardBatchComponent implements OnInit {
       this.showOrgUnitSelectionError = false;
       this.organisation_unit_id = selectedOrganisationUnit.id;
       this.district_council_name = selectedOrganisationUnit.name;
-
+      const data = await this.http.get("/api/organisationUnits/" + this.organisation_unit_id + ".json?fields=id,name,parent[id,name,parent[id,name]]").toPromise();
+      this.orgUnitData = {
+        district: this.district_council_name,
+        region: data ? data['parent'] ? data['parent']['name'] : "" : "",
+      };
       // filter outlets according to selected district name
       this.filteredOutlets = this.data.outlets.filter((outlet: Outlet) => {
         return outlet.district == this.district_council_name;
@@ -144,6 +166,7 @@ export class AddEditBoardBatchComponent implements OnInit {
       start_date: this.form.value.start_date ? new Date(this.form.value.start_date).toISOString().substr(0, 10) : new Date().toISOString().substr(0, 10),
       end_date: this.form.value.end_date ? new Date(this.form.value.end_date).toISOString().substr(0, 10) : new Date().toISOString().substr(0, 10),
       organisation_unit_id: this.organisation_unit_id,
+      region: this.orgUnitData.region,
       district_council_name: this.district_council_name,
       agency_name: this.selectedAgency,
     };
