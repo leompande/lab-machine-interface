@@ -9,16 +9,16 @@ import { SignBoardBatchItemService } from 'src/app/shared/services/model-service
 @Injectable()
 export class SignBoardBatchItemEffects {
 
-  @Effect()
-  loadSignBoardBatchItems$: Observable<any> = this.actions$.pipe(
-    ofType(SignBoardBatchItemActionTypes.LoadSignBoardBatchItems),
-    switchMap((action: LoadSignBoardBatchItems) =>
-      this.signBoardService.listSignBoardBatchItems().pipe(
-        map((signBoards: SignBoardBatchItem[]) => new LoadSignBoardBatchItemsSuccess({ SignBoardBatchItems: signBoards })),
-        catchError((error: any) => of(new LoadSignBoardBatchItemsFailure(error)))
-      )
-    )
-  );
+  // @Effect()
+  // loadSignBoardBatchItems$: Observable<any> = this.actions$.pipe(
+  //   ofType(SignBoardBatchItemActionTypes.LoadSignBoardBatchItems),
+  //   switchMap((action: LoadSignBoardBatchItems) =>
+  //     this.signBoardService.listSignBoardBatchItems().pipe(
+  //       map((signBoards: SignBoardBatchItem[]) => new LoadSignBoardBatchItemsSuccess({ SignBoardBatchItems: signBoards })),
+  //       catchError((error: any) => of(new LoadSignBoardBatchItemsFailure(error)))
+  //     )
+  //   )
+  // );
 
   constructor(private actions$: Actions<SignBoardBatchItemActions>, private signBoardService: SignBoardBatchItemService) { }
 

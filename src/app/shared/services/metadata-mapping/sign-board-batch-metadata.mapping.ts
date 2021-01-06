@@ -42,6 +42,11 @@ export const signBoardBatchMetadata = {
             id: 'fcVt79oD6bQ',
             valueType: 'TEXT',
             key: 'district_council_name'
+        },{
+            name: 'Outlet',
+            id: 'IbzXhCEzN6I',
+            valueType: 'TEXT',
+            key: 'outlet'
         }, {
             name: 'Agency Name',
             id: 'DfHE0niLTb9',

@@ -1,10 +1,12 @@
 
-.batch-item-container{
+.batch-item-container,.batch-item-more-container{
     padding:10px;
     border-radius: 10px;
     background-color: white;
     -webkit-box-shadow: 0 0 6px rgba(0, 0, 0, 0.05) !important;
 }
+
+
 
 .batch-info{
     padding:10px;
@@ -122,4 +124,22 @@
     background-color:rgba(0, 0, 0, 0.08) !important;
     cursor: pointer;
     
+}
+
+.visualization-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
+}
+
+.map-area{
+  border: 1px solid #dbdada;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.description-area{
+  border: 1px solid #dbdada;
+  border-radius: 5px;
+  padding: 5px;
 }

@@ -8,6 +8,7 @@ import { Agency } from 'src/app/store/agency/reducers/agency';
 import { SignBoardBatchService } from 'src/app/shared/services/model-services/signboardbatch.service';
 import { makeId } from 'src/app/shared/helpers';
 import { Outlet } from 'src/app/store/outlet/reducers/outlet';
+import { SignBoardBatch } from 'src/app/store/sign-board-batch/reducers/sign-board-batch';
 
 @Component({
   selector: 'app-add-edit-board-batch',
@@ -43,10 +44,30 @@ export class AddEditBoardBatchComponent implements OnInit {
   base64ImageString: string = 'data:image/png;base64,';
   imageUrl: string;
   files: any = [];
+  chosedAgency: ListItem[];
+  chosedOutlet: ListItem[];
+  boards_config: string = "";
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { currentObject: any, campaign: Campaign, organisation: Organisation, agencies: Agency[], outlets: Outlet[], reference: string }, private signBoardBatchService: SignBoardBatchService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { currentObject: SignBoardBatch, campaign: Campaign, organisation: Organisation, agencies: Agency[], outlets: Outlet[], reference: string }, private signBoardBatchService: SignBoardBatchService) {
     this.isUpdate = data.currentObject != null;
+    console.log(data.currentObject);
     this.startingOus = this.isUpdate ? [data.currentObject.organisation_unit_id] : [];
+    this.chosedAgency = data.currentObject ? data.agencies.filter(agency => agency.name == data.currentObject.agency_name).map(agency => {
+      return {
+        id: agency.id,
+        name: agency.name,
+        value: agency.name,
+        chosed: false
+      }
+    }) : [];
+    this.chosedOutlet = data.currentObject ? data.outlets.filter(outlet => outlet.name == data.currentObject.outlet).map(outlet => {
+      return {
+        id: outlet.id,
+        name: outlet.name,
+        value: outlet.name,
+        chosed: false
+      }
+    }) : [];
     this.availableAgencies = data.agencies.map(agency => {
       return {
         id: agency.id,
@@ -119,6 +140,7 @@ export class AddEditBoardBatchComponent implements OnInit {
     const formValues = {
       ...this.form.value,
       outlet: this.selectedOutlet,
+      boards_config: this.boards_config,
       start_date: this.form.value.start_date ? new Date(this.form.value.start_date).toISOString().substr(0, 10) : new Date().toISOString().substr(0, 10),
       end_date: this.form.value.end_date ? new Date(this.form.value.end_date).toISOString().substr(0, 10) : new Date().toISOString().substr(0, 10),
       organisation_unit_id: this.organisation_unit_id,
@@ -162,6 +184,13 @@ export class AddEditBoardBatchComponent implements OnInit {
 
   deleteAttachment(index) {
     this.files.splice(index, 1)
+  }
+
+  onItemChanges(events: any[]){
+    this.boards_config = "";
+    events.forEach((event: any, index: number)=>{
+      this.boards_config += event.boardHeight+"."+event.boardWidth+"."+event.boardQuantity+ ((index==events.length-1)?"":"_");
+    });
   }
 
 

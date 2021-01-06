@@ -5,7 +5,7 @@ import { User } from 'src/app/store/user/reducers/user';
 import { TrackerService } from '../dhis2/tracker.service';
 import { ApplicationState } from 'src/app/store';
 import { Store } from '@ngrx/store';
-import { LoadCampaigns } from 'src/app/store/campaign/actions/campaign.actions';
+import { LoadCampaigns, DeleteCampaign } from 'src/app/store/campaign/actions/campaign.actions';
 @Injectable({
   providedIn: 'root'
 })
@@ -60,6 +60,19 @@ export class CampaignService {
         observer.next(results);
         observer.complete()
       },error=>{
+        observer.error(error);
+        observer.complete();
+      });
+    });
+  }
+
+  deleteCampaign(trackedEntityInstance: string, id: string): Observable<any> {
+    return Observable.create(observer => {
+      this.trackerService.deleteTrackedEntityInstance(trackedEntityInstance).subscribe(results => {
+        this.store.dispatch(new DeleteCampaign({ id }));
+        observer.next(results);
+        observer.complete();
+      }, error => {
         observer.error(error);
         observer.complete();
       });

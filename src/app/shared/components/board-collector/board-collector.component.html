@@ -1,0 +1,58 @@
+<div class="row">
+    <div class="col">
+        <div class="board-configuration-container">
+            <table class="table table-hover">
+                <thead>
+                    <tr @fadeIn *ngIf="boardList.length>0">
+                        <th scope="col">#</th>
+                        <th scope="col">Board Height</th>
+                        <th scope="col">Board Width</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr  @fadeIn  *ngFor="let item of boardList; let i=index">
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{item.boardHeight}}</td>
+                        <td>{{item.boardWidth}}</td>
+                        <td>{{item.boardQuantity}}</td>
+                        <td>
+                            <div class="campaign-control-button" style="color:red" (click)="remove(i)">
+                                <i class="fa fa-trash-o"></i>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th scope="row"></th>
+                        <td>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Board Width</mat-label>
+                                <input matInput type="number" min="0" [(ngModel)]="boardHeight" placeholder="Board Width">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field appearance="outline">
+                                <mat-label>Board Width</mat-label>
+                                <input matInput type="number" min="0" [(ngModel)]="boardWidth" placeholder="Board Width">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <mat-form-field appearance="outline" style="height: 20px;">
+                                <mat-label>Quantity</mat-label>
+                                <input matInput type="number" min="0" [(ngModel)]="boardQuantity" placeholder="Quantity">
+                            </mat-form-field>
+                        </td>
+                        <td>
+                            <div class="custom-button primary-custom-button-color" (click)="addConfiguration()">Add</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

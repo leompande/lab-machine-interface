@@ -22,43 +22,27 @@
                     </tulonge-org-unit-filter-closed>
                 </div>
             </div>
-            <br/>
+            <br />
             <div class="row">
                 <div class="col">
-                    <app-one-sided-multi-select [items]="filteredOutlets" [selected]="[]"
+                    <app-one-sided-multi-select [items]="filteredOutlets" [selected]="chosedOutlet"
                         (onChange)="onSelectionOutletDone($event)"
-                        [config]="{label:'Outlets',allowMultiple: false, autoDismiss:true}"></app-one-sided-multi-select>
+                        [config]="{label:'Outlets',allowMultiple: false, autoDismiss:true}">
+                    </app-one-sided-multi-select>
                 </div>
-            
+
                 <div class="col">
-                    <app-one-sided-multi-select [items]="availableAgencies" [selected]="[]"
+                    <app-one-sided-multi-select [items]="availableAgencies" [selected]="chosedAgency"
                         (onChange)="onSelectionAgencyDone($event)"
                         [config]="{label:'Agency',allowMultiple: false, autoDismiss:true}"></app-one-sided-multi-select>
                 </div>
             </div>
             <div class="row">
                 <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Board Height</mat-label>
-                        <input matInput type="number" min="0" placeholder="Board Height" formControlName="board_height">
-                    </mat-form-field>
-                </div>
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Board Width</mat-label>
-                        <input matInput type="number" min="0" placeholder="Board Width" formControlName="board_width">
-                    </mat-form-field>
+                    <app-board-collector [boardList]="[]" (onItemChanges)="onItemChanges($event)"></app-board-collector>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Sign Boards Quantity</mat-label>
-                        <input matInput type="number" min="0" placeholder="Sign Boards Quantity"
-                            formControlName="signboard_quantity">
-                    </mat-form-field>
-                </div>
-            </div>
+            <br/>
             <div class="row">
                 <div class="col">
                     <mat-form-field appearance="outline">
@@ -83,10 +67,9 @@
     </div>
     <br />
     <div class="form-footer">
-        <app-save-area [isUpdate]="isUpdate" [isEnabled]="form.value.signboard_quantity 
-        && form.value.board_width
-        && form.value.board_height
-        && selectedAgency && selectedOutlet && organisation_unit_id" [loading]="loading" (onCancel)="cancel()" (onSave)="save()">
+        <app-save-area [isUpdate]="isUpdate" [isEnabled]="boards_config.length>0
+        && selectedAgency && selectedOutlet && organisation_unit_id" [loading]="loading" (onCancel)="cancel()"
+            (onSave)="save()">
         </app-save-area>
         <button id="closeButton" mat-button mat-dialog-close style="display: none;">Cancel</button>
     </div>

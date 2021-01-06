@@ -13,7 +13,7 @@ import { DatastoreService } from 'src/app/shared/services/dhis2/datastore.servic
   templateUrl: './sign-board-list.component.html',
   styleUrls: ['./sign-board-list.component.scss']
 })
-export class SignBoardListComponent implements OnInit , OnChanges{
+export class SignBoardListComponent implements OnInit, OnChanges {
   @Input() campaigns;
   @Input() signBoards;
   @Input() userOrganisation: Organisation;
@@ -21,10 +21,10 @@ export class SignBoardListComponent implements OnInit , OnChanges{
   searchKey: string;
   searchHeaders: { name: string }[] = [
     { name: 'district_council_name' },
-      { name: 'board_height' },
-      { name: 'board_width'},
-      { name: 'street_name'},
-      { name: 'date_to_be_planted' },
+    { name: 'board_height' },
+    { name: 'board_width' },
+    { name: 'street_name' },
+    { name: 'date_to_be_planted' },
   ];
   showable: any = {};
 
@@ -57,7 +57,7 @@ export class SignBoardListComponent implements OnInit , OnChanges{
   @Output() editingCampaign = new EventEmitter;
 
   constructor(public dialog: MatDialog, private storeService: DatastoreService) {
-    
+
   }
 
   ngOnInit(): void {
@@ -84,25 +84,22 @@ export class SignBoardListComponent implements OnInit , OnChanges{
 
   }
 
-  deleteCampaign(campaign: Campaign,signBoards: SignBoard[]) {
-    if (signBoards.filter((board:SignBoard)=>board.campaign_reference_number==campaign.reference).length>0){
-    } else{
+  deleteCampaign(campaign: Campaign, signBoards: SignBoard[]) {
+    if (signBoards && signBoards.filter((board: SignBoard) => board.campaign_reference_number == campaign.reference).length > 0) {
+    } else {
       this.deletingCampaign.emit(campaign);
     }
   }
 
-  createUpdateSignBoardBatch(campaign: Campaign, currentObject?: any) {
-    this.creatEditSignBoardBatch.emit({ campaign, currentObject });
+  updateSignBoardBatch(campaign: Campaign, batchId: any) {
+    this.creatEditSignBoardBatch.emit({ campaign, batch: this.signBoardBatches.find((batch: any)=>batch.id==batchId) });
   }
 
 
-  previewSignBoardBatch(campaign,$event){
-
-  } 
-  deleteSignBoardBatch($event){
+  previewSignBoardBatch(campaign, $event) {
 
   }
-  updateSignBoardBatch(campaign,$event){
+  deleteSignBoardBatch($event) {
 
   }
 
@@ -122,7 +119,7 @@ export class SignBoardListComponent implements OnInit , OnChanges{
       maxHeight: '80%',
       disableClose: true,
       hasBackdrop: true, data: {
-        signBoard: this.signBoards.find(signBoard => signBoard.id == event),
+        signBoard: this.signBoards.find((signBoard: any) => signBoard.id == event),
         campaign: campaign,
         signBoardImage: imageData ? imageData.image : ''
       },

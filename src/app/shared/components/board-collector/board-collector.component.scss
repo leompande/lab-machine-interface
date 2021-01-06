@@ -1,0 +1,27 @@
+.mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0px !important;}
+.mat-form-field-appearance-outline .mat-form-field-label { margin-top:0px!important; }
+label.ng-star-inserted { transform: translateY(-0.59375em) scale(.75) !important; }
+
+
+.board-configuration-container{
+    padding: 5px;
+    border: 1px solid #dddddd;
+    border-radius: 5px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.campaign-control-button{
+    padding:10px;
+    display: inline-block;
+    height: 40px;
+    width: 40px;
+    text-align: center;
+  }
+
+  .campaign-control-button:hover{
+    border-radius: 40px;
+    background-color:rgba(0, 0, 0, 0.08) !important;
+    cursor: pointer;
+    
+}

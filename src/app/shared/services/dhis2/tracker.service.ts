@@ -62,7 +62,6 @@ return new Observable(observe => {
     formData.append('analyticsTableAnalyze','false');
     formData.append('zeroDataValueRemoval','false');
     formData.append('softDeletedDataValueRemoval','true');
-    formData.append('softDeletedDataValueRemoval','true');
     formData.append('softDeletedEventRemoval','true');
     formData.append('softDeletedEnrollmentRemoval','true');
     formData.append('softDeletedTrackedEntityInstanceRemoval','true');

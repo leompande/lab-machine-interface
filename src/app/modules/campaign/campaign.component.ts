@@ -63,8 +63,8 @@ export class CampaignComponent implements OnInit {
   editingCampaign(campaign: any) {
     this.createEditCampaign(campaign);
   }
-  deletingCampaign(campaign: any) {
-    console.log(campaign);
+  async deletingCampaign(campaign: Campaign) {
+    await this.campaignService.deleteCampaign(campaign.trackedEntityInstance, campaign.id).toPromise();
   }
 
   createUpdateSignBoard(event: { campaign: Campaign, currentObject?: any }) {
@@ -114,12 +114,13 @@ export class CampaignComponent implements OnInit {
     });
   }
 
-
-
   updateSignBoardBatch(eventObject: any) {
     this.createUpdateSignBoard(eventObject);
   }
 
+  editSignBoardBatch({campaign,batch}){
+     this.createUpdateSignBoardBatch({ campaign: campaign, currentObject: batch});
+  }
 
   async deleteSignBoardBatch(id: string) {
     await this.signBoardService.deleteSignBoard(id).toPromise();

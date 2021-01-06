@@ -57,8 +57,30 @@ export class SignBoardBatchService {
 
   saveUpdateSignBoardBatch(isUpdate, signBoardBatch: SignBoardBatch|any, trackedEntityInstanceId: string, eventDate: any): Observable<any> {
   return Observable.create((observer: any) => {
+    let events = [];
+      
+      signBoardBatch.boards_config.split("_").forEach(config=>{
+        const parameter = config.split(".");
+        const height = +parameter[0];
+        const weight = +parameter[1];
+        const count = +parameter[2];
+        const batch = {
+          ...signBoardBatch,
+          board_height: height,
+          board_width: weight,
+        };
+        for (let eventCount = 0; eventCount < count; eventCount++) {
+          events = [...events, this.trackerService.prepareSingleEvent(
+            'SignBoardBatches',
+            signBoardBatch.organisation_unit_id,
+            "SignBoards",
+            prepareSignBoardData((eventCount + 1), batch),
+            null
+          )];
+        }
+      });
+      signBoardBatch.signboard_quantity = events.length;
       let trackedEntityInstancePayload = this.trackerService.prepareTrackedEntityPayload('SignBoardBatches', signBoardBatch.organisation_unit_id, signBoardBatch, !isUpdate ? 'add' : 'edit', trackedEntityInstanceId, eventDate);
-      let events = [];
       if (isUpdate) {
         this.trackerService.updateTrackedEntityInstance([trackedEntityInstancePayload], signBoardBatch.trackedEntityInstance).subscribe((results: any) => {
           this.store.dispatch(new LoadSignBoardBatches());
@@ -69,15 +91,6 @@ export class SignBoardBatchService {
           observer.complete();
         });
       } else {
-        for (let eventCount = 0; eventCount < (+signBoardBatch.signboard_quantity); eventCount++) {
-          events = [...events, this.trackerService.prepareSingleEvent(
-            'SignBoardBatches',
-            signBoardBatch.organisation_unit_id,
-            "SignBoards",
-            prepareSignBoardData((eventCount + 1), signBoardBatch),
-            null
-          )];
-        }
         trackedEntityInstancePayload['enrollments'][0]["events"] = events;
         this.trackerService.saveTrackedEntityInstances([trackedEntityInstancePayload]).subscribe((results: any) => {
         this.store.dispatch(new LoadSignBoardBatches());

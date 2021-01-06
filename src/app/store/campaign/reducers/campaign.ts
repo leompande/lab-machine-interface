@@ -2,6 +2,7 @@ export class Campaign {
     id!: string;
     enrollment_id: string;
     organisation_unit_id: string;
+    trackedEntityInstance?: string;
     agency: string;
     reference: string;
     campaign_name: string;

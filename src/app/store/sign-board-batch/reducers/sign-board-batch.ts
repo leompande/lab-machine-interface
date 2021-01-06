@@ -6,8 +6,10 @@ export class SignBoardBatch {
     district_council_name: string;
     batch_reference_number: string;
     campaign_reference_number: string;
+    boards_config?: string;
     board_height: string;
     board_width: string;
+    outlet: string;
     signboard_quantity: string;
     latitude: string;
     longitude: string;

@@ -18,18 +18,23 @@ import { TreeModule } from '@circlon/angular-tree-component';
 import { DragDropDirective } from './directives/drag-drop.directive';
 import { FilterSignBoardPipe } from './pipes/filter-sign-board.pipe';
 import { NgxBarcode6Module } from 'ngx-barcode6';
+import { BoardCollectorComponent } from './components/board-collector/board-collector.component';
 @NgModule({
   declarations: [
-    OneSidedMultiSelectComponent, 
+    OneSidedMultiSelectComponent,
     TwoSidedMultiSelectComponent,
     OrgUnitFilterClosedComponent,
     OrgUnitFilterComponent,
-    HeaderComponent, 
+    HeaderComponent,
     FilterItemsPipe,
     FilterMultPipe,
     SearchPipe,
     SaveAreaComponent,
-    SplitToArrayPipe,FormatNumberPipe,DragDropDirective, FilterSignBoardPipe],
+    SplitToArrayPipe, 
+    FormatNumberPipe, 
+    DragDropDirective, 
+    FilterSignBoardPipe, 
+    BoardCollectorComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -41,18 +46,20 @@ import { NgxBarcode6Module } from 'ngx-barcode6';
   ],
   exports: [
     MaterialModule,
+    BoardCollectorComponent,
     OneSidedMultiSelectComponent,
     TwoSidedMultiSelectComponent,
     OrgUnitFilterClosedComponent,
     OrgUnitFilterComponent,
     SaveAreaComponent,
-    HeaderComponent, 
+    HeaderComponent,
     FilterItemsPipe,
     FilterMultPipe,
     SearchPipe,
     DragDropDirective,
     FilterSignBoardPipe,
-    SplitToArrayPipe,FormatNumberPipe,
+    SplitToArrayPipe, 
+    FormatNumberPipe,
     FormsModule,
     ReactiveFormsModule,
     GoogleMapsModule,
