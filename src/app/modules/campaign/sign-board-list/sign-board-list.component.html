@@ -1,7 +1,7 @@
 <div class="campaign-item-container">
     <input class="search-bar" placeholder="Search" (keyup)="searchCampaign($event)">
 </div>
-<div [fadeIn] class="campaign-item-container data-container"
+<div @fadeIn class="campaign-item-container data-container"
     *ngFor="let campaign of campaigns|search:searchKey:searchHeaders">
     <div class="top-summary-header" (click)="showDetails(campaign)">
         <div class="row">
@@ -36,7 +36,7 @@
         </div>
     </div>
     <br />
-    <div [fadeSmooth] class="board-detail-container" *ngIf="!(showable[campaign.id]==false||!showable[campaign.id])">
+    <div @fadeIn class="board-detail-container" *ngIf="!(showable[campaign.id]==false||!showable[campaign.id])">
         <div class="header-detail-summary">
             <div class="row">
                 <div class="col">Sign Board Batches</div>
@@ -59,7 +59,7 @@
         </div>
     </div>
 </div>
-<div class="campaign-item-container">
-    <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+<div @fadeIn class="campaign-item-container" *ngIf="campaigns.length>1" >
+    <mat-paginator [length]="campaigns.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
     </mat-paginator>
 </div>

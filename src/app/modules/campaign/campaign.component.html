@@ -4,7 +4,7 @@
         (deletingSignBoardBatch)="deleteSignBoardBatch($event)" (editingCampaign)="editingCampaign($event)"
         (deletingCampaign)="deletingCampaign($event)">
     </app-sign-board-list>
-    <div class="create-button-conatiner"
+    <div @fadeIn class="create-button-conatiner"
         [ngClass]="{'add-button-area-center-aligned':campaigns.length<1,'add-button-area-bottom-left-aligned':campaigns.length>0}">
         <div class="custom-button" (click)="createEditCampaign()">Create Campaign</div>
     </div>

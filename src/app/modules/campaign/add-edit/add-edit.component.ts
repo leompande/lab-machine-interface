@@ -57,9 +57,9 @@ export class AddEditCampaignComponent implements OnInit {
       end_date: moment(this.form.value.end_date).toISOString(),
       agency: this.selectedAgency
     };
-    let trackedEntityInstanceId = this.data.currentObject.trackedEntityInstance?this.data.currentObject.trackedEntityInstance:null;
+    // let trackedEntityInstanceId = this.data.currentObject != null && this.data.currentObject.trackedEntityInstance?this.data.currentObject.trackedEntityInstance:null;
     let eventDate;
-    await this.campaignService.saveUpdateCampaign(this.isUpdate,formValues,trackedEntityInstanceId, eventDate).toPromise();
+    await this.campaignService.saveUpdateCampaign(this.isUpdate,formValues,null, eventDate).toPromise();
     this.loading = false;
     this.cancel();
   }

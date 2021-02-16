@@ -5,13 +5,14 @@ import { Organisation } from 'src/app/store/organisation/reducers/organisation';
 import { SignBoard } from 'src/app/store/sign-board/reducers/sign-board';
 import { SignboardMoreComponent } from '../signboard-more/signboard-more.component';
 import { MatDialog } from '@angular/material/dialog';
-import { DataService } from 'src/app/shared/services/firebase/data.service';
 import { DatastoreService } from 'src/app/shared/services/dhis2/datastore.service';
+import { fadeIn } from 'src/app/shared/animations/router-animation';
 
 @Component({
   selector: 'app-sign-board-list',
   templateUrl: './sign-board-list.component.html',
-  styleUrls: ['./sign-board-list.component.scss']
+  styleUrls: ['./sign-board-list.component.scss'],
+  animations:[fadeIn]
 })
 export class SignBoardListComponent implements OnInit, OnChanges {
   @Input() campaigns;
