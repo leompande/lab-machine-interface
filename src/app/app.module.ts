@@ -56,7 +56,7 @@ import { SignBoardBatchComponent } from './modules/sign-board-batch/sign-board-b
 
 @NgModule({
   declarations: [
-    LoaderComponent,
+    // LoaderComponent,
     MainDataTableComponent,
     AppComponent,
     LoginComponent,

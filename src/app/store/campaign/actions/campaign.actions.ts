@@ -161,6 +161,7 @@ export class DoneLoagingCampaigns implements Action {
 export type CampaignActions =
   LoadCampaigns
   | LoadCampaignsSuccess
+  | LoadCampaignsFailure
   | AddCampaignFailure
   | AddCampaign
   | AddCampaignSuccess

@@ -13,6 +13,7 @@ import { AddEditBoardBatchComponent } from './add-edit-board-batch/add-edit-boar
 import { SignBoardBatchService } from 'src/app/shared/services/model-services/signboardbatch.service';
 import { SignBoardBatch } from 'src/app/store/sign-board-batch/reducers/sign-board-batch';
 import { Outlet } from 'src/app/store/outlet/reducers/outlet';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-campaign',
@@ -31,6 +32,7 @@ export class CampaignComponent implements OnInit {
   @Input() outletEntities: { [id: string]: Outlet };
   @Input() signBoardBatches: SignBoardBatch[];
   @Input() signBoardBatchEntities: { [id: string]: SignBoardBatch };
+  @Input() loadCampaign$: Observable<any>;
   allSignBoards: any[] = [];
 
 

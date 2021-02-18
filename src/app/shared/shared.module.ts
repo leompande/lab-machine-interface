@@ -20,6 +20,7 @@ import { FilterSignBoardPipe } from './pipes/filter-sign-board.pipe';
 import { NgxBarcode6Module } from 'ngx-barcode6';
 import { BoardCollectorComponent } from './components/board-collector/board-collector.component';
 import { AuthorizableActionDirective } from './directives/authorizable-action.directive';
+import { LoaderComponent } from './components/loader/loader.component';
 @NgModule({
   declarations: [
     OneSidedMultiSelectComponent,
@@ -35,7 +36,7 @@ import { AuthorizableActionDirective } from './directives/authorizable-action.di
     FormatNumberPipe, 
     DragDropDirective, 
     FilterSignBoardPipe, 
-    BoardCollectorComponent,AuthorizableActionDirective],
+    BoardCollectorComponent,AuthorizableActionDirective, LoaderComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -52,6 +53,7 @@ import { AuthorizableActionDirective } from './directives/authorizable-action.di
     TwoSidedMultiSelectComponent,
     OrgUnitFilterClosedComponent,
     OrgUnitFilterComponent,
+    LoaderComponent,
     SaveAreaComponent,
     HeaderComponent,
     FilterItemsPipe,

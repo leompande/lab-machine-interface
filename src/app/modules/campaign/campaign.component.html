@@ -1,4 +1,5 @@
 <div class="campaign-container">
+    <app-loader [message]="'  '" *ngIf="(loadCampaign$|async) == true"></app-loader>
     <app-sign-board-list [campaigns]="campaigns" [signBoardBatches]="signBoardBatches"
         (creatEditSignBoardBatch)="editSignBoardBatch($event)" (editSignBoardBatch)="updateSignBoardBatch($event)"
         (deletingSignBoardBatch)="deleteSignBoardBatch($event)" (editingCampaign)="editingCampaign($event)"

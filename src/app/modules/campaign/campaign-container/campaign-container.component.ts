@@ -35,6 +35,7 @@ export class CampaignContainerComponent implements OnInit {
   signBoardBatches$: Observable<SignBoardBatch[]>;
   signBoardEntities$: Observable<{ [id: string]: SignBoard }>;
   signBoardBatchEntities$: Observable<{ [id: string]: SignBoardBatch }>;
+  loadCampaign$: Observable<any>;
   constructor(private store: Store<ApplicationState>) {
     const user: any = new Function('return ' + localStorage.getItem('sb-user'));
     this.agencies$ = this.store.select(fromAgencySelector.selectAll);
@@ -48,6 +49,7 @@ export class CampaignContainerComponent implements OnInit {
     this.signBoardEntities$ = this.store.select(fromSignBoardSelector.selectEntities);
     this.signBoardBatches$ = this.store.select(fromSignBoardBatchSelector.selectAll);
     this.signBoardBatchEntities$ = this.store.select(fromSignBoardBatchSelector.selectEntities);
+    this.loadCampaign$ = this.store.select(fromCampaignSelector.selectLoading);
   }
 
   ngOnInit(): void {

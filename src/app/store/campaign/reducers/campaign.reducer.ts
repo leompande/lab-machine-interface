@@ -23,11 +23,16 @@ export function reducer(
   action: CampaignActions
 ): State {
   switch (action.type) {
-    case CampaignActionTypes.Get: {
+    case CampaignActionTypes.LoadCampaigns: {
       return {...state, loading: true};
     }
 
+    
     case CampaignActionTypes.DoneLoading: {
+      return {...state, loading: false};
+    }
+
+    case CampaignActionTypes.LoadCampaignsFailure: {
       return {...state, loading: false};
     }
 
