@@ -1,28 +1,134 @@
 <div class="table-cover">
-    <div class="top-area no-print">
-      <div class="search-area">
-        <mat-form-field *ngIf="tableConfigurations.showSearch">
-          <mat-label>
-            <mat-icon>search</mat-icon>
-            Search
-          </mat-label>
-          <input autocomplete="off" matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
-        </mat-form-field>
-      </div>
-      <div class="excel-button">
-        <div class="custom-button" (click)="downloadToCsv()" *ngIf="!tableConfigurations.hideExport">
-          <i style="margin-bottom: 5px; color: green" class="fa fa-file-excel-o"></i>
-          Export
-        </div> &nbsp;
-        <div class="custom-button" style="margin-right: 10px;" (click)="exportPdf()" *ngIf="!tableConfigurations.hideExport"><i
-            style="margin-bottom: 5px; color: red" class="fa fa-file-pdf-o"></i>
-          Pdf</div>
-      </div>
+  <div class="top-area no-print">
+    <div class="search-area">
+      <mat-form-field *ngIf="tableConfigurations.showSearch">
+        <mat-label>
+          <mat-icon>search</mat-icon>
+          Search
+        </mat-label>
+        <input autocomplete="off" matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+      </mat-form-field>
     </div>
+    <div class="excel-button">
+      <div class="custom-button" (click)="downloadToCsv()" *ngIf="!tableConfigurations.hideExport">
+        <i style="margin-bottom: 5px; color: green" class="fa fa-file-excel-o"></i>
+        Export
+      </div> &nbsp;
+      <div class="custom-button" style="margin-right: 10px;" (click)="exportPdf()"
+        *ngIf="!tableConfigurations.hideExport"><i style="margin-bottom: 5px; color: red" class="fa fa-file-pdf-o"></i>
+        Pdf</div>
+    </div>
+  </div>
 
-    <app-loader @fadeIn *ngIf="loading" message="{{ loadingMessage || 'Getting Data Please Wait...' }}"></app-loader>
-    <table [ngClass]="{'table-bordered': tableConfigurations.showBorder}" mat-table [trackBy]="trackByFn"
-      [dataSource]="dataSource" matSort class="mat-elevation-z0" *ngIf="tableList.length != 0; else noData">
+  <app-loader @fadeIn *ngIf="loading" message="{{ loadingMessage || 'Getting Data Please Wait...' }}"></app-loader>
+  <table [ngClass]="{'table-bordered': tableConfigurations.showBorder}" mat-table [trackBy]="trackByFn"
+    [dataSource]="dataSource" matSort class="mat-elevation-z0" *ngIf="tableList.length != 0; else noData">
+    <!-- Number Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> No</th>
+      <td mat-cell *matCellDef="let element;let i = index;"> {{ i + 1 }}</td>
+    </ng-container>
+
+    <!-- Position Column -->
+    <ng-container *ngFor="let column of tableConfigurations.tableColumns" matColumnDef="{{ column.name }}">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column.label }}</th>
+      <td mat-cell *matCellDef="let element"
+        [ngClass]="{'right-align':isNumber(element[column?.name]) && tableConfigurations.showBorder,'center-align':!tableConfigurations.showBorder && isNumber(element[column?.name])}">
+        <div *ngIf="column.type && column.type == 'barcode'">
+          <ngx-barcode6 [bc-format]="'CODE128B'" [bc-value]="element[column?.name]" [bc-display-value]="false"
+            [bc-width]="1" [bc-font-size]="14">
+          </ngx-barcode6>
+        </div>
+        <div *ngIf="!column.type || column.type != 'barcode'">{{element[column?.name] | formatNumber:column?.label }}
+        </div>
+
+      </td>
+    </ng-container>
+
+    <!--Action Icons-->
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let tableListItem">
+        <div class="pull-right" role="group" aria-label="Basic example"
+          *ngIf="tableConfigurations.actionIcons.edit || tableConfigurations.actionIcons.print || tableConfigurations.actionIcons.delete || tableConfigurations.actionIcons.more || tableConfigurations.actionIcons.cancel">
+          <a @fadeIn class="cursor text-primary action-button mr-1 btn-float" title="print"
+            (click)="printItem(!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn])"
+            style="border-radius: 50%"
+            *ngIf="tableConfigurations?.actionIcons?.print && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
+            <i class="fa fa-print"></i>
+          </a>&nbsp;
+          <a @fadeIn mat-mini-fab style="color:black!important; background-color: white; border-radius: 50%!important;"
+            title="view details"
+            (click)="viewItemDetails(!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn])"
+            *ngIf="tableConfigurations?.actionIcons?.more && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
+            <i class="fa fa-list"></i>
+          </a>&nbsp;
+          <a @fadeIn title="edit"
+            (click)="editItem(!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn])"
+            mat-mini-fab style="color:black!important; background-color: white; border-radius: 50%!important;"
+            *ngIf="tableConfigurations?.actionIcons?.edit && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
+            <i class="fa fa-pencil"></i>
+          </a> &nbsp;
+          <a @fadeIn
+            (click)="showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]] = true"
+            mat-mini-fab style="color: white; background-color: red; border-radius: 50%!important;"
+            *ngIf="tableConfigurations?.actionIcons?.delete && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
+            <i class="fa fa-trash-o"></i>
+          </a>
+          <button @fadeIn mat-flat-button
+            (click)="showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]] = true"
+            title="Cancel"
+            *ngIf="tableConfigurations?.actionIcons?.cancel && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
+            <mat-icon>cancel</mat-icon>
+            Cancel
+          </button>
+
+          <!--delete confirmation-->
+          <p @fadeIn
+            *ngIf="showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]] && !tableConfigurations.deleting[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
+            Are You
+            sure?</p>
+          <p @fadeIn
+            *ngIf="showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]] && tableConfigurations.deleting[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
+            <span *ngIf="tableConfigurations?.actionIcons?.cancel">Canceling</span>
+            <span *ngIf="tableConfigurations?.actionIcons?.delete">Deleting</span>
+          </p>
+          <p @fadeIn
+            *ngIf="showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
+            <mat-progress-bar mode="indeterminate" @fadeIn
+              *ngIf="tableConfigurations.deleting[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
+            </mat-progress-bar>
+            <button mat-mini-fab style="color: white; background-color: red; border-radius: 50%!important;" @fadeIn
+              *ngIf="!tableConfigurations.deleting[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]"
+              (click)="showDelete = {}">
+              <mat-icon>clear</mat-icon>
+            </button>
+            <button mat-mini-fab style="color: white; background-color: green; border-radius: 50%!important;" @fadeIn
+              *ngIf="!tableConfigurations.deleting[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]"
+              (click)="deleteItem(!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn])">
+              <mat-icon>done</mat-icon>
+            </button>
+          </p>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns" style='background-color: rgba(0, 0, 0, 0.1); opacity: 0.8;'>
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="routeAnimationsElements" class="card-1">
+    </tr>
+  </table>
+
+  <!--Pagination-->
+  <mat-paginator [ngClass]="{'hidden': !tableConfigurations.allowPagination}" class="no-print" [pageSize]="pageSize"
+    [pageSizeOptions]="[10, 20, 25, 50, 100]">
+  </mat-paginator>
+
+
+  <ng-template #noData>
+    <table *ngIf="!loading" [ngClass]="{'table-bordered': tableConfigurations.showBorder}" mat-table
+      [trackBy]="trackByFn" [dataSource]="dataSource" matSort class="mat-elevation-z0">
+
       <!-- Number Column -->
       <ng-container matColumnDef="position">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> No</th>
@@ -32,19 +138,13 @@
       <!-- Position Column -->
       <ng-container *ngFor="let column of tableConfigurations.tableColumns" matColumnDef="{{ column.name }}">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column.label }}</th>
-        <td mat-cell *matCellDef="let element"
-          [ngClass]="{'right-align':isNumber(element[column?.name]) && tableConfigurations.showBorder,'center-align':!tableConfigurations.showBorder && isNumber(element[column?.name])}">
-          <div *ngIf="column.type && column.type == 'barcode'">
-            <ngx-barcode6
-                      [bc-format]="'CODE128B'"
-                      [bc-value]="element[column?.name]"
-                      [bc-display-value]="false"
-                      [bc-width]="1"
-                      [bc-font-size]="14"
-                  >
-                  </ngx-barcode6>
+        <td mat-cell *matCellDef="let element">
+          <div>
+            <ngx-barcode6 [bc-format]="'CODE128B'" [bc-value]="'abc'" [bc-display-value]="false" [bc-width]="1"
+              [bc-font-size]="16">
+            </ngx-barcode6>
           </div>
-          <div *ngIf="!column.type || column.type != 'barcode'">{{element[column?.name] | formatNumber:column?.label }}</div>
+          <div>{{element[column?.name] | formatNumber:column?.label }}</div>
 
         </td>
       </ng-container>
@@ -60,22 +160,24 @@
               style="border-radius: 50%"
               *ngIf="tableConfigurations?.actionIcons?.print && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
               <i class="fa fa-print"></i>
-            </a>&nbsp;
-            <a @fadeIn mat-mini-fab style="color:black!important; background-color: white; border-radius: 50%!important;" title="view details"
+            </a>
+            <a @fadeIn mat-mini-fab
+              style="color:black!important; background-color: white; border-radius: 50%!important;" title="view details"
               (click)="viewItemDetails(!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn])"
-
+              style="border-radius: 50%"
               *ngIf="tableConfigurations?.actionIcons?.more && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
               <i class="fa fa-list"></i>
-            </a>&nbsp;
-            <a @fadeIn  title="edit"
+            </a>
+            <a @fadeIn mat-mini-fab
+              style="color:black!important; background-color: white; border-radius: 50%!important;" title="edit"
               (click)="editItem(!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn])"
-              mat-mini-fab style="color:black!important; background-color: white; border-radius: 50%!important;"
+              style="border-radius: 50%"
               *ngIf="tableConfigurations?.actionIcons?.edit && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
               <i class="fa fa-pencil"></i>
-            </a> &nbsp;
-            <a @fadeIn
+            </a>
+            <a @fadeIn class="btn btn-sm btn-danger action-button  btn-float"
               (click)="showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]] = true"
-              mat-mini-fab style="color: white; background-color: red; border-radius: 50%!important;"
+              style="border-radius: 50%" title="delete"
               *ngIf="tableConfigurations?.actionIcons?.delete && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
               <i class="fa fa-trash-o"></i>
             </a>
@@ -117,143 +219,34 @@
         </td>
       </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns" style='background-color: rgba(0, 0, 0, 0.1); opacity: 0.8;'>
-      </tr>
+      <!-- Disclaimer column -->
+      <ng-container matColumnDef="disclaimer">
+        <td mat-footer-cell *matFooterCellDef [attr.colspan]="displayedColumns.length">
+          <h5 class="text-center text-muted pt-1">
+            {{tableConfigurations.empty_msg || "No data"}}
+          </h5>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"
+        style='background-color: rgba(0, 0, 0, 0.1); opacity: 0.8;'></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="routeAnimationsElements" class="card-1">
       </tr>
+
+      <tr mat-footer-row *matFooterRowDef="['disclaimer']" class="example-second-footer-row"></tr>
     </table>
 
-    <!--Pagination-->
-    <mat-paginator [ngClass]="{'hidden': !tableConfigurations.allowPagination}" class="no-print" [pageSize]="pageSize"
-      [pageSizeOptions]="[10, 20, 25, 50, 100]">
-    </mat-paginator>
-
-
-    <ng-template #noData>
-      <table *ngIf="!loading" [ngClass]="{'table-bordered': tableConfigurations.showBorder}" mat-table
-        [trackBy]="trackByFn" [dataSource]="dataSource" matSort class="mat-elevation-z0">
-
-        <!-- Number Column -->
-        <ng-container matColumnDef="position">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> No</th>
-          <td mat-cell *matCellDef="let element;let i = index;"> {{ i + 1 }}</td>
-        </ng-container>
-
-        <!-- Position Column -->
-        <ng-container *ngFor="let column of tableConfigurations.tableColumns" matColumnDef="{{ column.name }}">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column.label }}</th>
-          <td mat-cell *matCellDef="let element">
-            <div>
-              <ngx-barcode6
-                        [bc-format]="'CODE128B'"
-                        [bc-value]="'abc'"
-                        [bc-display-value]="false"
-                        [bc-width]="1"
-                        [bc-font-size]="16"
-                    >
-                    </ngx-barcode6>
-            </div>
-            <div>{{element[column?.name] | formatNumber:column?.label }}</div>
-
-          </td>
-        </ng-container>
-
-        <!--Action Icons-->
-        <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let tableListItem">
-            <div class="pull-right"  role="group" aria-label="Basic example"
-              *ngIf="tableConfigurations.actionIcons.edit || tableConfigurations.actionIcons.print || tableConfigurations.actionIcons.delete || tableConfigurations.actionIcons.more || tableConfigurations.actionIcons.cancel">
-              <a @fadeIn class="cursor text-primary action-button mr-1 btn-float" title="print"
-                (click)="printItem(!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn])"
-                style="border-radius: 50%"
-                *ngIf="tableConfigurations?.actionIcons?.print && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
-                <i class="fa fa-print"></i>
-              </a>
-              <a @fadeIn mat-mini-fab style="color:black!important; background-color: white; border-radius: 50%!important;" title="view details"
-                (click)="viewItemDetails(!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn])"
-                style="border-radius: 50%"
-                *ngIf="tableConfigurations?.actionIcons?.more && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
-                <i class="fa fa-list"></i>
-              </a>
-              <a @fadeIn mat-mini-fab style="color:black!important; background-color: white; border-radius: 50%!important;" title="edit"
-                (click)="editItem(!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn])"
-                style="border-radius: 50%"
-                *ngIf="tableConfigurations?.actionIcons?.edit && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
-                <i class="fa fa-pencil"></i>
-              </a>
-              <a @fadeIn class="btn btn-sm btn-danger action-button  btn-float"
-                (click)="showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]] = true"
-                style="border-radius: 50%" title="delete"
-                *ngIf="tableConfigurations?.actionIcons?.delete && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
-                <i class="fa fa-trash-o"></i>
-              </a>
-              <button @fadeIn mat-flat-button
-                (click)="showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]] = true"
-                title="Cancel"
-                *ngIf="tableConfigurations?.actionIcons?.cancel && !showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
-                <mat-icon>cancel</mat-icon>
-                Cancel
-              </button>
-
-              <!--delete confirmation-->
-              <p @fadeIn
-                *ngIf="showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]] && !tableConfigurations.deleting[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
-                Are You
-                sure?</p>
-              <p @fadeIn
-                *ngIf="showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]] && tableConfigurations.deleting[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
-                <span *ngIf="tableConfigurations?.actionIcons?.cancel">Canceling</span>
-                <span *ngIf="tableConfigurations?.actionIcons?.delete">Deleting</span>
-              </p>
-              <p @fadeIn
-                *ngIf="showDelete[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
-                <mat-progress-bar mode="indeterminate" @fadeIn
-                  *ngIf="tableConfigurations.deleting[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]">
-                </mat-progress-bar>
-                <button mat-mini-fab style="color: white; background-color: red; border-radius: 50%!important;" @fadeIn
-                  *ngIf="!tableConfigurations.deleting[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]"
-                  (click)="showDelete = {}">
-                  <mat-icon>clear</mat-icon>
-                </button>
-                <button mat-mini-fab style="color: white; background-color: green; border-radius: 50%!important;" @fadeIn
-                  *ngIf="!tableConfigurations.deleting[!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn]]"
-                  (click)="deleteItem(!tableConfigurations?.identifierColumn?tableListItem?.id:tableListItem[tableConfigurations?.identifierColumn])">
-                  <mat-icon>done</mat-icon>
-                </button>
-              </p>
-            </div>
-          </td>
-        </ng-container>
-
-        <!-- Disclaimer column -->
-        <ng-container matColumnDef="disclaimer">
-          <td mat-footer-cell *matFooterCellDef [attr.colspan]="displayedColumns.length">
-            <h5 class="text-center text-muted pt-1">
-              {{tableConfigurations.empty_msg || "No data"}}
-            </h5>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"
-          style='background-color: rgba(0, 0, 0, 0.1); opacity: 0.8;'></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="routeAnimationsElements" class="card-1">
-        </tr>
-
-        <tr mat-footer-row *matFooterRowDef="['disclaimer']" class="example-second-footer-row"></tr>
-      </table>
-
-    </ng-template>
-  </div>
+  </ng-template>
+</div>
 
 
 
-  <!-- pdf printing section -->
-  <div style="display: none" #printPdf>
+<!-- pdf printing section -->
+<div style="display: none" #printPdf>
 
-    <!-- header goes here -->
-    <!-- Title and logos -->
-    <!-- <table>
+  <!-- header goes here -->
+  <!-- Title and logos -->
+  <!-- <table>
       <tr>
         <td>
           <div class="col-sm-2">
@@ -276,32 +269,32 @@
 
 
 
-    <!--end of header goes here -->
-    <table [ngClass]="{'table table-bordered': true}"
-      [ngStyle]="{'width': '100%', 'border-spacing': '0', 'border-collapse': 'collapse'}" mat-table
-      [dataSource]="dataSourceToPrint" *ngIf="tableList.length != 0;">
-      <!-- Number Column -->
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef [ngStyle]="{'padding-right': '10px','text-align': 'center'}"> No</th>
-        <td mat-cell *matCellDef="let element; let i = index;"
-          [ngStyle]="{'padding-right': '10px','text-align': 'right'}"> {{ i + 1 }}</td>
-      </ng-container>
+  <!--end of header goes here -->
+  <table [ngClass]="{'table table-bordered': true}"
+    [ngStyle]="{'width': '100%', 'border-spacing': '0', 'border-collapse': 'collapse'}" mat-table
+    [dataSource]="dataSourceToPrint" *ngIf="tableList.length != 0;">
+    <!-- Number Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef [ngStyle]="{'padding-right': '10px','text-align': 'center'}"> No</th>
+      <td mat-cell *matCellDef="let element; let i = index;"
+        [ngStyle]="{'padding-right': '10px','text-align': 'right'}"> {{ i + 1 }}</td>
+    </ng-container>
 
-      <!-- Position Column -->
-      <ng-container *ngFor="let column of tableConfigurations.tableColumns" matColumnDef="{{ column.name }}">
-        <th [ngStyle]="column.head_align?{'padding-right': '10px', 'text-align':column.head_align}:''"
-          style="text-align: center" mat-header-cell *matHeaderCellDef> {{ column.label }}</th>
-        <td [ngClass]="{'left-align':!isNumber(element[column?.name]), 'right-align':isNumber(element[column?.name])}"
-          mat-cell *matCellDef="let element">
-          {{ column.noSeparator ? element[column?.name] : element[column?.name] | formatNumber:column?.label }}</td>
-      </ng-container>
+    <!-- Position Column -->
+    <ng-container *ngFor="let column of tableConfigurations.tableColumns" matColumnDef="{{ column.name }}">
+      <th [ngStyle]="column.head_align?{'padding-right': '10px', 'text-align':column.head_align}:''"
+        style="text-align: center" mat-header-cell *matHeaderCellDef> {{ column.label }}</th>
+      <td [ngClass]="{'left-align':!isNumber(element[column?.name]), 'right-align':isNumber(element[column?.name])}"
+        mat-cell *matCellDef="let element">
+        {{ column.noSeparator ? element[column?.name] : element[column?.name] | formatNumber:column?.label }}</td>
+    </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumnsPrint" style='border-color: black'></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumnsPrint;" [ngClass]="routeAnimationsElements"
-        class="card-1"></tr>
-    </table>
-    <h1 style="text-align: right" *ngIf="totalAmount"><strong>Total Amount: {{totalAmount | number: '0.2-2'}}</strong>
-    </h1>
-  </div>
+    <tr mat-header-row *matHeaderRowDef="displayedColumnsPrint" style='border-color: black'></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumnsPrint;" [ngClass]="routeAnimationsElements"
+      class="card-1"></tr>
+  </table>
+  <h1 style="text-align: right" *ngIf="totalAmount"><strong>Total Amount: {{totalAmount | number: '0.2-2'}}</strong>
+  </h1>
+</div>
 
-  <!-- end of pdf printing section -->
+<!-- end of pdf printing section -->

@@ -1,65 +1,65 @@
 <div class="campaign-item-container">
-    <input class="search-bar" placeholder="Search" (keyup)="searchCampaign($event)">
+  <input class="search-bar" placeholder="Search" (keyup)="searchCampaign($event)">
 </div>
 <div @fadeIn class="campaign-item-container data-container"
-    *ngFor="let campaign of campaigns|search:searchKey:searchHeaders">
-    <div class="top-summary-header" (click)="showDetails(campaign)">
-        <div class="row">
-            <div class="col header-summary">Ref#:<span>{{campaign.reference}}</span></div>
-            <div class="col">
-                <div class="header-summary" style="display: inline-block;float:right;">Status: <span
-                        style="font-size: 12px;font-weight: bold;">PENDING</span></div>
-            </div>
+  *ngFor="let campaign of campaigns|search:searchKey:searchHeaders">
+  <div class="top-summary-header" (click)="showDetails(campaign)">
+    <div class="row">
+      <div class="col header-summary">Ref#:<span>{{campaign.reference}}</span></div>
+      <div class="col">
+        <div class="header-summary" style="display: inline-block;float:right;">Status: <span
+            style="font-size: 12px;font-weight: bold;">PENDING</span></div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col header-body">{{campaign.campaign_name}}</div>
+      <div class="col"></div>
+    </div>
+    <div class="row">
+      <div class="col small-body-summary">
+        <mat-icon style="font-size: 15px;color:rgb(139,139,139)">calendar_today</mat-icon>:
+        {{campaign.start_date|date:'fullDate'}}&nbsp;&nbsp;<mat-icon style="font-size: 15px;color:rgb(139,139,139)">
+          calendar_today</mat-icon>: {{campaign.end_date|date:'fullDate'}}
+      </div>
+      <div class="col small-body-summary">
+        <div style="display:inline-block;padding:5px;" class="pull-right">
+          <div class="campaign-control-button" (click)="editCampaign(campaign)"><i class="fa fa-pencil"></i>
+          </div>
+          <div class="campaign-control-button" style="color:red" (click)="deleteCampaign(campaign,signBoards)"><i
+              class="fa fa-trash-o"></i></div>
         </div>
-        <div class="row">
-            <div class="col header-body">{{campaign.campaign_name}}</div>
-            <div class="col"></div>
-        </div>
-        <div class="row">
-            <div class="col small-body-summary">
-                <mat-icon style="font-size: 15px;color:rgb(139,139,139)">calendar_today</mat-icon>:
-                {{campaign.start_date|date:'fullDate'}}&nbsp;&nbsp;<mat-icon
-                    style="font-size: 15px;color:rgb(139,139,139)">
-                    calendar_today</mat-icon>: {{campaign.end_date|date:'fullDate'}}
-            </div>
-            <div class="col small-body-summary">
-                <div style="display:inline-block;padding:5px;" class="pull-right">
-                    <div class="campaign-control-button" (click)="editCampaign(campaign)"><i class="fa fa-pencil"></i>
-                    </div>
-                    <div class="campaign-control-button" style="color:red"
-                        (click)="deleteCampaign(campaign,signBoards)"><i class="fa fa-trash-o"></i></div>
-                </div>
-            </div>
-        </div>
-        <div>
+      </div>
+    </div>
+    <div>
 
+    </div>
+  </div>
+  <br />
+  <div @fadeIn class="board-detail-container" *ngIf="!(showable[campaign.id]==false||!showable[campaign.id])">
+    <div class="header-detail-summary">
+      <div class="row">
+        <div class="col">Sign Board Batches</div>
+        <div class="col">
+          <div @fadeIn class="sign-board-button pull-right" *ngIf="!loadReference"
+            (click)="updateSignBoardBatch(campaign, null)">
+            Create New
+            Batch</div><br />
+          <div @fadeIn class="pull-right" *ngIf="loadReference">Please...</div>
         </div>
+      </div>
     </div>
     <br />
-    <div @fadeIn class="board-detail-container" *ngIf="!(showable[campaign.id]==false||!showable[campaign.id])">
-        <div class="header-detail-summary">
-            <div class="row">
-                <div class="col">Sign Board Batches</div>
-                <div class="col">
-                    <div @fadeIn class="sign-board-button pull-right"  *ngIf="!loadReference" (click)="updateSignBoardBatch(campaign, null)">
-                        Create New
-                        Batch</div><br/>
-                        <div @fadeIn class="pull-right" *ngIf="loadReference">please...</div>
-                </div>
-            </div>
-        </div>
-        <br />
-        <div>
-            <app-board-batch *ngIf="tableConfigurations.tableColumns && signBoardBatches"
-                [tableConfigurations]="tableConfigurations"
-                [tableList]="signBoardBatches|filterSignBoard:'campaign_reference_number':campaign.reference"
-                (rowPreview)="previewSignBoardBatch(campaign,$event)" (rowDelete)="deleteSignBoardBatch($event)"
-                (rowUpdate)="updateSignBoardBatch(campaign,$event)" [loading]="loading$ | async"></app-board-batch>
+    <div>
+      <app-board-batch *ngIf="tableConfigurations.tableColumns && signBoardBatches"
+        [tableConfigurations]="tableConfigurations"
+        [tableList]="signBoardBatches|filterSignBoard:'campaign_reference_number':campaign.reference"
+        (rowPreview)="previewSignBoardBatch(campaign,$event)" (rowDelete)="deleteSignBoardBatch($event)"
+        (rowUpdate)="updateSignBoardBatch(campaign,$event)" [loading]="loading$ | async"></app-board-batch>
 
-        </div>
     </div>
+  </div>
 </div>
 <div @fadeIn class="campaign-item-container" *ngIf="campaigns.length>1">
-    <mat-paginator [length]="campaigns.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
-    </mat-paginator>
+  <mat-paginator [length]="campaigns.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
+  </mat-paginator>
 </div>

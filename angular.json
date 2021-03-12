@@ -28,7 +28,9 @@
             "aot": true,
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webapp",
+              "src/manifest.json"
             ],
             "styles": [
               "src/styles.scss"

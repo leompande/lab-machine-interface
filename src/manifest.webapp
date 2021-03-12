@@ -16,7 +16,7 @@
     "default_locale": "en",
     "activities": {
         "dhis": {
-            "href": "http://localhost:8080/api/"
+            "href": "https://signboard.dpod.monitafrica.com/api/"
         }
     },
      "authorities": [

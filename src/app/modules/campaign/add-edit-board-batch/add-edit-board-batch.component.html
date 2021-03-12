@@ -23,21 +23,7 @@
                 </div>
             </div>
             <br />
-            <!-- <div class="row">
-                <div class="col">
-                    <app-one-sided-multi-select [items]="filteredOutlets" [selected]="chosedOutlet"
-                        (onChange)="onSelectionOutletDone($event)"
-                        [config]="{label:'Outlets',allowMultiple: false, autoDismiss:true}">
-                    </app-one-sided-multi-select>
-                </div>
-
-                <div class="col">
-                    <app-one-sided-multi-select [items]="availableAgencies" [selected]="chosedAgency"
-                        (onChange)="onSelectionAgencyDone($event)"
-                        [config]="{label:'Agency',allowMultiple: false, autoDismiss:true}"></app-one-sided-multi-select>
-                </div>
-            </div> -->
-            <div class="row">
+            <div class="row" @fadeIn *ngIf="district_council_name">
                 <div class="col">
                     <app-board-collector [boardList]="[]" [agencies]="availableAgencies" [outlets]="availableOutlets" (onItemChanges)="onItemChanges($event)"></app-board-collector>
                 </div>
@@ -47,7 +33,7 @@
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>Start Date</mat-label>
-                        <input matInput [matDatepicker]="start_date" formControlName="start_date">
+                        <input matInput [matDatepicker]="start_date" formControlName="start_date" [disabled]="!district_council_name">
                         <mat-datepicker-toggle matSuffix [for]="start_date" placeholder="Start Date">
                         </mat-datepicker-toggle>
                         <mat-datepicker touchUi #start_date></mat-datepicker>
@@ -56,7 +42,7 @@
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>End Date</mat-label>
-                        <input matInput [matDatepicker]="end_date" formControlName="end_date">
+                        <input matInput [matDatepicker]="end_date" formControlName="end_date" [disabled]="!district_council_name">
                         <mat-datepicker-toggle matSuffix [for]="end_date" placeholder="End Date">
                         </mat-datepicker-toggle>
                         <mat-datepicker touchUi #end_date></mat-datepicker>
@@ -67,8 +53,7 @@
     </div>
     <br />
     <div class="form-footer">
-        <app-save-area [isUpdate]="isUpdate" [isEnabled]="boards_config.length>0
-        && selectedAgency && selectedOutlet && organisation_unit_id" [loading]="loading" (onCancel)="cancel()"
+        <app-save-area [isUpdate]="isUpdate" [isEnabled]="boards_config.length>0 && organisation_unit_id" [loading]="loading" (onCancel)="cancel()"
             (onSave)="save()">
         </app-save-area>
         <button id="closeButton" mat-button mat-dialog-close style="display: none;">Cancel</button>

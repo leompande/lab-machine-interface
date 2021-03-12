@@ -10,11 +10,13 @@ import { makeId } from 'src/app/shared/helpers';
 import { Outlet } from 'src/app/store/outlet/reducers/outlet';
 import { SignBoardBatch } from 'src/app/store/sign-board-batch/reducers/sign-board-batch';
 import { HttpClient } from '@angular/common/http';
+import { fadeIn } from 'src/app/shared/animations/router-animation';
 
 @Component({
   selector: 'app-add-edit-board-batch',
   templateUrl: './add-edit-board-batch.component.html',
-  styleUrls: ['./add-edit-board-batch.component.scss']
+  styleUrls: ['./add-edit-board-batch.component.scss'],
+  animations:[fadeIn]
 })
 export class AddEditBoardBatchComponent implements OnInit {
   isUpdate: boolean = false;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClientService } from './http-client.service';
-import {first} from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ManifestService } from './manifest.service';
 
@@ -11,7 +11,7 @@ import {
   HttpHandler,
   HttpRequest,
 } from '@angular/common/http';
-import {Store} from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { ApplicationState } from 'src/app/store';
 import { User } from 'src/app/store/user/reducers/user';
 import { DatastoreService } from './datastore.service';
@@ -41,13 +41,13 @@ export class UserService {
     private manifestService: ManifestService,
     private dataStoreService: DatastoreService,
     private store: Store<ApplicationState>
-) {
-  this.setUser();
-}
+  ) {
+    this.setUser();
+  }
 
-setUser() {
-  // this.user$ = this.loadCurrentUser().pipe(shareReplay(1));
-}
+  setUser() {
+    // this.user$ = this.loadCurrentUser().pipe(shareReplay(1));
+  }
 
   /**
    * Load current user information
@@ -56,16 +56,16 @@ setUser() {
   loadCurrentUser(): Observable<User> {
     return new Observable(observer => {
       this.httpClient
-              .get(`me.json?fields=id,name,displayName,created,lastUpdated,email,dataViewOrganisationUnits[id,name,code,level,parent[id,name]],organisationUnits[id,name,level,code,parent[id,name]],userCredentials[username,userRoles[authorities]]`)
-              .subscribe(user => {
-                observer.next(user);
-                observer.complete();
-              }, error1 => observer.error());
+        .get(`me.json?fields=id,name,displayName,created,lastUpdated,email,dataViewOrganisationUnits[id,name,code,level,parent[id,name]],organisationUnits[id,name,level,code,parent[id,name]],userCredentials[username,userRoles[authorities]]`)
+        .subscribe(user => {
+          observer.next(user);
+          observer.complete();
+        }, error1 => observer.error());
     });
   }
 
   login(credentials: { username: any, password: any }): Observable<string> {
-    const   meUrl = 'me.json?fields=id,name,displayName,created,lastUpdated,email,dataViewOrganisationUnits[id,name,level,code,parent[id,name]],organisationUnits[id,code,name,level,parent[id,name]],userCredentials[username,userRoles[authorities]]';
+    const meUrl = 'me.json?fields=id,name,displayName,created,lastUpdated,email,dataViewOrganisationUnits[id,name,level,code,parent[id,name]],organisationUnits[id,code,name,level,parent[id,name]],userCredentials[username,userRoles[authorities]]';
     return new Observable(observer => {
       const token = this.prepareToken(credentials);
       authenticationtoken = token;
@@ -73,32 +73,32 @@ setUser() {
       const headers: HttpHeaders = this.createDHISAuthorizationHeader(token);
       this.manifestService.getRootUrl().
         subscribe(rootUrl => {
-          this.http.get(rootUrl + meUrl,{
+          this.http.get(rootUrl + meUrl, {
             headers: headers
-          } )
+          })
             .subscribe((data: any) => {
               localStorage.setItem('sb-web-token', token);
-              this.dataStoreService.getData('users',data.id).subscribe((userData: any)=>{
-              localStorage.setItem('sb-user-id', data.id);
-              localStorage.setItem('sb-user-organisation-unit', this.getUserOu(data));
-              observer.next('Login successful..');
-              observer.complete();
-            });
-            
+              this.dataStoreService.getData('users', data.id).subscribe((userData: any) => {
+                localStorage.setItem('sb-user-id', data.id);
+                localStorage.setItem('sb-user-organisation-unit', this.getUserOu(data));
+                observer.next('Login successful..');
+                observer.complete();
+              });
+
             },
-        error1 => {
-          const errorMessage = error1.message;
-          if ( errorMessage.indexOf('Unauthorized')) {
-            observer.error('Incorrect Username or Password');
-          } else if ( errorMessage.indexOf('unknown url')) {
-            observer.error('There is no internet connection');
-          } else {
-            observer.error('There is problem with server please contact the administrator');
-          }
-        }
-      );
+              error1 => {
+                const errorMessage = error1.message;
+                if (errorMessage.indexOf('Unauthorized')) {
+                  observer.error('Incorrect Username or Password');
+                } else if (errorMessage.indexOf('unknown url')) {
+                  observer.error('There is no internet connection');
+                } else {
+                  observer.error('There is problem with server please contact the administrator');
+                }
+              }
+            );
+        });
     });
-  });
   }
 
 

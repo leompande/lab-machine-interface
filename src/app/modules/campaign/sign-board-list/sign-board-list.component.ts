@@ -12,7 +12,7 @@ import { fadeIn } from 'src/app/shared/animations/router-animation';
   selector: 'app-sign-board-list',
   templateUrl: './sign-board-list.component.html',
   styleUrls: ['./sign-board-list.component.scss'],
-  animations:[fadeIn]
+  animations: [fadeIn]
 })
 export class SignBoardListComponent implements OnInit, OnChanges {
   @Input() campaigns;
@@ -94,7 +94,7 @@ export class SignBoardListComponent implements OnInit, OnChanges {
   }
 
   updateSignBoardBatch(campaign: Campaign, batchId: any) {
-    this.creatEditSignBoardBatch.emit({ campaign, batch: this.signBoardBatches.find((batch: any)=>batch.id==batchId) });
+    this.creatEditSignBoardBatch.emit({ campaign, batch: this.signBoardBatches.find((batch: any) => batch.id == batchId) });
   }
 
 

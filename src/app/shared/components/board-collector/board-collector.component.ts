@@ -57,8 +57,8 @@ export class BoardCollectorComponent implements OnInit {
       this.boardHeight = null;
       this.boardWidth = null;
       this.boardQuantity = null;
-      this.selectedAgency = null;
-      this.selectedOutlet = null;
+      this.chosedAgency = [];
+      this.chosedOutlet = [];
       this.onItemChanges.emit(this.boardList);
     }
   }
