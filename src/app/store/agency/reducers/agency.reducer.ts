@@ -23,12 +23,17 @@ export function reducer(
   action: AgencyActions
 ): State {
   switch (action.type) {
-    case AgencyActionTypes.Get: {
-      return {...state, loading: true};
+    case AgencyActionTypes.LoadAgencies: {
+      return { ...state, loading: true };
     }
 
-    case AgencyActionTypes.DoneLoading: {
-      return {...state, loading: false};
+
+    case AgencyActionTypes.DoneLoadingAgencies: {
+      return { ...state, loading: false };
+    }
+
+    case AgencyActionTypes.LoadAgenciesFailure: {
+      return { ...state, loading: false };
     }
 
     case AgencyActionTypes.AddAgency: {

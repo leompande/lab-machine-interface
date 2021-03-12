@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { catchError, map, concatMap, switchMap } from 'rxjs/operators';
 import { EMPTY, of, Observable } from 'rxjs';
-import { LoadAgenciesFailure, LoadAgenciesSuccess, AgencyActionTypes, AgencyActions, LoadAgencies } from '../actions/agency.actions';
+import { LoadAgenciesFailure, LoadAgenciesSuccess, AgencyActionTypes, AgencyActions, LoadAgencies, DoneLoadingAgencies } from '../actions/agency.actions';
 import { Agency } from '../reducers/agency';
 import { AgencyService } from 'src/app/shared/services/model-services/agency.service';
 
@@ -17,7 +17,7 @@ export class AgencyEffects {
     ofType(AgencyActionTypes.LoadAgencies),
     switchMap((action: LoadAgencies) =>
       this.agencyService.listAgencies().pipe(
-        map((agencies: Agency[]) => new LoadAgenciesSuccess({Agencies:agencies})),
+        switchMap((agencies: Agency[]) => [new LoadAgenciesSuccess({Agencies:agencies}),new DoneLoadingAgencies()]),
         catchError((error: any) => of(new LoadAgenciesFailure(error)))
       )
     )

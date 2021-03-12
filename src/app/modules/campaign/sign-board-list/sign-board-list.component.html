@@ -41,10 +41,10 @@
             <div class="row">
                 <div class="col">Sign Board Batches</div>
                 <div class="col">
-
-                    <div class="sign-board-button pull-right" (click)="updateSignBoardBatch(campaign, null)">
+                    <div @fadeIn class="sign-board-button pull-right"  *ngIf="!loadReference" (click)="updateSignBoardBatch(campaign, null)">
                         Create New
-                        Batch</div>
+                        Batch</div><br/>
+                        <div @fadeIn class="pull-right" *ngIf="loadReference">please...</div>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
         </div>
     </div>
 </div>
-<div @fadeIn class="campaign-item-container" *ngIf="campaigns.length>1" >
+<div @fadeIn class="campaign-item-container" *ngIf="campaigns.length>1">
     <mat-paginator [length]="campaigns.length" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]">
     </mat-paginator>
 </div>

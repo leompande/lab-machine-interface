@@ -18,7 +18,7 @@ export class AgencyComponent implements OnInit {
   @Input()
   organisations!: Organisation[];
   @Input() organisationEntities: any;
-  loading$!: Observable<boolean>;
+  @Input() loading$: Observable<boolean>;
 
 
 

@@ -1,12 +1,12 @@
 <div class="campaign-container">
-    <app-loader [message]="'  '" *ngIf="(loadCampaign$|async) == true"></app-loader>
-    <app-sign-board-list [campaigns]="campaigns" [signBoardBatches]="signBoardBatches"
-        (creatEditSignBoardBatch)="editSignBoardBatch($event)" (editSignBoardBatch)="updateSignBoardBatch($event)"
-        (deletingSignBoardBatch)="deleteSignBoardBatch($event)" (editingCampaign)="editingCampaign($event)"
-        (deletingCampaign)="deletingCampaign($event)">
-    </app-sign-board-list>
-    <div @fadeIn class="create-button-conatiner"
-        [ngClass]="{'add-button-area-center-aligned':campaigns.length<1,'add-button-area-bottom-left-aligned':campaigns.length>0}">
-        <div class="custom-button" (click)="createEditCampaign()">Create Campaign</div>
-    </div>
+  <app-loader [message]="'  '" *ngIf="(loadCampaign$|async) == true"></app-loader>
+  <app-sign-board-list [loadReference]="loadReference" [campaigns]="campaigns" [signBoardBatches]="signBoardBatches"
+    (creatEditSignBoardBatch)="editSignBoardBatch($event)" (editSignBoardBatch)="updateSignBoardBatch($event)"
+    (deletingSignBoardBatch)="deleteSignBoardBatch($event)" (editingCampaign)="editingCampaign($event)"
+    (deletingCampaign)="deletingCampaign($event)">
+  </app-sign-board-list>
+  <div @fadeIn class="create-button-conatiner"
+    [ngClass]="{'add-button-area-center-aligned':campaigns.length<1,'add-button-area-bottom-left-aligned':campaigns.length>0}">
+    <div class="custom-button" (click)="createEditCampaign()">Create Campaign</div>
+  </div>
 </div>

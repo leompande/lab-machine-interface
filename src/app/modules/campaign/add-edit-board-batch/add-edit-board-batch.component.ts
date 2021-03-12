@@ -55,7 +55,6 @@ export class AddEditBoardBatchComponent implements OnInit {
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: { currentObject: SignBoardBatch, campaign: Campaign, organisation: Organisation, agencies: Agency[], outlets: Outlet[], reference: string }, private signBoardBatchService: SignBoardBatchService, private http: HttpClient) {
     this.isUpdate = data.currentObject != null;
-    console.log(data.currentObject);
     this.startingOus = this.isUpdate ? [data.currentObject.organisation_unit_id] : [];
     this.chosedAgency = data.currentObject ? data.agencies.filter(agency => agency.name == data.currentObject.agency_name).map(agency => {
       return {

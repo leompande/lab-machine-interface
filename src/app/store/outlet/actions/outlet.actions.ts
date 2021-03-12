@@ -4,7 +4,7 @@ import { Update } from '@ngrx/entity';
 
 export enum OutletActionTypes {
   Get = '[Outlet] Get Outlets',
-  DoneLoading = '[Outlet] Done Loading Outlets',
+  DoneLoadingOutlets = '[Outlet] Done Loading Outlets',
   LoadOutlets = '[Outlet] Load Outlets',
   LoadOutletsSuccess = '[Outlet] Load Outlets Success',
   SelectOutlet = '[Outlet] Select Outlet',
@@ -154,13 +154,15 @@ export class GetOutlets implements Action {
   readonly type = OutletActionTypes.Get;
 }
 
-export class DoneLoagingOutlets implements Action {
-  readonly type = OutletActionTypes.DoneLoading;
+export class DoneLoadingOutlets implements Action {
+  readonly type = OutletActionTypes.DoneLoadingOutlets;
 }
 
 export type OutletActions =
   LoadOutlets
   | LoadOutletsSuccess
+  | LoadOutletsFailure
+  | DoneLoadingOutlets
   | AddOutletFailure
   | AddOutlet
   | AddOutletSuccess
@@ -177,5 +179,4 @@ export type OutletActions =
   | DeleteOutletFailure
   | DeleteOutlets
   | ClearOutlets
-  | GetOutlets
-  | DoneLoagingOutlets;
+  | GetOutlets;

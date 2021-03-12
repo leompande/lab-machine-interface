@@ -15,15 +15,17 @@ import { Organisation } from 'src/app/store/organisation/reducers/organisation';
 export class AgencyContainerComponent implements OnInit {
 
   organisations$: Observable<Organisation[]>;
-  organisationEntities$: Observable<{[id: string]: Organisation}>;
+  organisationEntities$: Observable<{ [id: string]: Organisation }>;
   agencies$: Observable<Agency[]>;
-  agencyEntities$: Observable<{[id: string]: Agency}>;
-  constructor(private store: Store<ApplicationState>) {  
+  agencyEntities$: Observable<{ [id: string]: Agency }>;
+  loading$: Observable<any>;
+  constructor(private store: Store<ApplicationState>) {
     this.agencies$ = this.store.pipe(select(agencySelector.selectAll));
-    this.agencyEntities$ = this.store.pipe(select(agencySelector.selectEntities)); 
+    this.agencyEntities$ = this.store.pipe(select(agencySelector.selectEntities));
     this.organisations$ = this.store.pipe(select(organisationSelector.selectAll));
-    this.organisationEntities$ = this.store.pipe(select(organisationSelector.selectEntities)); 
-  
+    this.organisationEntities$ = this.store.pipe(select(organisationSelector.selectEntities));
+    this.loading$ = this.store.pipe(select(agencySelector.selectLoading));
+
   }
 
   ngOnInit(): void {

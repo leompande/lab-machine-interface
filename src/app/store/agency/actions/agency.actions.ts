@@ -4,8 +4,9 @@ import { Update } from '@ngrx/entity';
 
 export enum AgencyActionTypes {
   Get = '[Agency] Get Agencies',
-  DoneLoading = '[Agency] Done Loading Agencies',
+  DoneLoadingAgencies = '[Agency] Done Loading Agencies',
   LoadAgencies = '[Agency] Load Agencies',
+
   LoadAgenciesSuccess = '[Agency] Load Agencies Success',
   SelectAgency = '[Agency] Select Agency',
   LoadAgenciesFailure = '[Agency] Load Agencies Failure',
@@ -154,13 +155,14 @@ export class GetAgencies implements Action {
   readonly type = AgencyActionTypes.Get;
 }
 
-export class DoneLoagingAgencies implements Action {
-  readonly type = AgencyActionTypes.DoneLoading;
+export class DoneLoadingAgencies implements Action {
+  readonly type = AgencyActionTypes.DoneLoadingAgencies;
 }
 
 export type AgencyActions =
   LoadAgencies
   | LoadAgenciesSuccess
+  |LoadAgenciesFailure
   | AddAgencyFailure
   | AddAgency
   | AddAgencySuccess
@@ -178,4 +180,4 @@ export type AgencyActions =
   | DeleteAgencies
   | ClearAgencies
   | GetAgencies
-  | DoneLoagingAgencies;
+  | DoneLoadingAgencies;

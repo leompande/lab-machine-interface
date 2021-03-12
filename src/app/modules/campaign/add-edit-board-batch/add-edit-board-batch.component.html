@@ -23,7 +23,7 @@
                 </div>
             </div>
             <br />
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col">
                     <app-one-sided-multi-select [items]="filteredOutlets" [selected]="chosedOutlet"
                         (onChange)="onSelectionOutletDone($event)"
@@ -36,10 +36,10 @@
                         (onChange)="onSelectionAgencyDone($event)"
                         [config]="{label:'Agency',allowMultiple: false, autoDismiss:true}"></app-one-sided-multi-select>
                 </div>
-            </div>
+            </div> -->
             <div class="row">
                 <div class="col">
-                    <app-board-collector [boardList]="[]" (onItemChanges)="onItemChanges($event)"></app-board-collector>
+                    <app-board-collector [boardList]="[]" [agencies]="availableAgencies" [outlets]="availableOutlets" (onItemChanges)="onItemChanges($event)"></app-board-collector>
                 </div>
             </div>
             <br/>

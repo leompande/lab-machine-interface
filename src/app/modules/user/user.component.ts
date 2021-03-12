@@ -23,8 +23,7 @@ export class UserComponent implements OnInit {
   @Input()
   organisations!: Organisation[];
   @Input() organisationEntities: any;
-  
-  loading$!: Observable<boolean>;
+  @Input() loading$: Observable<boolean>;
 
 
   tableConfigurations = {
@@ -33,7 +32,7 @@ export class UserComponent implements OnInit {
       { name: 'middleName', label: 'Middle Name' },
       { name: 'lastName', label: 'Last Name' },
       { name: 'email', label: 'Email' },
-      {name: 'phone', label: 'Phone'},
+      { name: 'phone', label: 'Phone' },
       { name: 'username', label: 'Username' },
       { name: 'organisation', label: 'Organisation' },
       { name: 'agency', label: 'Agency' },
@@ -50,7 +49,7 @@ export class UserComponent implements OnInit {
     deleting: {},
     empty_msg: 'No users'
   };
-  
+
   constructor(public dialog: MatDialog, private userService: UserService) { }
 
   ngOnInit(): void {
@@ -58,22 +57,22 @@ export class UserComponent implements OnInit {
 
   updateUser(userId: string) {
 
-      const dialogRef = this.dialog.open(AddEditUserComponent, {
-        data:{
-          currentObject:this.users.find(user => user.id == userId), 
-          agencies: this.agencies,
-          organisations: this.organisations
+    const dialogRef = this.dialog.open(AddEditUserComponent, {
+      data: {
+        currentObject: this.users.find(user => user.id == userId),
+        agencies: this.agencies,
+        organisations: this.organisations
 
-        },
-        width: '80%',
-        maxHeight: '80%',
-        disableClose: true,
-        hasBackdrop: true, 
-        closeOnNavigation: true
-      });
+      },
+      width: '80%',
+      maxHeight: '80%',
+      disableClose: true,
+      hasBackdrop: true,
+      closeOnNavigation: true
+    });
 
-      dialogRef.afterClosed().subscribe(result => {
-      });
+    dialogRef.afterClosed().subscribe(result => {
+    });
 
   }
 
@@ -87,8 +86,8 @@ export class UserComponent implements OnInit {
       maxHeight: '80%',
       disableClose: true,
       hasBackdrop: true, data: {
-        
-        currentObject:null,
+
+        currentObject: null,
         agencies: this.agencies,
         organisations: this.organisations
       },

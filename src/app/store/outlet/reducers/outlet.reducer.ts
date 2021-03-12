@@ -23,12 +23,17 @@ export function reducer(
   action: OutletActions
 ): State {
   switch (action.type) {
-    case OutletActionTypes.Get: {
-      return {...state, loading: true};
+    case OutletActionTypes.LoadOutlets: {
+      return { ...state, loading: true };
     }
 
-    case OutletActionTypes.DoneLoading: {
-      return {...state, loading: false};
+
+    case OutletActionTypes.DoneLoadingOutlets: {
+      return { ...state, loading: false };
+    }
+
+    case OutletActionTypes.LoadOutletsFailure: {
+      return { ...state, loading: false };
     }
 
     case OutletActionTypes.AddOutlet: {

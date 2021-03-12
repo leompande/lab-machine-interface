@@ -23,6 +23,7 @@ export class UserContainerComponent implements OnInit {
   organisationEntities$: Observable<{[id: string]: Organisation}>;
   agencies$: Observable<Agency[]>;
   agencyEntities$: Observable<{[id: string]: Agency}>;
+  loading$: Observable<any>;
   constructor(private store: Store<ApplicationState>) {  
     this.users$ = this.store.pipe(select(userSelector.selectAll));
     this.userEntities$ = this.store.pipe(select(userSelector.selectEntities));
@@ -30,6 +31,7 @@ export class UserContainerComponent implements OnInit {
     this.agencyEntities$ = this.store.pipe(select(agencySelector.selectEntities)); 
     this.organisations$ = this.store.pipe(select(organisationSelector.selectAll));
     this.organisationEntities$ = this.store.pipe(select(organisationSelector.selectEntities)); 
+    this.loading$ = this.store.pipe(select(userSelector.selectLoading));
   
   }
 

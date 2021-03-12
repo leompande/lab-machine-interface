@@ -14,9 +14,11 @@ export class OutletContainerComponent implements OnInit {
 
   outlets$: Observable<Outlet[]>;
   outletEntities$: Observable<{[id: string]: Outlet}>;
+  outletLoading$: Observable<any>;
   constructor(private store: Store<ApplicationState>) {  
     this.outlets$ = this.store.pipe(select(outletSelector.selectAll));
-    this.outletEntities$ = this.store.pipe(select(outletSelector.selectEntities)); 
+    this.outletEntities$ = this.store.pipe(select(outletSelector.selectEntities));
+    this.outletLoading$ = this.store.pipe(select(outletSelector.selectLoading)); 
   }
 
   ngOnInit(): void {

@@ -1,4 +1,5 @@
 <div class="user-container">
+  <app-loader [message]="'  '" *ngIf="(loading$|async) == true"></app-loader>
     <div class="display-pane">
         <vvs-main-data-table
         *ngIf="tableConfigurations.tableColumns && users"

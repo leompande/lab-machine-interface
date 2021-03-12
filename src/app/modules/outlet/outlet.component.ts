@@ -16,7 +16,7 @@ export class OutletComponent implements OnInit {
   @Input()
   outlets!: Outlet[];
   @Input() outletEntities: any;
-  loading$!: Observable<boolean>;
+  @Input() loading$!: Observable<boolean>;
 
   tableConfigurations = {
     tableColumns: [

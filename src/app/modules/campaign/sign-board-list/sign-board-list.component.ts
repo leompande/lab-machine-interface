@@ -56,6 +56,7 @@ export class SignBoardListComponent implements OnInit, OnChanges {
 
   @Output() deletingCampaign = new EventEmitter;
   @Output() editingCampaign = new EventEmitter;
+  @Input() loadReference: boolean;
 
   constructor(public dialog: MatDialog, private storeService: DatastoreService) {
 

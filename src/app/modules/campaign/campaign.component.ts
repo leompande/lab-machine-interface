@@ -34,6 +34,7 @@ export class CampaignComponent implements OnInit {
   @Input() signBoardBatchEntities: { [id: string]: SignBoardBatch };
   @Input() loadCampaign$: Observable<any>;
   allSignBoards: any[] = [];
+  loadReference: boolean = false;
 
 
   constructor(public dialog: MatDialog, private campaignService: CampaignService, private signBoardService: SignBoardService, private signBoardBatchService: SignBoardBatchService) {
@@ -95,7 +96,9 @@ export class CampaignComponent implements OnInit {
   }
 
   async createUpdateSignBoardBatch(event: { campaign: Campaign, currentObject?: any }) {
+    this.loadReference = true;
     const reference = event.currentObject ? event.currentObject.reference : await this.signBoardBatchService.getReference(event.campaign.reference).toPromise();
+    this.loadReference = false;
     const dialogRef = this.dialog.open(AddEditBoardBatchComponent, {
       data: {
         currentObject: event.currentObject,

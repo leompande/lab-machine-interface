@@ -24,7 +24,7 @@
     </div>
   </div>
 
-  <vvs-loader @fadeIn *ngIf="loading" message="{{ loadingMessage || 'Getting Data Please Wait...' }}"></vvs-loader>
+  <app-loader @fadeIn *ngIf="loading" message="{{ loadingMessage || 'Getting Data Please Wait...' }}"></app-loader>
   <table [ngClass]="{'table-bordered': tableConfigurations.showBorder}" mat-table [trackBy]="trackByFn"
     [dataSource]="dataSource" matSort class="mat-elevation-z0" *ngIf="tableList.length != 0; else noData">
     <!-- Number Column -->
