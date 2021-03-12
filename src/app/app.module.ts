@@ -53,6 +53,7 @@ import { effects } from './store/effects';
 import { OutletMapPreviewComponent } from './modules/outlet/outlet-map-preview/outlet-map-preview.component';
 import { SignBoardBatchContainerComponent } from './modules/sign-board-batch/sign-board-bach-container/sign-board-batch-container.component';
 import { SignBoardBatchComponent } from './modules/sign-board-batch/sign-board-batch.component';
+import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -104,7 +105,7 @@ import { SignBoardBatchComponent } from './modules/sign-board-batch/sign-board-b
   exports: [
     SharedModule
   ],
-  providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }],
+  providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }, { provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
