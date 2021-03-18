@@ -36,7 +36,6 @@ export class ManifestService {
   private _manifestLoaded: boolean;
 
   constructor(private httpClient: HttpClient) {
-    // this._defaultRootUrl = '../../../api/';
     this._defaultRootUrl = '/api/';
     this._manifestLoaded = false;
   }
@@ -54,9 +53,7 @@ export class ManifestService {
   }
 
   public getRootUrl(): Observable<string> {
-    // return of(this._defaultRootUrl);
     return this.getManifest().pipe(map((manifest: Manifest) => {
-      console.log(manifest);
       if (!manifest) {
         return this._defaultRootUrl;
       }

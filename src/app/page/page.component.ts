@@ -15,7 +15,6 @@ import { LoadCampaigns } from '../store/campaign/actions/campaign.actions';
 import { LoadSignBoards } from '../store/sign-board/actions/sign-board.actions';
 import { LoadOutlets } from '../store/outlet/actions/outlet.actions';
 import { LoadSignBoardBatches } from '../store/sign-board-batch/actions/sign-board-batch.actions';
-import { LoadSignBoardBatchItems } from '../store/sign-board-batch-item/actions/sign-board-batch-item.actions';
 
 @Component({
   selector: 'app-page',

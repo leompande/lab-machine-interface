@@ -11,7 +11,7 @@ import { LoadCampaigns, DeleteCampaign } from 'src/app/store/campaign/actions/ca
 })
 export class CampaignService {
   user: User;
-  constructor(private dataStore: DatastoreService, private trackerService: TrackerService, private store: Store<ApplicationState>) { 
+  constructor(private dataStore: DatastoreService, private trackerService: TrackerService, private store: Store<ApplicationState>) {
     this.user = new Function('return '+localStorage.getItem('sb-user'))();
   }
 
@@ -51,10 +51,10 @@ export class CampaignService {
     });
   }
 
-  
+
   saveUpdateCampaign(isUpdate,campaign: any,trackedEntityInstanceId: string,eventDate: any): Observable<any>{
     let trackedEntityInstance = this.trackerService.prepareTrackedEntityPayload('Campaigns','zs9X8YYBOnK',campaign,!isUpdate?'add':'edit',trackedEntityInstanceId,eventDate);
-    return Observable.create(observer=>{
+    return Observable.create((observer : any)=>{
       this.trackerService.saveTrackedEntityInstances([trackedEntityInstance]).subscribe(results=>{
         this.store.dispatch(new LoadCampaigns());
         observer.next(results);
@@ -67,7 +67,7 @@ export class CampaignService {
   }
 
   deleteCampaign(trackedEntityInstance: string, id: string): Observable<any> {
-    return Observable.create(observer => {
+    return Observable.create((observer : any) => {
       this.trackerService.deleteTrackedEntityInstance(trackedEntityInstance).subscribe(results => {
         this.store.dispatch(new DeleteCampaign({ id }));
         observer.next(results);

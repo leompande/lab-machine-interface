@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Routes, CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { User } from 'src/app/store/user/reducers/user';
 
 @Injectable({
@@ -12,5 +12,5 @@ export class AuthGuardService implements CanActivate {
     const user: User = new Function('return '+localStorage.getItem('sb-user'))();
     return route.data.roles.indexOf(user.roleId)>=0;
   }
-  
+
 }

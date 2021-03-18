@@ -11,12 +11,13 @@ import { Outlet } from 'src/app/store/outlet/reducers/outlet';
 import { SignBoardBatch } from 'src/app/store/sign-board-batch/reducers/sign-board-batch';
 import { HttpClient } from '@angular/common/http';
 import { fadeIn } from 'src/app/shared/animations/router-animation';
+import { HttpClientService } from 'src/app/shared/services/dhis2/http-client.service';
 
 @Component({
   selector: 'app-add-edit-board-batch',
   templateUrl: './add-edit-board-batch.component.html',
   styleUrls: ['./add-edit-board-batch.component.scss'],
-  animations:[fadeIn]
+  animations: [fadeIn]
 })
 export class AddEditBoardBatchComponent implements OnInit {
   isUpdate: boolean = false;
@@ -55,7 +56,7 @@ export class AddEditBoardBatchComponent implements OnInit {
     region: string
   };
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { currentObject: SignBoardBatch, campaign: Campaign, organisation: Organisation, agencies: Agency[], outlets: Outlet[], reference: string }, private signBoardBatchService: SignBoardBatchService, private http: HttpClient) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { currentObject: SignBoardBatch, campaign: Campaign, organisation: Organisation, agencies: Agency[], outlets: Outlet[], reference: string }, private signBoardBatchService: SignBoardBatchService, private http: HttpClientService) {
     this.isUpdate = data.currentObject != null;
     this.startingOus = this.isUpdate ? [data.currentObject.organisation_unit_id] : [];
     this.chosedAgency = data.currentObject ? data.agencies.filter(agency => agency.name == data.currentObject.agency_name).map(agency => {
@@ -130,11 +131,17 @@ export class AddEditBoardBatchComponent implements OnInit {
       this.showOrgUnitSelectionError = false;
       this.organisation_unit_id = selectedOrganisationUnit.id;
       this.district_council_name = selectedOrganisationUnit.name;
-      const data = await this.http.get("/api/organisationUnits/" + this.organisation_unit_id + ".json?fields=id,name,parent[id,name,parent[id,name]]").toPromise();
-      this.orgUnitData = {
-        district: this.district_council_name,
-        region: data ? data['parent'] ? data['parent']['name'] : "" : "",
-      };
+      const data = await this.http.get("organisationUnits/" + this.organisation_unit_id + ".json?fields=id,name,parent[id,name,parent[id,name]]").toPromise();
+      try {
+        this.orgUnitData = {
+          district: this.district_council_name,
+          region: data ? data['parent'] ? data['parent']['name'] : "" : "",
+        };
+      } catch (e) {
+        console.log(e);
+      }
+
+
       // filter outlets according to selected district name
       this.filteredOutlets = this.data.outlets.filter((outlet: Outlet) => {
         return outlet.district == this.district_council_name;
@@ -159,23 +166,30 @@ export class AddEditBoardBatchComponent implements OnInit {
     this.selectedOutlet = event[0].name;
   }
   async save() {
+    console.log("Bitch Please");
     this.loading = true;
-    const formValues = {
-      ...this.form.value,
-      outlet: this.selectedOutlet,
-      boards_config: this.boards_config,
-      start_date: this.form.value.start_date ? new Date(this.form.value.start_date).toISOString().substr(0, 10) : new Date().toISOString().substr(0, 10),
-      end_date: this.form.value.end_date ? new Date(this.form.value.end_date).toISOString().substr(0, 10) : new Date().toISOString().substr(0, 10),
-      organisation_unit_id: this.organisation_unit_id,
-      region: this.orgUnitData.region,
-      district_council_name: this.district_council_name,
-      agency_name: this.selectedAgency,
-    };
-    let trackedEntityInstanceId = this.data.currentObject && this.data.currentObject.trackedEntityInstance ? this.data.currentObject.trackedEntityInstance : makeId();
-    let eventDate;
-    await this.signBoardBatchService.saveUpdateSignBoardBatch(this.isUpdate, formValues, trackedEntityInstanceId, eventDate).toPromise();
-    this.loading = false;
-    this.cancel();
+    try {
+      const formValues = {
+        ...this.form.value,
+        boards_config: this.boards_config,
+        start_date: this.form.value.start_date ? new Date(this.form.value.start_date).toISOString().substr(0, 10) : new Date().toISOString().substr(0, 10),
+        end_date: this.form.value.end_date ? new Date(this.form.value.end_date).toISOString().substr(0, 10) : new Date().toISOString().substr(0, 10),
+        organisation_unit_id: this.organisation_unit_id,
+        region: this.orgUnitData.region,
+        district_council_name: this.district_council_name,
+        agency_name: this.selectedAgency,
+      };
+
+      let trackedEntityInstanceId = this.data.currentObject && this.data.currentObject.trackedEntityInstance ? this.data.currentObject.trackedEntityInstance : makeId();
+      let eventDate;
+      await this.signBoardBatchService.saveUpdateSignBoardBatch(this.isUpdate, formValues, trackedEntityInstanceId, eventDate).toPromise();
+      this.loading = false;
+      this.cancel();
+    } catch (e) {
+      console.log(this.orgUnitData);
+    }
+
+
   }
 
   cancel() {
@@ -210,10 +224,11 @@ export class AddEditBoardBatchComponent implements OnInit {
     this.files.splice(index, 1)
   }
 
-  onItemChanges(events: any[]){
+  onItemChanges(events: any[]) {
+    console.log(events);
     this.boards_config = "";
-    events.forEach((event: any, index: number)=>{
-      this.boards_config += event.boardHeight+"."+event.boardWidth+"."+event.boardQuantity+ ((index==events.length-1)?"":"_");
+    events.forEach((event: any, index: number) => {
+      this.boards_config += event.outlet + "."+event.agency + "."+event.boardHeight + "." + event.boardWidth + "." + event.boardQuantity + ((index == events.length - 1) ? "" : "_");
     });
   }
 

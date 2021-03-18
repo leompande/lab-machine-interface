@@ -18,18 +18,12 @@ import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
-import { UserEffects } from './store/user/effects/user.effects';
-import { SignBoardEffects } from './store/sign-board/effects/sign-board.effects';
-import { ApplicationEffects } from './store/application/effects/application.effects';
-import { OrganisationEffects } from './store/organisation/effects/organisation.effects';
-import { UserRoleEffects } from './store/user-role/effects/user-role.effects';
 import { PageComponent } from './page/page.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { ApplicationComponent } from './modules/application/application.component';
 import { ReportComponent } from './modules/report/report.component';
 import { SettingComponent } from './modules/setting/setting.component';
 import { SharedModule } from './shared/shared.module';
-import { LoaderComponent } from './shared/components/loader/loader.component';
 import { OrganisationComponent } from './modules/organisation/organisation.component';
 import { AgencyComponent } from './modules/agency/agency.component';
 import { AgencyContainerComponent } from './modules/agency/agency-container/agency-container.component';
@@ -40,9 +34,7 @@ import { AddEditOrganisationComponent } from './modules/organisation/add-edit/ad
 import { AddEditAgencyComponent } from './modules/agency/add-edit/add-edit.component';
 import { AddEditUserComponent } from './modules/user/add-edit/add-edit.component';
 import { MainDataTableComponent } from './shared/components/main-data-table/main-data-table.component';
-import { AgencyEffects } from './store/agency/effects/agency.effects';
 import { AddEditCampaignComponent } from './modules/campaign/add-edit/add-edit.component';
-import { CampaignEffects } from './store/campaign/effects/campaign.effects';
 import { SignBoardComponent } from './modules/sign-board/sign-board.component';
 import { SignBoardContainerComponent } from './modules/sign-board/sign-board-container/sign-board-container.component';
 import { SignBoardMoreComponent } from './modules/sign-board/sign-board-more/sign-board-more.component';
@@ -57,7 +49,6 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 @NgModule({
   declarations: [
-    // LoaderComponent,
     MainDataTableComponent,
     AppComponent,
     LoginComponent,

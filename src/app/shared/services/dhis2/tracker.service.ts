@@ -20,7 +20,7 @@ export class TrackerService {
     }
     return id;
   }
-  
+
   // save tracked entity Instances
   saveTrackedEntityInstances(trackedEntityInstances:any[]) {
     return this.http.post(`30/trackedEntityInstances`, {
@@ -50,7 +50,7 @@ export class TrackerService {
         observe.complete();
 
       });
-      
+
     });
   }
 
@@ -82,7 +82,7 @@ return new Observable(observe => {
     observe.complete();
 
   });
-  
+
 });
   }
 
@@ -91,7 +91,7 @@ return new Observable(observe => {
       events: events
     });
   }
-  
+
 
   // update tracked entity
   updateTrackedEntity(trackedEntity, trackedEntityInstanceId) {
@@ -183,7 +183,7 @@ return new Observable(observe => {
       return [];
     } else {
       const stage = metadata.stage[stageKey];
-      
+
       eventData.forEach(event=>{
         let eventObject = {};
         stage.dataElements.forEach(element => {
@@ -255,7 +255,7 @@ return new Observable(observe => {
     });
   }
 
- 
+
   prepareTrackedEntityFilterString(
     key,
     filters: { attribute_key: string; value: any }[]
@@ -362,7 +362,7 @@ return new Observable(observe => {
     });
   }
 
-  
+
 
   /**
    * this function will be used to prepare a dhis2 payload
@@ -381,12 +381,6 @@ return new Observable(observe => {
     trackedEntityInstance,
     eventDate
   ) {
-    console.log(key,
-      ou,
-      values,
-      action,
-      trackedEntityInstance,
-      eventDate);
     const metadata = TrackedEntityTypes[key];
     const date = eventDate || new Date().toISOString().substring(0, 10);
     const returnItem = {
@@ -412,8 +406,6 @@ return new Observable(observe => {
         }
       ];
     } else {
-      console.log("INSIDE SERVICE");
-      console.log(trackedEntityInstance);
       returnItem["trackedEntityInstance"] = trackedEntityInstance;
       returnItem["programOwners"] = [
         {
