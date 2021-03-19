@@ -8,7 +8,7 @@ import { ApplicationState } from 'src/app/store';
 import { Store } from '@ngrx/store';
 import { LoadSignBoardBatches, DeleteSignBoardBatch } from 'src/app/store/sign-board-batch/actions/sign-board-batch.actions';
 import { FirebaseDataService } from '../firebase/firebase-data.service';
-import { prepareSignBoardData } from '../../helpers';
+import { prepareSignBoardData, makeId } from '../../helpers';
 @Injectable({
   providedIn: 'root'
 })
@@ -67,7 +67,7 @@ export class SignBoardBatchService {
       console.log(last_number);
       let counter = +last_number;
       let last_reference = "";
-      signBoardBatch.boards_config.split("_").forEach(config => {
+      let signBoardBatches = signBoardBatch.boards_config.split("_").map(config => {
         console.log(signBoardBatch);
         const parameter = config.split(".");
         const outlet = +parameter[0];
@@ -83,7 +83,8 @@ export class SignBoardBatchService {
           board_width: weight,
           agency_name: agency_name,
           outlet: outlet,
-          signboard_quantity: count
+          signboard_quantity: count,
+          trackedEntityInstanceId: makeId()
         };
         for (let eventCount = 0; eventCount < count; eventCount++) {
           events = [...events, this.trackerService.prepareSingleEvent(
@@ -96,33 +97,45 @@ export class SignBoardBatchService {
         }
         last_reference = new_batch_reference
         counter++;
+        batch.signboard_quantity = events.length;
+        return batch;
       });
-      signBoardBatch.signboard_quantity = events.length;
-      let trackedEntityInstancePayload = this.trackerService.prepareTrackedEntityPayload('SignBoardBatches', signBoardBatch.organisation_unit_id, signBoardBatch, !isUpdate ? 'add' : 'edit', trackedEntityInstanceId, eventDate);
-      if (isUpdate) {
-        this.trackerService.updateTrackedEntityInstance([trackedEntityInstancePayload], signBoardBatch.trackedEntityInstance).subscribe(async (results: any) => {
-          this.store.dispatch(new LoadSignBoardBatches());
-          const abbreviation = this.prepareAbbreviation(this.user.organisation);
-          try {
-            await this.dataStore.saveData('batch-reference', abbreviation, +last_reference.split("/")[1]).toPromise();
-          } catch (e) {
-          }
-          observer.next(results);
-          observer.complete();
-        }, error => {
-          observer.error(error);
-          observer.complete();
-        });
-      } else {
-        this.trackerService.saveTrackedEntityInstances([trackedEntityInstancePayload]).subscribe((results: any) => {
-          this.store.dispatch(new LoadSignBoardBatches());
-          observer.next(results);
-          observer.complete();
-        }, error => {
-          observer.error(error);
-          observer.complete();
-        });
-      }
+      let boardsNumber = 0;
+      signBoardBatches.forEach(async (signBoardbatchItem: SignBoardBatch) => {
+        boardsNumber++;
+        let trackedEntityInstancePayload = this.trackerService.prepareTrackedEntityPayload('SignBoardBatches', signBoardbatchItem.organisation_unit_id, signBoardbatchItem, !isUpdate ? 'add' : 'edit', signBoardbatchItem.trackedEntityInstance, eventDate);
+        if (isUpdate) {
+          this.trackerService.updateTrackedEntityInstance([trackedEntityInstancePayload], signBoardbatchItem.trackedEntityInstance).subscribe(async (results: any) => {
+
+            const abbreviation = this.prepareAbbreviation(this.user.organisation);
+            try {
+              await this.dataStore.saveData('batch-reference', abbreviation, +last_reference.split("/")[1]).toPromise();
+            } catch (e) {
+            }
+            if (boardsNumber == signBoardBatches.length){
+              this.store.dispatch(new LoadSignBoardBatches());
+            }
+            observer.next(results);
+            observer.complete();
+          }, error => {
+            observer.error(error);
+            observer.complete();
+          });
+        } else {
+          this.trackerService.saveTrackedEntityInstances([trackedEntityInstancePayload]).subscribe((results: any) => {
+            if (boardsNumber == signBoardBatches.length){
+              this.store.dispatch(new LoadSignBoardBatches());
+            }
+
+            observer.next(results);
+            observer.complete();
+          }, error => {
+            observer.error(error);
+            observer.complete();
+          });
+        }
+      });
+
     });
   }
 

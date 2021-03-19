@@ -180,9 +180,9 @@ export class AddEditBoardBatchComponent implements OnInit {
         agency_name: this.selectedAgency,
       };
 
-      let trackedEntityInstanceId = this.data.currentObject && this.data.currentObject.trackedEntityInstance ? this.data.currentObject.trackedEntityInstance : makeId();
+      // let trackedEntityInstanceId = this.data.currentObject && this.data.currentObject.trackedEntityInstance ? this.data.currentObject.trackedEntityInstance : makeId();
       let eventDate;
-      await this.signBoardBatchService.saveUpdateSignBoardBatch(this.isUpdate, formValues, trackedEntityInstanceId, eventDate).toPromise();
+      await this.signBoardBatchService.saveUpdateSignBoardBatch(this.isUpdate, formValues, null, eventDate).toPromise();
       this.loading = false;
       this.cancel();
     } catch (e) {
