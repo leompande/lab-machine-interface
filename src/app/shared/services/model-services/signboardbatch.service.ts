@@ -60,9 +60,13 @@ export class SignBoardBatchService {
     return Observable.create((observer: any) => {
       let events = [];
       // event.outlet + "."+event.agency + "."+event.boardHeight + "." + event.boardWidth + "." + event.boardQuantity + ((index == events.length - 1) ? "" : "_")
-      let counter = 0;
-      let substring = signBoardBatch.batch_reference_number.substring(0,signBoardBatch.batch_reference_number.length-1);
-      let last_number = signBoardBatch.batch_reference_number.substring(signBoardBatch.batch_reference_number.length-1);
+
+      let substring = signBoardBatch.batch_reference_number.substring(0, signBoardBatch.batch_reference_number.length - 1);
+      let last_number = signBoardBatch.batch_reference_number.substring(signBoardBatch.batch_reference_number.length - 1);
+      console.log(substring);
+      console.log(last_number);
+      let counter = +last_number;
+      let last_reference = "";
       signBoardBatch.boards_config.split("_").forEach(config => {
         console.log(signBoardBatch);
         const parameter = config.split(".");
@@ -71,8 +75,10 @@ export class SignBoardBatchService {
         const height = +parameter[2];
         const weight = +parameter[3];
         const count = +parameter[4];
+        let new_batch_reference = substring + "" + counter;
         const batch = {
           ...signBoardBatch,
+          batch_reference_number: new_batch_reference,
           board_height: height,
           board_width: weight,
           agency_name: agency_name,
@@ -88,12 +94,19 @@ export class SignBoardBatchService {
             null
           )];
         }
+        last_reference = new_batch_reference
+        counter++;
       });
       signBoardBatch.signboard_quantity = events.length;
       let trackedEntityInstancePayload = this.trackerService.prepareTrackedEntityPayload('SignBoardBatches', signBoardBatch.organisation_unit_id, signBoardBatch, !isUpdate ? 'add' : 'edit', trackedEntityInstanceId, eventDate);
       if (isUpdate) {
-        this.trackerService.updateTrackedEntityInstance([trackedEntityInstancePayload], signBoardBatch.trackedEntityInstance).subscribe((results: any) => {
+        this.trackerService.updateTrackedEntityInstance([trackedEntityInstancePayload], signBoardBatch.trackedEntityInstance).subscribe(async (results: any) => {
           this.store.dispatch(new LoadSignBoardBatches());
+          const abbreviation = this.prepareAbbreviation(this.user.organisation);
+          try {
+            await this.dataStore.saveData('batch-reference', abbreviation, +last_reference.split("/")[1]).toPromise();
+          } catch (e) {
+          }
           observer.next(results);
           observer.complete();
         }, error => {
