@@ -38,7 +38,7 @@ export class BoardBatchComponent implements OnInit {
     printTitle: '',
     showBorder: true,
     allowPagination: true,
-    actionIcons: { edit: true, delete: true, more: false },
+    actionIcons: { edit: true, delete: true },
     doneLoading: false,
     showSearch: true,
     deleting: {},

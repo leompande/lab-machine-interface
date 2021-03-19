@@ -25,7 +25,7 @@
             <br />
             <div class="row" @fadeIn *ngIf="district_council_name">
                 <div class="col">
-                    <app-board-collector [boardList]="[]" [agencies]="availableAgencies" [outlets]="availableOutlets" (onItemChanges)="onItemChanges($event)"></app-board-collector>
+                    <app-board-collector [boardList]="boardList" [agencies]="availableAgencies" [outlets]="availableOutlets" (onItemChanges)="onItemChanges($event)"></app-board-collector>
                 </div>
             </div>
             <br/>
