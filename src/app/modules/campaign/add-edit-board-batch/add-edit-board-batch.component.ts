@@ -166,7 +166,6 @@ export class AddEditBoardBatchComponent implements OnInit {
     this.selectedOutlet = event[0].name;
   }
   async save() {
-    console.log("Bitch Please");
     this.loading = true;
     try {
       const formValues = {

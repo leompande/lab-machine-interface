@@ -112,7 +112,7 @@ export class SignBoardBatchService {
               await this.dataStore.saveData('batch-reference', abbreviation, +last_reference.split("/")[1]).toPromise();
             } catch (e) {
             }
-            if (boardsNumber == signBoardBatches.length){
+            if (boardsNumber == signBoardBatches.length) {
               this.store.dispatch(new LoadSignBoardBatches());
             }
             observer.next(results);
@@ -123,7 +123,7 @@ export class SignBoardBatchService {
           });
         } else {
           this.trackerService.saveTrackedEntityInstances([trackedEntityInstancePayload]).subscribe((results: any) => {
-            if (boardsNumber == signBoardBatches.length){
+            if (boardsNumber == signBoardBatches.length) {
               this.store.dispatch(new LoadSignBoardBatches());
             }
 

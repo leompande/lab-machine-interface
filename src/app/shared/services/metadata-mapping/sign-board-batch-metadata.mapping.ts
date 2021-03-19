@@ -111,7 +111,12 @@ export const signBoardBatchMetadata = {
                     id: 'tUGUdDwLzCz',
                     valueType: 'TEXT',
                     key: 'outlet'
-                },
+                }, {
+                  name: 'Agency',
+                  id: 'tUGUdDwLzCz',
+                  valueType: 'TEXT',
+                  key: 'agency_name'
+              },
                 {
                     name: 'Sign board image',
                     id: 'EkEZdEgvuGP',

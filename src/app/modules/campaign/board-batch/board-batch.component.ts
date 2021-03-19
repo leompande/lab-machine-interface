@@ -29,7 +29,7 @@ export class BoardBatchComponent implements OnInit {
       { name: 'board_width', label: 'Board Width' },
       { name: 'signboard_quantity', label: 'Asigned Quantity' },
       { name: 'planted_signboard_quantity', label: 'Planted Quantity' },
-      { name: 'agency_name', label: 'Agency' },
+      { name: 'agency', label: 'Agency' },
       { name: 'start_date', label: 'Start Date' },
       { name: 'end_date', label: 'End Date' }
     ],
@@ -38,7 +38,7 @@ export class BoardBatchComponent implements OnInit {
     printTitle: '',
     showBorder: true,
     allowPagination: true,
-    actionIcons: { edit: true, delete: true, more: true },
+    actionIcons: { edit: true, delete: true, more: false },
     doneLoading: false,
     showSearch: true,
     deleting: {},
