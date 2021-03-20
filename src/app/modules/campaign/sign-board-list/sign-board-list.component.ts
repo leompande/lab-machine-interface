@@ -48,7 +48,7 @@ export class SignBoardListComponent implements OnInit, OnChanges {
     deleting: {},
     empty_msg: 'No Sign Biards'
   };
-  loading$!: Observable<boolean>;
+  @Input() loading: boolean ;
   @Output() creatEditSignBoard = new EventEmitter;
   @Output() creatEditSignBoardBatch = new EventEmitter;
   @Output() deletingSignBoard = new EventEmitter;
@@ -74,6 +74,7 @@ export class SignBoardListComponent implements OnInit, OnChanges {
   }
 
   createUpdateSignBoard(campaign: Campaign, currentObject?: any) {
+    this.loading = true;
     this.creatEditSignBoard.emit({ campaign, currentObject });
   }
 

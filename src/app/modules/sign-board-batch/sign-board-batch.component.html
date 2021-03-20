@@ -3,12 +3,15 @@
         <vvs-main-data-table *ngIf="allTableConfigurations.tableColumns && signBoardBatches"
             [tableConfigurations]="allTableConfigurations" (rowUpdate)="editNewlyAssigned($event)"
             (rowPreview)="rowPreview($event)"
-            [tableList]="signBoardBatches">
+            [tableList]="signBoardBatches"
+            [loading]="loading"
+            >
         </vvs-main-data-table>
+
         <!-- <mat-tab-group>
             <mat-tab label="Newly Assigned">
                 <ng-template matTabContent>
-                    <vvs-main-data-table 
+                    <vvs-main-data-table
                     *ngIf="allTableConfigurations.tableColumns && signBoardBatches"
                         [tableConfigurations]="allTableConfigurations"
                         (rowUpdate)="editNewlyAssigned($event)"
@@ -18,7 +21,7 @@
             </mat-tab>
             <mat-tab label="Planted">
                 <ng-template matTabContent>
-                    <vvs-main-data-table 
+                    <vvs-main-data-table
                     *ngIf="plantedTableConfigurations.tableColumns && signBoardBatches"
                         [tableConfigurations]="plantedTableConfigurations"
                         [tableList]="signBoardBatches">
@@ -27,7 +30,7 @@
             </mat-tab>
             <mat-tab label="Verified">
                 <ng-template matTabContent>
-                    <vvs-main-data-table 
+                    <vvs-main-data-table
                     *ngIf="verifiedTableConfigurations.tableColumns && signBoardBatches"
                         [tableConfigurations]="verifiedTableConfigurations"
                         [tableList]="signBoardBatches">

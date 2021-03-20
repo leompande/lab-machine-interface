@@ -209,7 +209,7 @@ export class SignBoardTableComponent implements OnInit {
     const data = this.tableList.map((item) => {
       const object = {};
       for (const col of this.tableConfigurations.tableColumns) {
-        object[col.name] = item[col.name];
+        object[col.name] = item[col.name] == null?'':item[col.name];
       }
       return object;
     });

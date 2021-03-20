@@ -65,28 +65,31 @@ export class AddEditBoardBatchComponent implements OnInit {
   constructor(@Inject(MAT_DIALOG_DATA) public data: { currentObject: SignBoardBatch, campaign: Campaign, organisation: Organisation, agencies: Agency[], outlets: Outlet[], reference: string }, private signBoardBatchService: SignBoardBatchService, private http: HttpClientService) {
     this.isUpdate = data.currentObject != null;
     this.startingOus = this.isUpdate ? [data.currentObject.organisation_unit_id] : [];
-    console.log(data.currentObject);
-    this.boardList.push({
-      outlet: data.currentObject.outlet,
-      agency: data.currentObject.agency_name,
-      boardWidth: +data.currentObject.board_width, boardHeight: +data.currentObject.board_height, boardQuantity: +data.currentObject.signboard_quantity
-    });
-    this.chosedAgency = data.currentObject ? data.agencies.filter(agency => agency.name == data.currentObject.agency_name).map(agency => {
-      return {
-        id: agency.id,
-        name: agency.name,
-        value: agency.name,
-        chosed: false
-      }
-    }) : [];
-    this.chosedOutlet = data.currentObject ? data.outlets.filter(outlet => outlet.name == data.currentObject.outlet).map(outlet => {
-      return {
-        id: outlet.id,
-        name: outlet.name,
-        value: outlet.name,
-        chosed: false
-      }
-    }) : [];
+
+    if (data.currentObject != null) {
+      this.boardList.push({
+        outlet: data.currentObject.outlet,
+        agency: data.currentObject.agency_name,
+        boardWidth: +data.currentObject.board_width, boardHeight: +data.currentObject.board_height, boardQuantity: +data.currentObject.signboard_quantity
+      });
+    }
+
+    // this.chosedAgency = data.currentObject ? data.agencies.filter(agency => agency.name == data.currentObject.agency_name).map(agency => {
+    //   return {
+    //     id: agency.id,
+    //     name: agency.name,
+    //     value: agency.name,
+    //     chosed: false
+    //   }
+    // }) : [];
+    // this.chosedOutlet = data.currentObject ? data.outlets.filter(outlet => outlet.name == data.currentObject.outlet).map(outlet => {
+    //   return {
+    //     id: outlet.id,
+    //     name: outlet.name,
+    //     value: outlet.name,
+    //     chosed: false
+    //   }
+    // }) : [];
     this.availableAgencies = data.agencies.map(agency => {
       return {
         id: agency.id,
@@ -236,11 +239,11 @@ export class AddEditBoardBatchComponent implements OnInit {
   }
 
   onItemChanges(events: any[]) {
-    console.log(events);
     this.boards_config = "";
     events.forEach((event: any, index: number) => {
-      this.boards_config += event.outlet + "." + event.agency + "." + event.boardHeight + "." + event.boardWidth + "." + event.boardQuantity + ((index == events.length - 1) ? "" : "_");
+      this.boards_config += event.outlet + "*" + event.agency + "*" + event.boardHeight + "*" + event.boardWidth + "*" + event.boardQuantity + ((index == events.length - 1) ? "" : "_");
     });
+    console.log(this.boards_config);
   }
 
 

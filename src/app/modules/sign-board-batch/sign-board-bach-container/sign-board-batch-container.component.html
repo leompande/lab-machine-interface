@@ -1,5 +1,6 @@
 <app-header [title]="'Baches'" [label]="'assets/icons/all.png'"></app-header>
-<app-sign-board-batch 
+<app-sign-board-batch
 [signBoardBatches]="signBoardBatches$|async"
 [outlets]="outlets$|async"
+[loading]="this.loading$|async"
 ></app-sign-board-batch>

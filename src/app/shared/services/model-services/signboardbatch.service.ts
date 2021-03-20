@@ -67,11 +67,12 @@ export class SignBoardBatchService {
       console.log(last_number);
       let counter = +last_number;
       let last_reference = "";
+      console.log(signBoardBatch.boards_config.split("_"));
       let signBoardBatches = signBoardBatch.boards_config.split("_").map(config => {
-        console.log(signBoardBatch);
-        const parameter = config.split(".");
-        const outlet = +parameter[0];
-        const agency_name = +parameter[1];
+        const parameter = config.split("*");
+        console.log(parameter);
+        const outlet = parameter[0];
+        const agency_name = parameter[1];
         const height = +parameter[2];
         const weight = +parameter[3];
         const count = +parameter[4];
@@ -103,6 +104,7 @@ export class SignBoardBatchService {
       let boardsNumber = 0;
       signBoardBatches.forEach(async (signBoardbatchItem: SignBoardBatch) => {
         boardsNumber++;
+        console.log(boardsNumber);
         let trackedEntityInstancePayload = this.trackerService.prepareTrackedEntityPayload('SignBoardBatches', signBoardbatchItem.organisation_unit_id, signBoardbatchItem, !isUpdate ? 'add' : 'edit', signBoardbatchItem.trackedEntityInstance, eventDate);
         if (isUpdate) {
           this.trackerService.updateTrackedEntityInstance([trackedEntityInstancePayload], signBoardbatchItem.trackedEntityInstance).subscribe(async (results: any) => {

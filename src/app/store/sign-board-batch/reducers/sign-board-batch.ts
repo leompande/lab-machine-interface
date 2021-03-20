@@ -18,5 +18,4 @@ export class SignBoardBatch {
   agency_name: string;
   start_date: string;
   end_date: string;
-
 }

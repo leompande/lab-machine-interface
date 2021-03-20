@@ -17,7 +17,7 @@ export class SignBoardBatchComponent implements OnInit {
   @Input() signBoardBatches: SignBoardBatch[];
   @Input() signBoardBatchEntities: { [id: string]: SignBoardBatch };
   @Input() outlets: Outlet[];
-  loading$!: Observable<boolean>;
+  @Input() loading: boolean;
   allTableConfigurations = {
     tableColumns: [
       { name: 'batch_reference_number', label: 'Batch Ref#' },
@@ -72,7 +72,7 @@ export class SignBoardBatchComponent implements OnInit {
   //   console.log(response);
   // }
 
-  
+
 
   editNewlyAssigned(signBoardId: string) {
     // this.signBoardBatches.find(signBoardData => {

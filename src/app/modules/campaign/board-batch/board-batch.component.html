@@ -1,6 +1,6 @@
 <div>
   <app-sign-board-table *ngIf="tableConfigurations.tableColumns && tableList"
     [tableConfigurations]="tableConfigurations" [tableList]="tableList" (rowPreview)="rowPreview($event)"
-    (rowDelete)="rowDelete($event)" (rowUpdate)="rowUpdating($event)" [loading]="loading$ | async">
+    (rowDelete)="rowDelete($event)" [loadingMessage]="'Please wait...'" (rowUpdate)="rowUpdating($event)" [loading]="loading">
   </app-sign-board-table>
 </div>

@@ -54,7 +54,7 @@
         [tableConfigurations]="tableConfigurations"
         [tableList]="signBoardBatches|filterSignBoard:'campaign_reference_number':campaign.reference"
         (rowPreview)="previewSignBoardBatch(campaign,$event)" (rowDelete)="deleteSignBoardBatch($event)"
-        (rowUpdate)="updateSignBoardBatch(campaign,$event)" [loading]="loading$ | async"></app-board-batch>
+        (rowUpdate)="updateSignBoardBatch(campaign,$event)" [loading]="loading"></app-board-batch>
 
     </div>
   </div>

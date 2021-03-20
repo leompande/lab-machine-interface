@@ -20,6 +20,7 @@ export class SignBoardBatchContainerComponent implements OnInit {
   signBoardBatchEntities$: Observable<{ [id: string]: SignBoardBatch }>;
   outlets$: Observable<Outlet[]>;
   outletEntities$: Observable<{ [id: string]: Outlet }>;
+  loading$: Observable<boolean>;
   constructor(private store: Store<ApplicationState>) {
     this.outlets$ = this.store.select(fromOutletSelector.selectAll);
     this.signBoardBatches$ =
@@ -37,6 +38,7 @@ export class SignBoardBatchContainerComponent implements OnInit {
         });
       }));
     this.signBoardBatchEntities$ = this.store.pipe(select(signBoardBatchSelector.selectEntities));
+    this.loading$ = this.store.pipe(select(signBoardBatchSelector.selectLoading));
   }
 
   ngOnInit(): void {

@@ -28,8 +28,8 @@ export class BoardBatchComponent implements OnInit {
       { name: 'board_height', label: 'Board Height' },
       { name: 'board_width', label: 'Board Width' },
       { name: 'signboard_quantity', label: 'Asigned Quantity' },
-      { name: 'planted_signboard_quantity', label: 'Planted Quantity' },
-      { name: 'agency', label: 'Agency' },
+      { name: 'planted_quantity', label: 'Planted Quantity' },
+      { name: 'agency_name', label: 'Agency' },
       { name: 'start_date', label: 'Start Date' },
       { name: 'end_date', label: 'End Date' }
     ],
@@ -44,7 +44,7 @@ export class BoardBatchComponent implements OnInit {
     deleting: {},
     empty_msg: 'No Sign Boards'
   };
-  loading$!: Observable<boolean>;
+  @Input() loading: boolean;
   outlets: Outlet[];
   constructor(public dialog: MatDialog, private signBoardBatch: SignBoardBatchService, private signBoardBatchItem: SignBoardBatchItemService, private store: Store<ApplicationState>) {
     this.store.select(fromOuletSelector.selectAll).subscribe((outlets) => {
@@ -63,7 +63,7 @@ export class BoardBatchComponent implements OnInit {
         maxHeight: '700px',
         disableClose: true,
         hasBackdrop: true, data: {
-          boardItems: boardItems.filter((boardItem: SignBoardBatchItem)=>boardItem.batch_reference_number == batch.batch_reference_number),
+          boardItems: boardItems.filter((boardItem: SignBoardBatchItem) => boardItem.batch_reference_number == batch.batch_reference_number),
           batch: batch,
           outlets: this.outlets
         },
@@ -76,9 +76,10 @@ export class BoardBatchComponent implements OnInit {
   }
 
   async rowDelete(rowId: string) {
+    this.loading = true;
     const batch: SignBoardBatch = this.tableList.find((item: any) => item.id == rowId);
     const response = await this.signBoardBatch.deleteSignBoardBatch(batch.trackedEntityInstance, rowId).toPromise();
-    console.log(response);
+    this.loading = false;
   }
 
   async rowUpdating(rowId: string) {
