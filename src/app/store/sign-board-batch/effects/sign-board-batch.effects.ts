@@ -14,7 +14,7 @@ export class SignBoardBatchEffects {
     ofType(SignBoardBatchActionTypes.LoadSignBoardBatches),
     switchMap((action: LoadSignBoardBatches) =>
       this.signBoardService.listSignBoardBatches().pipe(
-        map((signBoards: SignBoardBatch[]) => [new LoadSignBoardBatchesSuccess({ SignBoardBatches: signBoards }), new DoneLoagingSignBoardBatches()]),
+        map((signBoards: SignBoardBatch[]) => new LoadSignBoardBatchesSuccess({ SignBoardBatches: signBoards })),
         catchError((error: any) => of(new LoadSignBoardBatchesFailure(error)))
       )
     )

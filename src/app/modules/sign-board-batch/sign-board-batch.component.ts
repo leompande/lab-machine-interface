@@ -6,6 +6,7 @@ import { Outlet } from 'src/app/store/outlet/reducers/outlet';
 import { BoardBatchMoreComponent } from '../campaign/board-batch-more/board-batch-more.component';
 import { SignBoardBatchItem } from 'src/app/store/sign-board-batch-item/reducers/sign-board-batch-item';
 import { SignBoardBatchItemService } from 'src/app/shared/services/model-services/signboardbatchitem.service';
+import { AgencyBatchMoreComponent } from './agency-batch-more/agency-batch-more.component';
 
 @Component({
   selector: 'app-sign-board-batch',
@@ -48,8 +49,9 @@ export class SignBoardBatchComponent implements OnInit {
 
   rowPreview(rowId: string) {
     const batch: SignBoardBatch = this.signBoardBatches.find((item: any) => item.id == rowId);
+    console.log(batch);
     this.sigBoardBatchItemService.listSignBoardBatchItems(batch.organisation_unit_id).subscribe((boardItems) => {
-      const dialogRef = this.dialog.open(BoardBatchMoreComponent, {
+      const dialogRef = this.dialog.open(AgencyBatchMoreComponent, {
         width: '95%',
         maxHeight: '700px',
         disableClose: true,

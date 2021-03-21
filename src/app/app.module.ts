@@ -45,6 +45,7 @@ import { effects } from './store/effects';
 import { OutletMapPreviewComponent } from './modules/outlet/outlet-map-preview/outlet-map-preview.component';
 import { SignBoardBatchContainerComponent } from './modules/sign-board-batch/sign-board-bach-container/sign-board-batch-container.component';
 import { SignBoardBatchComponent } from './modules/sign-board-batch/sign-board-batch.component';
+import { AgencyBatchMoreComponent } from './modules/sign-board-batch/agency-batch-more/agency-batch-more.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 
 @NgModule({
@@ -75,7 +76,8 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     AddEditOutletComponent,
     OutletMapPreviewComponent,
     SignBoardBatchComponent,
-    SignBoardBatchContainerComponent
+    SignBoardBatchContainerComponent,
+    AgencyBatchMoreComponent
   ],
   imports: [
     BrowserModule,

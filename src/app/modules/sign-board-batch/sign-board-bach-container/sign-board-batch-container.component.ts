@@ -20,9 +20,10 @@ export class SignBoardBatchContainerComponent implements OnInit {
   signBoardBatchEntities$: Observable<{ [id: string]: SignBoardBatch }>;
   outlets$: Observable<Outlet[]>;
   outletEntities$: Observable<{ [id: string]: Outlet }>;
-  loading$: Observable<boolean>;
+  loading: boolean;
   constructor(private store: Store<ApplicationState>) {
     this.outlets$ = this.store.select(fromOutletSelector.selectAll);
+    this.loading = true;
     this.signBoardBatches$ =
       combineLatest(
         this.store.select(campaignSelector.selectAll),
@@ -31,6 +32,7 @@ export class SignBoardBatchContainerComponent implements OnInit {
       ).pipe(map((output) => {
         return output.signBoards.map((signBoard) => {
           const campaign = output.campaings.find((campaign) => campaign.reference == signBoard.campaign_reference_number);
+          this.loading = false;
           return {
             ...signBoard,
             campaign_name: campaign ? campaign.campaign_name : ''
@@ -38,7 +40,7 @@ export class SignBoardBatchContainerComponent implements OnInit {
         });
       }));
     this.signBoardBatchEntities$ = this.store.pipe(select(signBoardBatchSelector.selectEntities));
-    this.loading$ = this.store.pipe(select(signBoardBatchSelector.selectLoading));
+    // this.loading$ = this.store.pipe(select(signBoardBatchSelector.selectLoading));
   }
 
   ngOnInit(): void {

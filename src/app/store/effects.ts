@@ -10,15 +10,15 @@ import { SignBoardBatchEffects } from './sign-board-batch/effects/sign-board-bat
 import { SignBoardBatchItemEffects } from './sign-board-batch-item/effects/sign-board-batch-item.effects';
 
 export const effects = [
-    OutletEffects,
-    UserEffects,
-    AgencyEffects,
-    CampaignEffects,
-    SignBoardEffects,
-    SignBoardBatchEffects,
-    SignBoardBatchItemEffects,
-    ApplicationEffects,
-    OrganisationEffects,
-    UserRoleEffects,
-    OrganisationEffects
+  OutletEffects,
+  UserEffects,
+  AgencyEffects,
+  CampaignEffects,
+  SignBoardEffects,
+  SignBoardBatchEffects,
+  SignBoardBatchItemEffects,
+  ApplicationEffects,
+  OrganisationEffects,
+  UserRoleEffects,
+  OrganisationEffects
 ];

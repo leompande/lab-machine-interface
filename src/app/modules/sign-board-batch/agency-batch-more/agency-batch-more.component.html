@@ -1,0 +1,59 @@
+<div class="batch-info">
+  <div class="card-section" style="display: inline-block;font-size:14px;">
+    <div><span style="font-family: nunitoBold;">Batch Ref#:</span> {{batch?.batch_reference_number}}.</div>
+    <div><span style="font-family: nunitoBold;"> Region:</span> {{batch?.region}}.</div>
+    <div><span style="font-family: nunitoBold;"> District:</span> {{batch?.district_council_name}}.</div>
+    <div><span style="font-family: nunitoBold;"> Agency:</span> {{batch?.agency_name}}.</div>
+    <div><span style="font-family: nunitoBold;"> Campaign Name:</span> {{batch['campaign_name']}}.</div>
+  </div>
+
+  <div @fadeIn *ngIf="!detailsVisible" style="display: inline-block;font-size: 16px;padding:5px!important"
+    class="pull-right custom-button" (click)="cancel()">close</div>&nbsp;
+  <div @fadeIn *ngIf="detailsVisible" style="display: inline-block;font-size: 16px;padding:5px!important"
+    class="pull-right custom-button" (click)="back()"><img src="assets/icons/arrow-left.png"
+      style="width:15px;height:15px" /> Back</div>&nbsp;&nbsp;
+
+</div>
+<div class="batch-info">
+  <div class="row">
+    <div class="col">
+      <div class="card-section">
+        <div><b>Board Height:&nbsp;</b> <span>{{batch?.board_height}}</span>, &nbsp;&nbsp;<b>Board Width:&nbsp;</b>
+          <span>{{batch?.board_width}}</span> , &nbsp;&nbsp;<b>Assigned Quantity:&nbsp;</b>
+          <span>{{batch?.signboard_quantity}}.</span> </div>
+        <div><b>Outlet:&nbsp;</b> <span>{{batch?.outlet}}</span>.</div>
+        <div>
+          <b>Expected to be planted between:&nbsp;</b>
+          <span>{{batch?.start_date}}</span>&nbsp; and &nbsp;<b>{{batch?.end_date}}.</b>
+        </div>
+      </div>
+      <br />
+      <div>
+
+        <div @fadeIn class="custom-button primary-custom-button-color" *ngIf="close_batch==false" style="width: 50%;"
+          (click)="save()">Close Batch</div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card-section" @fadeIn *ngIf="close_batch==true">
+        <form>
+          <div class="mb-3">
+            <label for="planted_quantity" class="form-label">Planted Quantity</label>
+            <input type="number" min="0" class="form-control" id="planted_quantity" placeholder="Planted Quantity">
+          </div>
+          <div class="mb-3">
+            <label for="close_date" class="form-label">Close Date</label>
+            <input type="date" min="0" class="form-control" id="close_date" placeholder="Close Date">
+          </div>
+          <div class="mb-3">
+            <app-save-area [isUpdate]="false" [loading]="false" (onCancel)="cancelForm()" (onSave)="save()">
+            </app-save-area>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div @fadeIn *ngIf="!detailsVisible" class="batch-item-container">
+  <button id="closeButton" mat-button mat-dialog-close style="display: none;">Cancel</button>
+</div>
