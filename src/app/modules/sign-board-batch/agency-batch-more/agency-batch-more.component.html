@@ -49,11 +49,15 @@
         <form>
           <div class="mb-3">
             <label for="planted_quantity" class="form-label">Planted Quantity</label>
-            <input type="number" min="0" class="form-control" id="planted_quantity" placeholder="Planted Quantity">
+            <input type="number" min="0" name="planted_quantity" [(ngModel)]="planted_quantity"
+              max="{{batch?.signboard_quantity}}" class="form-control" id="planted_quantity"
+              placeholder="Planted Quantity">
+            <small id="error_text" class="form-text text-muted">*** Planted quantity should not exceed Assigned Quantity
+              of <span style="font-weight: bolder;">{{batch?.signboard_quantity}}</span>.</small>
           </div>
           <div class="mb-3">
             <label for="close_date" class="form-label">Close Date</label>
-            <input type="date" min="0" class="form-control" id="close_date" placeholder="Close Date">
+            <input type="date" name="close_date" class="form-control" id="close_date" placeholder="Close Date">
           </div>
           <div class="mb-3">
             <app-save-area [isUpdate]="false" [loading]="false" (onCancel)="cancelForm()" (onSave)="save()">

@@ -69,14 +69,6 @@ export class SignBoardBatchComponent implements OnInit {
     });
   }
 
-  // async rowDelete(rowId: string) {
-  //   const batch: SignBoardBatch = this.tableList.find((item: any) => item.id == rowId);
-  //   const response = await this.signBoardBatch.deleteSignBoardBatch(batch.trackedEntityInstance, rowId).toPromise();
-  //   console.log(response);
-  // }
-
-
-
   editNewlyAssigned(signBoardId: string) {
     // this.signBoardBatches.find(signBoardData => {
     //   return signBoardData.id == signBoardId;

@@ -73,6 +73,7 @@ export class AgencyBatchMoreComponent implements OnInit {
       actualLongitude: null
     }
     close_batch: boolean = false;
+    planted_quantity: number;
   constructor(@Inject(MAT_DIALOG_DATA) public data: { boardItems: SignBoardBatchItem[], batch: SignBoardBatch, outlets: Outlet[] }) {
     this.boardItems = data.boardItems;
     this.batch = data.batch;
