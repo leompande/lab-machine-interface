@@ -1,17 +1,27 @@
-<div class="batch-info">
-  <div class="card-section" style="display: inline-block;font-size:14px;">
-    <div><span style="font-family: nunitoBold;">Batch Ref#:</span> {{batch?.batch_reference_number}}.</div>
-    <div><span style="font-family: nunitoBold;"> Region:</span> {{batch?.region}}.</div>
-    <div><span style="font-family: nunitoBold;"> District:</span> {{batch?.district_council_name}}.</div>
-    <div><span style="font-family: nunitoBold;"> Agency:</span> {{batch?.agency_name}}.</div>
-    <div><span style="font-family: nunitoBold;"> Campaign Name:</span> {{batch['campaign_name']}}.</div>
+<div class="row">
+  <div class="col">
+    <div style="padding: 20px;">
+      <div @fadeIn *ngIf="!detailsVisible" style="display: inline-block;font-size: 16px;padding:5px!important"
+        class="pull-right custom-button" (click)="cancel()">close</div>&nbsp;
+      <div @fadeIn *ngIf="detailsVisible" style="display: inline-block;font-size: 16px;padding:5px!important"
+        class="pull-right custom-button" (click)="back()"><img src="assets/icons/arrow-left.png"
+          style="width:15px;height:15px" /> Back</div>&nbsp;&nbsp;
+    </div>
   </div>
+</div>
+<div class="batch-info">
+  <div class="row">
+    <div class="col">
+      <div class="card-section" style="font-size:14px;">
+        <div><span style="font-family: nunitoBold;">Batch Ref#:</span> {{batch?.batch_reference_number}}.</div>
+        <div><span style="font-family: nunitoBold;"> Region:</span> {{batch?.region}}.</div>
+        <div><span style="font-family: nunitoBold;"> District:</span> {{batch?.district_council_name}}.</div>
+        <div><span style="font-family: nunitoBold;"> Agency:</span> {{batch?.agency_name}}.</div>
+        <div><span style="font-family: nunitoBold;"> Campaign Name:</span> {{batch['campaign_name']}}.</div>
+      </div>
+    </div>
 
-  <div @fadeIn *ngIf="!detailsVisible" style="display: inline-block;font-size: 16px;padding:5px!important"
-    class="pull-right custom-button" (click)="cancel()">close</div>&nbsp;
-  <div @fadeIn *ngIf="detailsVisible" style="display: inline-block;font-size: 16px;padding:5px!important"
-    class="pull-right custom-button" (click)="back()"><img src="assets/icons/arrow-left.png"
-      style="width:15px;height:15px" /> Back</div>&nbsp;&nbsp;
+  </div>
 
 </div>
 <div class="batch-info">
@@ -34,8 +44,8 @@
           (click)="save()">Close Batch</div>
       </div>
     </div>
-    <div class="col">
-      <div class="card-section" @fadeIn *ngIf="close_batch==true">
+    <div class="col" @fadeIn *ngIf="close_batch==true">
+      <div class="card-section">
         <form>
           <div class="mb-3">
             <label for="planted_quantity" class="form-label">Planted Quantity</label>

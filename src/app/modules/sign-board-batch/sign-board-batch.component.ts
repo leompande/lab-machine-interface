@@ -22,12 +22,12 @@ export class SignBoardBatchComponent implements OnInit {
   allTableConfigurations = {
     tableColumns: [
       { name: 'batch_reference_number', label: 'Batch Ref#' },
-      { name: 'campaign_name', label:'Campaign'},
+      { name: 'campaign_name', label: 'Campaign' },
       { name: 'signboard_quantity', label: 'Assign sign boards' },
       { name: 'region', label: 'Region' },
       { name: 'district_council_name', label: 'District Council' },
       { name: 'outlet', label: 'Outlet' },
-      { name: 'agency_name', label:'Agency'},
+      { name: 'agency_name', label: 'Agency' },
       { name: 'start_date', label: 'Date expected to plant from' },
       { name: 'end_date', label: 'Date expected to plant to' },
     ],
@@ -49,14 +49,15 @@ export class SignBoardBatchComponent implements OnInit {
 
   rowPreview(rowId: string) {
     const batch: SignBoardBatch = this.signBoardBatches.find((item: any) => item.id == rowId);
-    console.log(batch);
+    this.loading = true;
     this.sigBoardBatchItemService.listSignBoardBatchItems(batch.organisation_unit_id).subscribe((boardItems) => {
+      this.loading = false;
       const dialogRef = this.dialog.open(AgencyBatchMoreComponent, {
         width: '95%',
         maxHeight: '700px',
         disableClose: true,
         hasBackdrop: true, data: {
-          boardItems: boardItems.filter((boardItem: SignBoardBatchItem)=>boardItem.batch_reference_number == batch.batch_reference_number),
+          boardItems: boardItems.filter((boardItem: SignBoardBatchItem) => boardItem.batch_reference_number == batch.batch_reference_number),
           batch: batch,
           outlets: this.outlets
         },
