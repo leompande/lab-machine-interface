@@ -7,11 +7,14 @@ import * as agencySelector from '../../store/agency/selectors/agency.selectors';
 import { DashboardSummary, Status } from 'src/app/shared/models/dashboard-summary';
 import { User } from 'src/app/store/user/reducers/user';
 import { Agency } from 'src/app/store/agency/reducers/agency';
+import { get5Years } from 'src/app/shared/helpers';
+import { fadeIn } from 'src/app/shared/animations/router-animation';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
+  animations:[fadeIn]
 })
 export class DashboardComponent implements OnInit {
 
@@ -25,7 +28,15 @@ export class DashboardComponent implements OnInit {
   agencies: Agency[];
   statuses: Status[];
 
+  showStartEndDate: boolean = false;
+  showMonthYear: boolean = false;
+  showYears: boolean = false;
+
+  years: { id: string, value: number, name: string }[];
+  currentYear: number = new Date().getFullYear();
+
   constructor(private store: Store<ApplicationState>) {
+    this.years = get5Years();
     this.user = new Function("return " + localStorage.getItem('sb-user'))();
     this.store.select(agencySelector.selectAll).subscribe((results) => {
       this.agencies = results;
@@ -48,6 +59,36 @@ export class DashboardComponent implements OnInit {
       console.log("NOT PLANTED", results)
       this.dashboardSummary.notPlantedBoards = results;
     });
+  }
+
+
+  changePeriodType(event: any) {
+    this.showStartEndDate = false;
+    this.showMonthYear = false;
+    this.showYears = false;
+    switch (event.value) {
+      case 'Daily':
+        this.showStartEndDate = true;
+        break;
+      case 'Monthly':
+        this.showMonthYear = true;
+        break;
+      case 'Yearly':
+        this.showYears = true;
+        break;
+      default:
+        break;
+    }
+  }
+
+  goNextYear() {
+    this.years = get5Years('+',this.years[0],this.years[4]);
+    console.log("Data next year");
+  }
+
+  goPrevYear() {
+    this.years = get5Years('-',this.years[4],this.years[0]);
+    console.log("Data prev year");
   }
 
 

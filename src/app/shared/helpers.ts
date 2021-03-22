@@ -110,3 +110,56 @@ var data = {
     }
   ]
 }
+
+
+export function get5Years(sign?: string, lastItem?: { id: string, value: number, name: string }, firstItem?: { id: string, value: number, name: string }) {
+  let currentYear = new Date().getFullYear();
+  let years: { id: string, value: number, name: string }[] = [];
+  if (sign == "-") {
+    let dropCount = 0;
+    while (dropCount < 5) {
+      if ((currentYear - dropCount) >= 1970) {
+        years = [...years, {
+          id: (lastItem.value - dropCount) + "",
+          value: (lastItem.value - dropCount),
+          name: (lastItem.value - dropCount) + ""
+        }];
+      }
+      dropCount++;
+
+    }
+
+  }
+
+  if (sign == "+") {
+    let upCount = 0;
+    while (upCount < 5) {
+      if ((firstItem.value + upCount) <= currentYear) {
+        years = [...years, {
+          id: (firstItem.value + upCount) + "",
+          value: (firstItem.value + upCount),
+          name: (firstItem.value + upCount) + ""
+        }];
+      }
+      upCount++;
+    }
+  }
+
+  if (sign == null && lastItem == null && firstItem == null) {
+    const currentYear = new Date().getFullYear();
+    let count = 0;
+    while (count < 5) {
+      count++;
+      if ((currentYear - count) >= 1970 && (currentYear - count) <= currentYear) {
+        years = [...years, {
+          id: (currentYear - count) + "",
+          value: (currentYear - count),
+          name: (currentYear - count) + ""
+        }];
+      }
+
+    }
+  }
+
+  return years.sort((a, b) => b.value - a.value);;
+}
