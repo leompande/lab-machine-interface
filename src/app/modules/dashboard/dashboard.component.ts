@@ -3,7 +3,10 @@ import { GoogleMap } from '@angular/google-maps';
 import { Store } from '@ngrx/store';
 import { ApplicationState } from 'src/app/store';
 import * as signBoardbatchSelector from '../../store/sign-board-batch/selectors/sign-board-batch.selectors';
+import * as agencySelector from '../../store/agency/selectors/agency.selectors';
 import { DashboardSummary } from 'src/app/shared/models/dashboard-summary';
+import { User } from 'src/app/store/user/reducers/user';
+import { Agency } from 'src/app/store/agency/reducers/agency';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,10 +21,26 @@ export class DashboardComponent implements OnInit {
     plantedVerifiedBoards: 0,
     notPlantedBoards: 0
   }
+  user: User;
+  agencies: Agency[];
 
   constructor(private store: Store<ApplicationState>) {
-    this.store.select(signBoardbatchSelector.selectTotalSignBoards(null)).subscribe(results => {
+    this.user = new Function("return " + localStorage.getItem('sb-user'))();
+    this.store.select(agencySelector.selectAll).subscribe((results)=>{
+      this.agencies = results;
+    });
+
+    this.store.select(signBoardbatchSelector.selectTotalSignBoards(this.user.agency)).subscribe(results => {
       this.dashboardSummary.totalBoards = results;
+    });
+
+    this.store.select(signBoardbatchSelector.selectPlantedSignBoards(this.user.agency)).subscribe(results => {
+      this.dashboardSummary.plantedSignBoards = results;
+    });
+
+    this.store.select(signBoardbatchSelector.selectNotPlantedSignBoards(this.user.agency)).subscribe(results => {
+      console.log("NOT PLANTED",results)
+      this.dashboardSummary.notPlantedBoards = results;
     });
   }
 
