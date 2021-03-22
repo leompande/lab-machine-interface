@@ -108,3 +108,11 @@
       background-position: 468px 0;
     }
   }
+
+  .btn-group.special {
+    display: flex;
+  }
+
+  .special .btn {
+    flex: 1
+  }

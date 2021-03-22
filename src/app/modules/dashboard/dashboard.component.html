@@ -36,9 +36,9 @@
         </mat-form-field>
       </div>
       <div @fadeIn class="col" *ngIf="showMonthYear || showYears">
-        <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-outline-primary" [disabled]="years[0].value >= currentYear" (click)="goNextYear()">Next Year</button>
-          <button type="button" class="btn btn-outline-primary" [disabled]="years[4].value <= 1970" (click)="goPrevYear()">Prev Year</button>
+        <div class="btn-group special btn-group-lg" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-outline-primary " [disabled]="years[0].value >= currentYear" (click)="goNextYear()">Next Year</button>
+          <button type="button" class="btn btn-outline-primary " [disabled]="years[4].value <= 1970" (click)="goPrevYear()">Prev Year</button>
         </div>
       </div>
       <div @fadeIn class="col" *ngIf="showMonthYear">
