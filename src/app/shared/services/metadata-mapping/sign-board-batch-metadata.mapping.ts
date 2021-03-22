@@ -36,6 +36,11 @@ export const signBoardBatchMetadata = {
       id: 'u4pCnDC6cZo',
       valueType: 'NUMBER',
       key: 'signboard_quantity'
+    }, {
+      name: 'Planted Quantity',
+      id: 'ykePjKmjqga',
+      valueType: 'TEXT',
+      key: 'planted_quantity'
     },
     {
       name: 'Region',
@@ -72,10 +77,22 @@ export const signBoardBatchMetadata = {
       key: 'start_date'
     },
     {
+      name: 'Sign board status',
+      id: 'Cm3Tq4qFQDy',
+      valueType: 'TEXT',
+      key: 'sign_board_status'
+    },
+    {
       name: 'End date',
       id: 'Al7FVVC6179',
       valueType: 'TEXT',
       key: 'end_date'
+    },
+    {
+      name: 'Actual planting date',
+      id: 'ar2npAGPPwR',
+      valueType: 'TEXT',
+      key: 'actual_planting_date'
     }
   ],
   stage: {
@@ -197,12 +214,6 @@ export const signBoardBatchMetadata = {
           id: 'sfHXyc6Fznf',
           valueType: 'TEXT',
           key: 'latitude'
-        },
-        {
-          name: 'Actual planting date',
-          id: 'hD8PWyQybDI',
-          valueType: 'TEXT',
-          key: 'actual_planting_date'
         }
       ]
     }

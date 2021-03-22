@@ -18,4 +18,6 @@ export class SignBoardBatch {
   agency_name: string;
   start_date: string;
   end_date: string;
+  actual_planting_date: string;
+  sign_board_status: string;
 }

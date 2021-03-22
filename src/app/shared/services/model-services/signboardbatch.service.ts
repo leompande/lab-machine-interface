@@ -141,6 +141,19 @@ export class SignBoardBatchService {
     });
   }
 
+  updateAgencySignBoardBatch(isUpdate, signBoardBatch: SignBoardBatch | any, trackedEntityInstanceId: string, eventDate: any): Observable<any> {
+    return Observable.create((observer: any) => {
+      let trackedEntityInstancePayload = this.trackerService.prepareTrackedEntityPayload('SignBoardBatches', signBoardBatch.organisation_unit_id, signBoardBatch, !isUpdate ? 'add' : 'edit', signBoardBatch.trackedEntityInstance, eventDate);
+      this.trackerService.updateTrackedEntityInstance(trackedEntityInstancePayload, signBoardBatch.trackedEntityInstance).subscribe((results: any) => {
+        observer.next(results);
+        observer.complete();
+      }, error => {
+        observer.error(error);
+        observer.complete();
+      });
+    });
+  }
+
   deleteSignBoardBatch(trackedEntityInstance: string, id: string): Observable<any> {
     return Observable.create(observer => {
       this.trackerService.deleteTrackedEntityInstance(trackedEntityInstance).subscribe(results => {

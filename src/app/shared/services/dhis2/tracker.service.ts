@@ -28,10 +28,8 @@ export class TrackerService {
     });
   }
 
-  updateTrackedEntityInstance(trackedEntityInstances:any[], trackedEntityInstanceId) {
-    return this.http.put(`30/trackedEntityInstances/`+trackedEntityInstanceId, {
-      trackedEntityInstances: trackedEntityInstances
-    });
+  updateTrackedEntityInstance(trackedEntityInstances:any, trackedEntityInstanceId) {
+    return this.http.put(`30/trackedEntityInstances/`+trackedEntityInstanceId, trackedEntityInstances);
   }
 
   saveEvents(events) {

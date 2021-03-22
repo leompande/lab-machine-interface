@@ -1,10 +1,14 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, EventEmitter, Output } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GoogleMap } from '@angular/google-maps';
 import { fadeIn } from 'src/app/shared/animations/router-animation';
 import { SignBoardBatchItem } from 'src/app/store/sign-board-batch-item/reducers/sign-board-batch-item';
 import { SignBoardBatch } from 'src/app/store/sign-board-batch/reducers/sign-board-batch';
 import { Outlet } from 'src/app/store/outlet/reducers/outlet';
+import { SignBoardBatchService } from 'src/app/shared/services/model-services/signboardbatch.service';
+import { ApplicationState } from 'src/app/store';
+import { Store } from '@ngrx/store';
+import { LoadSignBoardBatches } from 'src/app/store/sign-board-batch/actions/sign-board-batch.actions';
 
 @Component({
   selector: 'app-agency-batch-more',
@@ -21,7 +25,6 @@ export class AgencyBatchMoreComponent implements OnInit {
   boardItem: SignBoardBatchItem;
   detailsVisible: boolean = false;
 
-  // Map visualization fields initiation
   zoom = 3;
   center: google.maps.LatLngLiteral
   options: google.maps.MapOptions = {
@@ -34,7 +37,6 @@ export class AgencyBatchMoreComponent implements OnInit {
 
   markers = [
   ];
-  // end
 
   tableConfigurations = {
     tableColumns: [
@@ -72,9 +74,14 @@ export class AgencyBatchMoreComponent implements OnInit {
       actualLatitude: null,
       actualLongitude: null
     }
-    close_batch: boolean = false;
-    planted_quantity: number;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { boardItems: SignBoardBatchItem[], batch: SignBoardBatch, outlets: Outlet[] }) {
+  close_batch: boolean = false;
+  planted_quantity: number;
+  actual_planting_date: any;
+  isSaving: boolean = false;
+  @Output() closeBatch: EventEmitter<any> = new EventEmitter();
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: { boardItems: SignBoardBatchItem[], batch: SignBoardBatch, outlets: Outlet[] },
+    private signBoardService: SignBoardBatchService, private store: Store<ApplicationState>) {
     this.boardItems = data.boardItems;
     this.batch = data.batch;
     this.outlets = data.outlets;
@@ -83,9 +90,22 @@ export class AgencyBatchMoreComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  save(){
+  closingBatch() {
     this.close_batch = true;
-    console.log("Saving the form");
+  }
+
+  async save() {
+    this.isSaving = true;
+    this.batch = {
+      ...this.batch,
+      planted_quantity: this.planted_quantity.toString(),
+      actual_planting_date: this.actual_planting_date,
+      sign_board_status: this.planted_quantity == (+this.batch.signboard_quantity) ? "COMPLETED" : "PARTIAL"
+    }
+    await this.signBoardService.updateAgencySignBoardBatch(true, this.batch, this.batch.trackedEntityInstance, null).toPromise();
+    this.store.dispatch(new LoadSignBoardBatches());
+    this.isSaving = false;
+    this.cancel()
   }
 
   addMarker(marker: { latitude: number, longitude: number, iconFlag: string }) {
@@ -113,7 +133,7 @@ export class AgencyBatchMoreComponent implements OnInit {
     });
   }
 
-  approveSignBoard(){
+  approveSignBoard() {
     console.log(this.boardItem);
   }
 
@@ -152,7 +172,7 @@ export class AgencyBatchMoreComponent implements OnInit {
     document.getElementById("closeButton")?.click();
   }
 
-  cancelForm(){
+  cancelForm() {
     this.close_batch = false;
   }
 

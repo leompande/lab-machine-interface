@@ -30,6 +30,8 @@ export class SignBoardBatchComponent implements OnInit {
       { name: 'agency_name', label: 'Agency' },
       { name: 'start_date', label: 'Date expected to plant from' },
       { name: 'end_date', label: 'Date expected to plant to' },
+      { name: 'actual_planting_date', label: 'Actual Planting Date' },
+      { name: 'planted_quantity', label: 'Planted Quantity' },
     ],
     tableCaption: ' ',
     tableNotifications: '',
