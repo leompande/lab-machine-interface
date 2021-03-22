@@ -49,6 +49,7 @@
     "lodash": "^4.17.20",
     "moment": "^2.29.1",
     "ngx-barcode6": "^1.0.13",
+    "ngx-shimmer-loading": "0.0.5",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

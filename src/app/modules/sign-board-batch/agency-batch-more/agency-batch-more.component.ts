@@ -79,12 +79,16 @@ export class AgencyBatchMoreComponent implements OnInit {
   actual_planting_date: any;
   isSaving: boolean = false;
   @Output() closeBatch: EventEmitter<any> = new EventEmitter();
+  
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { boardItems: SignBoardBatchItem[], batch: SignBoardBatch, outlets: Outlet[] },
     private signBoardService: SignBoardBatchService, private store: Store<ApplicationState>) {
     this.boardItems = data.boardItems;
     this.batch = data.batch;
     this.outlets = data.outlets;
+    this.planted_quantity = +this.batch.planted_quantity;
+    this.actual_planting_date = this.batch.actual_planting_date;
+
   }
 
   ngOnInit(): void {
@@ -132,11 +136,6 @@ export class AgencyBatchMoreComponent implements OnInit {
       }
     });
   }
-
-  approveSignBoard() {
-    console.log(this.boardItem);
-  }
-
 
   previewSignBoard(rowId: string) {
     this.boardItem = this.data.boardItems.find((item: SignBoardBatchItem) => item.id == rowId);

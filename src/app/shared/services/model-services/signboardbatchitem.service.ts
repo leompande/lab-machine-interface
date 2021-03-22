@@ -18,7 +18,6 @@ export class SignBoardBatchItemService {
     this.user = new Function('return ' + localStorage.getItem('sb-user'))();
   }
 
-
   listSignBoardBatchItems(ou: string): Observable<any> {
     return Observable.create((observer: any) => {
       this.trackerService.getEvents(
@@ -26,7 +25,7 @@ export class SignBoardBatchItemService {
         ou,
         "SignBoards"
       ).subscribe((results) => {
-        observer.next(this.trackerService.transformEventData("SignBoardBatches","SignBoards",results));
+        observer.next(this.trackerService.transformEventData("SignBoardBatches", "SignBoards", results));
         observer.complete();
       }, (error) => {
         observer.error(error);
@@ -34,7 +33,6 @@ export class SignBoardBatchItemService {
       });
     });
   }
-
 
   saveUpdateSignBoardBatchItem(isUpdate, signBoardBatch: SignBoardBatchItem, trackedEntityInstanceId: string, eventDate: any): Observable<any> {
 

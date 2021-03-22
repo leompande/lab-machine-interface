@@ -1,9 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { SignBoardBatch } from 'src/app/store/sign-board-batch/reducers/sign-board-batch';
 import { Outlet } from 'src/app/store/outlet/reducers/outlet';
-import { BoardBatchMoreComponent } from '../campaign/board-batch-more/board-batch-more.component';
 import { SignBoardBatchItem } from 'src/app/store/sign-board-batch-item/reducers/sign-board-batch-item';
 import { SignBoardBatchItemService } from 'src/app/shared/services/model-services/signboardbatchitem.service';
 import { AgencyBatchMoreComponent } from './agency-batch-more/agency-batch-more.component';
@@ -72,21 +70,7 @@ export class SignBoardBatchComponent implements OnInit {
   }
 
   editNewlyAssigned(signBoardId: string) {
-    // this.signBoardBatches.find(signBoardData => {
-    //   return signBoardData.id == signBoardId;
-    // });
-    // const dialogRef = this.dialog.open(SignBoardBatchMoreComponent, {
-    //   data: {
-    //     currentObject: this.signBoardBatches.find(signBoardData => signBoardData.id == signBoardId),
-    //   },
-    //   width: '80%',
-    //   maxHeight: '80%',
-    //   disableClose: true,
-    //   hasBackdrop: true,
-    //   closeOnNavigation: true
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    // });
+
   }
 
 }

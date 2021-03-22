@@ -13,6 +13,15 @@ export const selectAll = createSelector(selectCurrentState, fromSignBoardBatch.s
 export const selectTotal = createSelector(selectCurrentState, fromSignBoardBatch.selectTotal);
 export const selectCurrentId = createSelector(selectCurrentState, fromSignBoardBatch.getSelectedId);
 export const selectLoading = createSelector(selectCurrentState, fromSignBoardBatch.getLoading);
+export const selectTotalSignBoards = (agency_name: string) => createSelector(selectAll, (batch) => {
+  if (agency_name) {
+    return getTotalSignBoards(batch.filter(batchItem => {
+      return batchItem.agency_name == agency_name;
+    }));
+  }
+
+  return getTotalSignBoards(batch);
+})
 export const selectById = (id: string) => createSelector(
   selectEntities, (entities) => entities[id]
 );
@@ -24,3 +33,10 @@ export const selected = createSelector(
 export const currentLogedSignBoardBatch = createSelector(
   selectEntities, selectCurrentId, (entities, id) => entities[id]
 );
+
+
+function getTotalSignBoards(batches: any[]) {
+  return batches.reduce((a: any, b: any) => {
+    return (a) + (+b.signboard_quantity);
+  }, 0);
+}

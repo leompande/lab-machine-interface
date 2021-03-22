@@ -1,5 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { GoogleMap } from '@angular/google-maps';
+import { Store } from '@ngrx/store';
+import { ApplicationState } from 'src/app/store';
+import * as signBoardbatchSelector from '../../store/sign-board-batch/selectors/sign-board-batch.selectors';
+import { DashboardSummary } from 'src/app/shared/models/dashboard-summary';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,6 +11,21 @@ import { GoogleMap } from '@angular/google-maps';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
+
+  dashboardSummary: DashboardSummary = {
+    totalBoards: 0,
+    plantedSignBoards: 0,
+    plantedVerifiedBoards: 0,
+    notPlantedBoards: 0
+  }
+
+  constructor(private store: Store<ApplicationState>) {
+    this.store.select(signBoardbatchSelector.selectTotalSignBoards(null)).subscribe(results => {
+      this.dashboardSummary.totalBoards = results;
+    });
+  }
+
+
   @ViewChild(GoogleMap, { static: false }) map: GoogleMap
   zoom = 3;
   center: google.maps.LatLngLiteral

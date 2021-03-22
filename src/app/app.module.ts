@@ -47,7 +47,7 @@ import { SignBoardBatchContainerComponent } from './modules/sign-board-batch/sig
 import { SignBoardBatchComponent } from './modules/sign-board-batch/sign-board-batch.component';
 import { AgencyBatchMoreComponent } from './modules/sign-board-batch/agency-batch-more/agency-batch-more.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-
+import { NgxShimmerLoadingModule } from  'ngx-shimmer-loading';
 @NgModule({
   declarations: [
     MainDataTableComponent,
@@ -94,6 +94,7 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
     AngularFireAuthModule,
     NgbModule,
     EffectsModule.forRoot(effects),
+    NgxShimmerLoadingModule
   ],
   exports: [
     SharedModule

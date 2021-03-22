@@ -1,74 +1,66 @@
 <div class="dashboard-container">
-    <div class="top-visualizations">
-        <div class="top-visualization-card">Total Sign Boards
-            <div class="top-card-container">
-                <div class="top-visualization-card-avatar">
-                    <img src="/assets/icons/all.png" style="width:60px">
-                </div>
-                <div class="top-visualization-card-contents">
-                    <mat-chip-list class="pull-right">
-                        <mat-chip style="font-size: larger;">15</mat-chip>
-                      </mat-chip-list>
-                </div>
-            </div>
+  <div class="top-visualizations">
+    <div class="top-visualization-card">Total Sign Boards
+      <div class="top-card-container">
+        <div class="top-visualization-card-avatar">
+          <img src="/assets/icons/all.png" style="width:60px">
         </div>
-        <div class="top-visualization-card">Planted Sign Boards
-            <div class="top-card-container">
-                <div class="top-visualization-card-avatar">
-                    <img src="/assets/icons/planted.png" style="width:60px">
-                </div>
-                <div class="top-visualization-card-contents">
-                    <mat-chip-list class="pull-right">
-                        <mat-chip style="font-size: larger;background-color: rgb(202, 202, 6);color: black;">10</mat-chip>
-                      </mat-chip-list>
-                </div>
-            </div>
+        <div class="top-visualization-card-contents">
+          <mat-chip-list class="pull-right">
+            <mat-chip style="font-size: larger;">{{dashboardSummary.totalBoards}}</mat-chip>
+          </mat-chip-list>
         </div>
-        <div class="top-visualization-card">Planted & Verified
-            <div class="top-card-container">
-                <div class="top-visualization-card-avatar">
-                    <img src="/assets/icons/planted_verified.png" style="width:50px">
-                </div>
-                <div class="top-visualization-card-contents">
-                    <mat-chip-list class="pull-right">
-                        <mat-chip style="font-size: larger;background-color: green;color:white;">8</mat-chip>
-                      </mat-chip-list>
-                </div>
-            </div>
-        </div>
-        <div class="top-visualization-card">Not Planted
-            <div class="top-card-container">
-                <div class="top-visualization-card-avatar">
-                    <img src="/assets/icons/not_planted.png" style="width:50px">
-                </div>
-                <div class="top-visualization-card-contents">
-                    <mat-chip-list class="pull-right">
-                        <mat-chip style="font-size: larger;background-color: red;color:white">6</mat-chip>
-                      </mat-chip-list>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-    <div class="middle-visualizations">
-        <div class="middle-visualization-map-card">
-            <div class="map-title" style="padding:10px">Planted & Verified Sign Boards</div>
-            <google-map
-                height="504px"
-                width="100%"
-                [zoom]="zoom"
-                [center]="center"
-                [options]="options"
-                >
-                <map-marker
-                    *ngFor="let marker of markers"
-                    [position]="marker.position"
-                    [label]="marker.label"
-                    [title]="marker.title"
-                    [options]="marker.options"
-                >
-                </map-marker>
-            </google-map>
+    <div class="top-visualization-card">Planted Sign Boards
+      <div class="top-card-container">
+        <div class="top-visualization-card-avatar">
+          <img src="/assets/icons/planted.png" style="width:60px">
         </div>
-        <div class="middle-visualization-status-card">Status</div>
+        <div class="top-visualization-card-contents">
+          <mat-chip-list class="pull-right">
+            <mat-chip style="font-size: larger;background-color: rgb(202, 202, 6);color: black;">
+              {{dashboardSummary.plantedSignBoards}}</mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
     </div>
+    <div class="top-visualization-card">Planted & Verified
+      <div class="top-card-container">
+        <div class="top-visualization-card-avatar">
+          <img src="/assets/icons/planted_verified.png" style="width:50px">
+        </div>
+        <div class="top-visualization-card-contents">
+          <mat-chip-list class="pull-right">
+            <mat-chip style="font-size: larger;background-color: green;color:white;">
+              {{dashboardSummary.plantedVerifiedBoards}}</mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+    </div>
+    <div class="top-visualization-card">Not Planted
+      <div class="top-card-container">
+        <div class="top-visualization-card-avatar">
+          <img src="/assets/icons/not_planted.png" style="width:50px">
+        </div>
+        <div class="top-visualization-card-contents">
+          <mat-chip-list class="pull-right">
+            <mat-chip style="font-size: larger;background-color: red;color:white">{{dashboardSummary.notPlantedBoards}}
+            </mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="middle-visualizations">
+    <div class="middle-visualization-map-card">
+      <div class="map-title" style="padding:10px">Planted & Verified Sign Boards</div>
+      <google-map height="504px" width="100%" [zoom]="zoom" [center]="center" [options]="options">
+        <map-marker *ngFor="let marker of markers" [position]="marker.position" [label]="marker.label"
+          [title]="marker.title" [options]="marker.options">
+        </map-marker>
+      </google-map>
+    </div>
+    <div class="middle-visualization-status-card">Status</div>
+  </div>
 </div>
