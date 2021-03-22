@@ -7,7 +7,7 @@ import * as agencySelector from '../../store/agency/selectors/agency.selectors';
 import { DashboardSummary, Status } from 'src/app/shared/models/dashboard-summary';
 import { User } from 'src/app/store/user/reducers/user';
 import { Agency } from 'src/app/store/agency/reducers/agency';
-import { get5Years } from 'src/app/shared/helpers';
+import { get5Years, getMonths } from 'src/app/shared/helpers';
 import { fadeIn } from 'src/app/shared/animations/router-animation';
 
 @Component({
@@ -32,11 +32,13 @@ export class DashboardComponent implements OnInit {
   showMonthYear: boolean = false;
   showYears: boolean = false;
 
-  years: { id: string, value: number, name: string }[];
+  years: { id: string, value: any, name: string }[];
+  months: { id: string, value: any, name: string }[]
   currentYear: number = new Date().getFullYear();
 
   constructor(private store: Store<ApplicationState>) {
     this.years = get5Years();
+    this.months = getMonths();
     this.user = new Function("return " + localStorage.getItem('sb-user'))();
     this.store.select(agencySelector.selectAll).subscribe((results) => {
       this.agencies = results;

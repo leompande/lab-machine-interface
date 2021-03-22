@@ -163,3 +163,68 @@ export function get5Years(sign?: string, lastItem?: { id: string, value: number,
 
   return years.sort((a, b) => b.value - a.value);;
 }
+
+
+export function getMonths(){
+  return [
+    {
+      id: "January",
+      value:"01",
+      name:"January"
+    },
+    {
+      id: "February",
+      value:"02",
+      name:"February"
+    },
+    {
+      id: "March",
+      value:"03",
+      name:"March"
+    },
+    {
+      id: "April",
+      value:"04",
+      name:"April"
+    },
+    {
+      id: "May",
+      value:"05",
+      name:"May"
+    },
+    {
+      id: "June",
+      value:"06",
+      name:"June"
+    },
+    {
+      id: "July",
+      value:"07",
+      name:"July"
+    },
+    {
+      id: "August",
+      value:"08",
+      name:"August"
+    },
+    {
+      id: "September",
+      value:"09",
+      name:"September"
+    },{
+      id: "October",
+      value:"10",
+      name:"October"
+    },
+    {
+      id: "November",
+      value:"11",
+      name:"November"
+    },
+    {
+      id: "December",
+      value:"12",
+      name:"December"
+    }
+  ]
+}

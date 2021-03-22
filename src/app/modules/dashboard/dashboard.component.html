@@ -45,9 +45,7 @@
         <mat-form-field appearance="outline">
           <mat-label>Months</mat-label>
           <mat-select>
-            <mat-option value="Daily">Daily</mat-option>
-            <mat-option value="Monthly">Monthly</mat-option>
-            <mat-option value="Yearly">Yearly</mat-option>
+            <mat-option value="{{month.value}}" *ngFor="let month of months">{{month.name}}</mat-option>
           </mat-select>
         </mat-form-field>
       </div>
