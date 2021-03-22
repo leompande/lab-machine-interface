@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { ApplicationState } from 'src/app/store';
 import * as signBoardbatchSelector from '../../store/sign-board-batch/selectors/sign-board-batch.selectors';
 import * as agencySelector from '../../store/agency/selectors/agency.selectors';
-import { DashboardSummary } from 'src/app/shared/models/dashboard-summary';
+import { DashboardSummary, Status } from 'src/app/shared/models/dashboard-summary';
 import { User } from 'src/app/store/user/reducers/user';
 import { Agency } from 'src/app/store/agency/reducers/agency';
 
@@ -23,11 +23,17 @@ export class DashboardComponent implements OnInit {
   }
   user: User;
   agencies: Agency[];
+  statuses: Status[];
 
   constructor(private store: Store<ApplicationState>) {
     this.user = new Function("return " + localStorage.getItem('sb-user'))();
     this.store.select(agencySelector.selectAll).subscribe((results)=>{
       this.agencies = results;
+      if (this.user.agency == null){
+        this.store.select(signBoardbatchSelector.getStatus(this.agencies)).subscribe((results)=>{
+          this.statuses = results;
+        });
+      }
     });
 
     this.store.select(signBoardbatchSelector.selectTotalSignBoards(this.user.agency)).subscribe(results => {
