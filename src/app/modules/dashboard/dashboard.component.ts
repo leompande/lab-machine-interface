@@ -27,10 +27,10 @@ export class DashboardComponent implements OnInit {
 
   constructor(private store: Store<ApplicationState>) {
     this.user = new Function("return " + localStorage.getItem('sb-user'))();
-    this.store.select(agencySelector.selectAll).subscribe((results)=>{
+    this.store.select(agencySelector.selectAll).subscribe((results) => {
       this.agencies = results;
-      if (this.user.agency == null){
-        this.store.select(signBoardbatchSelector.getStatus(this.agencies)).subscribe((results)=>{
+      if (this.user.agency == null) {
+        this.store.select(signBoardbatchSelector.getStatus(this.agencies)).subscribe((results) => {
           this.statuses = results;
         });
       }
@@ -45,7 +45,7 @@ export class DashboardComponent implements OnInit {
     });
 
     this.store.select(signBoardbatchSelector.selectNotPlantedSignBoards(this.user.agency)).subscribe(results => {
-      console.log("NOT PLANTED",results)
+      console.log("NOT PLANTED", results)
       this.dashboardSummary.notPlantedBoards = results;
     });
   }

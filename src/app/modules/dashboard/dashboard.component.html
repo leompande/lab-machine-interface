@@ -65,13 +65,27 @@
       <div class="map-title" style="padding:5px">Planting Status</div>
       <br />
       <div>
-        <div *ngFor="let status of statuses" style="margin: 10px 10px;">
-          <label style="font-size: 15px;font-weight: bolder;">{{status.agency_name}}</label>
-          <div class="progress">
-            <div class="progress-bar " [ngClass]="{'bg-success': status.percentage_planted>70, 'bg-warning': status.percentage_planted<50 &&  status.percentage_planted>70  , 'bg-danger': status.percentage_planted<=50}" role="progressbar" style="width: {{status.percentage_planted}}%" aria-valuenow="{{status.percentage_planted}}"
-              aria-valuemin="0" aria-valuemax="100">{{status.percentage_planted}}%</div>
+        <div *ngIf="statuses.length<=0">
+          <div class="lines shine"></div>
+          <div class="lines shine"></div>
+          <div class="lines shine"></div>
+          <div class="lines shine"></div>
+          <div class="lines shine"></div>
+          <div class="lines shine"></div>
+        </div>
+        <div *ngIf="statuses.length>0">
+          <div *ngFor="let status of statuses" style="margin: 10px 10px;">
+            <label style="font-size: 15px;font-weight: bolder;">{{status.agency_name}}</label>
+            <div class="progress">
+              <div class="progress-bar "
+                [ngClass]="{'bg-success': status.percentage_planted>70, 'bg-warning': status.percentage_planted<50 &&  status.percentage_planted>70  , 'bg-danger': status.percentage_planted<=50}"
+                role="progressbar" style="width: {{status.percentage_planted}}%"
+                aria-valuenow="{{status.percentage_planted}}" aria-valuemin="0" aria-valuemax="100">
+                {{status.percentage_planted}}%</div>
+            </div>
           </div>
         </div>
+
       </div>
     </div>
 
