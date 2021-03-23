@@ -1,10 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Outlet } from 'src/app/store/outlet/reducers/outlet';
 import { FormGroup, FormControl } from '@angular/forms';
 import { makeId } from 'src/app/shared/helpers';
 import { OutletService } from 'src/app/shared/services/model-services/outlet.service';
-import { ListItem } from 'src/app/shared/components/one-sided-multi-select/one-sided-multi-select.component';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
