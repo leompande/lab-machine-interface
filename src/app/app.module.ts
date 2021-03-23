@@ -48,6 +48,21 @@ import { SignBoardBatchComponent } from './modules/sign-board-batch/sign-board-b
 import { AgencyBatchMoreComponent } from './modules/sign-board-batch/agency-batch-more/agency-batch-more.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { NgxShimmerLoadingModule } from  'ngx-shimmer-loading';
+import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
+import { MomentDateModule, MomentDateAdapter } from '@angular/material-moment-adapter';
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: ['YYYY-MM-DD'],
+  },
+  display: {
+    dateInput: 'YYYY-MM-DD',
+    monthYearLabel: 'YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
+
 @NgModule({
   declarations: [
     MainDataTableComponent,
@@ -99,7 +114,9 @@ import { NgxShimmerLoadingModule } from  'ngx-shimmer-loading';
   exports: [
     SharedModule
   ],
-  providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }, { provide: LocationStrategy, useClass: HashLocationStrategy }],
+  providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }, { provide: LocationStrategy, useClass: HashLocationStrategy },
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

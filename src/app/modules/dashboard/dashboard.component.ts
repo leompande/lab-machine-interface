@@ -9,6 +9,7 @@ import { User } from 'src/app/store/user/reducers/user';
 import { Agency } from 'src/app/store/agency/reducers/agency';
 import { get5Years, getMonths } from 'src/app/shared/helpers';
 import { fadeIn } from 'src/app/shared/animations/router-animation';
+import { Moment } from 'moment';
 
 @Component({
   selector: 'app-dashboard',
@@ -73,7 +74,6 @@ export class DashboardComponent implements OnInit {
     });
 
     this.store.select(signBoardbatchSelector.selectNotPlantedSignBoards(this.user.agency)).subscribe(results => {
-      console.log("NOT PLANTED", results)
       this.dashboardSummary.notPlantedBoards = results;
     });
   }
@@ -100,12 +100,12 @@ export class DashboardComponent implements OnInit {
 
   changeStartDate(event: any) {
     this.minDateEndDate = this.startDate;
-    console.log(this.startDate);
+    this.updateDashboardVisualization(null, this.startDate,this.endDate,null, null);
   }
 
   changeEndDate(event: any) {
     this.maxDateStartDate = this.endDate;
-    console.log(this.endDate);
+    this.updateDashboardVisualization(null, this.startDate,this.endDate,null, null);
   }
 
   goNextYear() {
@@ -116,6 +116,17 @@ export class DashboardComponent implements OnInit {
   goPrevYear() {
     this.years = get5Years('-', this.years[4], this.years[0]);
     console.log("Data prev year");
+  }
+
+
+  updateDashboardVisualization(type?: string, startDate?: Moment, endDate?: any, month?:any, year?: any){
+    if ( startDate != null ) {
+      console.log(startDate.calendar());
+    }
+
+    if ( endDate == null ){
+      console.log(endDate);
+    }
   }
 
 

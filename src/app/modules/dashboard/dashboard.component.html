@@ -14,19 +14,19 @@
       <div @fadeIn class="col" *ngIf="showStartEndDate">
         <mat-form-field appearance="outline">
           <mat-label>Start Date</mat-label>
-          <input name="startDate" [(ngModel)]="startDate" matInput [min]="minDateStartDate" [max]="maxDateStartDate" [matDatepicker]="picker"
-            (dateChange)="changeStartDate(event)">
+          <input name="startDate" [(ngModel)]="startDate" matInput [min]="minDateStartDate" [max]="maxDateStartDate"
+            [matDatepicker]="picker" (dateChange)="changeStartDate(event)">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+          <mat-datepicker touchUi #picker></mat-datepicker>
         </mat-form-field>
       </div>
       <div @fadeIn class="col" *ngIf="showStartEndDate">
         <mat-form-field appearance="outline">
           <mat-label>End Date</mat-label>
-          <input  name="endDate" [(ngModel)]="endDate" matInput [min]="minDateEndDate" [max]="maxDateEndDate" [matDatepicker]="picker"
-          (dateChange)="changeEndDate(event)">
+          <input name="endDate" [(ngModel)]="endDate" matInput [min]="minDateEndDate" [max]="maxDateEndDate"
+            [matDatepicker]="picker" (dateChange)="changeEndDate(event)">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
+          <mat-datepicker touchUi #picker></mat-datepicker>
         </mat-form-field>
       </div>
       <div @fadeIn class="col" *ngIf="showMonthYear || showYears">
@@ -135,7 +135,7 @@
             <div class="progress">
               <div class="progress-bar "
                 [ngClass]="{'bg-success': status.percentage_planted>70, 'bg-warning': status.percentage_planted<50 &&  status.percentage_planted>70  , 'bg-danger': status.percentage_planted<=50}"
-                role="progressbar" style="width: {{status.percentage_planted}}%"
+                role="progressbar" style="width: {{status.percentage_planted}} %"
                 aria-valuenow="{{status.percentage_planted}}" aria-valuemin="0" aria-valuemax="100">
                 {{status.percentage_planted}}%</div>
             </div>
