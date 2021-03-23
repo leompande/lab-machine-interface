@@ -149,7 +149,6 @@ export function get5Years(sign?: string, lastItem?: { id: string, value: number,
     const currentYear = new Date().getFullYear();
     let count = 0;
     while (count < 5) {
-      count++;
       if ((currentYear - count) >= 1970 && (currentYear - count) <= currentYear) {
         years = [...years, {
           id: (currentYear - count) + "",
@@ -157,6 +156,7 @@ export function get5Years(sign?: string, lastItem?: { id: string, value: number,
           name: (currentYear - count) + ""
         }];
       }
+      count++;
 
     }
   }

@@ -14,7 +14,8 @@
       <div @fadeIn class="col" *ngIf="showStartEndDate">
         <mat-form-field appearance="outline">
           <mat-label>Start Date</mat-label>
-          <input matInput [matDatepicker]="picker">
+          <input name="startDate" [(ngModel)]="startDate" matInput [min]="minDateStartDate" [max]="maxDateStartDate" [matDatepicker]="picker"
+            (dateChange)="changeStartDate(event)">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -22,7 +23,8 @@
       <div @fadeIn class="col" *ngIf="showStartEndDate">
         <mat-form-field appearance="outline">
           <mat-label>End Date</mat-label>
-          <input matInput [matDatepicker]="picker">
+          <input  name="endDate" [(ngModel)]="endDate" matInput [min]="minDateEndDate" [max]="maxDateEndDate" [matDatepicker]="picker"
+          (dateChange)="changeEndDate(event)">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
@@ -37,8 +39,10 @@
       </div>
       <div @fadeIn class="col" *ngIf="showMonthYear || showYears">
         <div class="btn-group special btn-group-lg" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-outline-primary " [disabled]="years[0].value >= currentYear" (click)="goNextYear()">Next Year</button>
-          <button type="button" class="btn btn-outline-primary " [disabled]="years[4].value <= 1970" (click)="goPrevYear()">Prev Year</button>
+          <button type="button" class="btn btn-outline-primary " [disabled]="years[0].value >= currentYear"
+            (click)="goNextYear()">Next Year</button>
+          <button type="button" class="btn btn-outline-primary " [disabled]="years[4].value <= 1970"
+            (click)="goPrevYear()">Prev Year</button>
         </div>
       </div>
       <div @fadeIn class="col" *ngIf="showMonthYear">

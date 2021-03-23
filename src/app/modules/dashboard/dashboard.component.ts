@@ -14,7 +14,7 @@ import { fadeIn } from 'src/app/shared/animations/router-animation';
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
-  animations:[fadeIn]
+  animations: [fadeIn]
 })
 export class DashboardComponent implements OnInit {
 
@@ -36,10 +36,25 @@ export class DashboardComponent implements OnInit {
   months: { id: string, value: any, name: string }[]
   currentYear: number = new Date().getFullYear();
 
+  minDateStartDate: Date;
+  maxDateStartDate: Date;
+
+  minDateEndDate: Date;
+  maxDateEndDate: Date;
+
+  today: Date = new Date();
+
+  startDate: any;
+  endDate: any;
+
   constructor(private store: Store<ApplicationState>) {
     this.years = get5Years();
     this.months = getMonths();
     this.user = new Function("return " + localStorage.getItem('sb-user'))();
+
+    this.maxDateStartDate = this.today;
+    this.maxDateEndDate = this.today;
+
     this.store.select(agencySelector.selectAll).subscribe((results) => {
       this.agencies = results;
       if (this.user.agency == null) {
@@ -83,13 +98,23 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  changeStartDate(event: any) {
+    this.minDateEndDate = this.startDate;
+    console.log(this.startDate);
+  }
+
+  changeEndDate(event: any) {
+    this.maxDateStartDate = this.endDate;
+    console.log(this.endDate);
+  }
+
   goNextYear() {
-    this.years = get5Years('+',this.years[0],this.years[4]);
+    this.years = get5Years('+', this.years[0], this.years[4]);
     console.log("Data next year");
   }
 
   goPrevYear() {
-    this.years = get5Years('-',this.years[4],this.years[0]);
+    this.years = get5Years('-', this.years[4], this.years[0]);
     console.log("Data prev year");
   }
 
