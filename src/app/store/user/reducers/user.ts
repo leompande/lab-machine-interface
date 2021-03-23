@@ -9,6 +9,7 @@ export class User {
     phone!: string;
     role!: string;
     roleId!: string;
+    user_level!: string;
     organisation!: string;
     dhisOrganisationUnitId!: string;
     dhisCredentialsId!: string;

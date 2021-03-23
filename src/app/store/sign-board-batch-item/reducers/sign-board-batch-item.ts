@@ -14,5 +14,8 @@ export class SignBoardBatchItem {
     agency_name: string;
     start_date: string;
     end_date: string;
+    sign_board_status?: string;
+    date_to_be_planted?: string;
+    bar_code?: string;
 
 }

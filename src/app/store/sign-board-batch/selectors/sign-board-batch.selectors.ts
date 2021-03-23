@@ -88,6 +88,6 @@ function getTotalSignBoards(batches: any[]) {
 
 function getPlantedSignBoards(batches: any[]) {
   return batches.reduce((a: any, b: any) => {
-    return (a) + (+b.planted_quantity);
+    return (a) + (+(b.planted_quantity||0));
   }, 0);
 }

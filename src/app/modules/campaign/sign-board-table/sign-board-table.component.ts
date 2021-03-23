@@ -26,7 +26,7 @@ export class SignBoardTableComponent implements OnInit {
   totalAmount!: number;
   @Input()
   tableConfigurations: {
-    tableColumns: Array<{ name: string; label: string, type?: string }>;
+    tableColumns: Array<{ name: string; label: string, type?: string, noSeparator?:boolean, head_align?:boolean }>;
     identifierColumn?: string;
     tableCaption: string;
     printTitle?: string;
@@ -39,6 +39,8 @@ export class SignBoardTableComponent implements OnInit {
     showBorder: boolean;
     empty_msg: string;
     hideExport: boolean;
+    head_align: any;
+    noSeparator: boolean;
   } = {
       tableColumns: [],
       tableCaption: '',
@@ -58,7 +60,9 @@ export class SignBoardTableComponent implements OnInit {
       showSearch: true,
       showBorder: true,
       empty_msg: 'No Data',
-      hideExport: false
+      hideExport: false,
+      head_align: false,
+      noSeparator: false
     };
   @Input()
   loading!: boolean;
