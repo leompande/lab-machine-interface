@@ -49,7 +49,7 @@ import { AgencyBatchMoreComponent } from './modules/sign-board-batch/agency-batc
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { NgxShimmerLoadingModule } from  'ngx-shimmer-loading';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
-import { MomentDateModule, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
 
 export const MY_FORMATS = {
   parse: {

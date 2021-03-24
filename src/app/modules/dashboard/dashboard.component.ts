@@ -10,6 +10,9 @@ import { Agency } from 'src/app/store/agency/reducers/agency';
 import { get5Years, getMonths } from 'src/app/shared/helpers';
 import { fadeIn } from 'src/app/shared/animations/router-animation';
 import { Moment } from 'moment';
+import * as Highcharts from 'highcharts';
+import * as HighchartsExporting from 'highcharts/modules/exporting';
+HighchartsExporting(Highcharts);
 
 @Component({
   selector: 'app-dashboard',
@@ -48,6 +51,8 @@ export class DashboardComponent implements OnInit {
   startDate: any;
   endDate: any;
 
+  options: Object;
+
   constructor(private store: Store<ApplicationState>) {
     this.years = get5Years();
     this.months = getMonths();
@@ -76,7 +81,9 @@ export class DashboardComponent implements OnInit {
     this.store.select(signBoardbatchSelector.selectNotPlantedSignBoards(this.user.agency)).subscribe(results => {
       this.dashboardSummary.notPlantedBoards = results;
     });
-  }
+
+
+}
 
 
   changePeriodType(event: any) {
@@ -130,61 +137,79 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  @ViewChild(GoogleMap, { static: false }) map: GoogleMap
-  zoom = 3;
-  center: google.maps.LatLngLiteral
-  options: google.maps.MapOptions = {
-    mapTypeId: 'hybrid',
-    zoomControl: false,
-    scrollwheel: false,
-    maxZoom: 15,
-    minZoom: 6,
-  }
 
-  markers = [
-  ];
 
-  addMarker() {
-    this.markers.push({
-      position: {
-        lat: this.center.lat + ((Math.random() - 0.5) * 2) / 10,
-        lng: this.center.lng + ((Math.random() - 0.5) * 2) / 10,
-      },
-      label: {
-        color: 'white',
-      },
-    });
-    this.markers.push({
-      position: {
-        lat: this.center.lat + ((Math.random() - 5) * 3) / 5,
-        lng: this.center.lng + ((Math.random() - 5) * 3) / 5,
-      },
-      label: {
-        color: 'white',
-      },
-    });
-  }
+
 
   ngOnInit() {
-    this.center = {
-      lat: -6.3728253,
-      lng: 34.8924826,
-    }
-    navigator.geolocation.getCurrentPosition((position) => {
-      this.center = {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-      }
-    });
-    this.addMarker();
+    setTimeout(() => Highcharts.chart('summaryChartVisualization', {
+
+      title: {
+          text: ''
+      },
+
+      subtitle: {
+          text: ''
+      },
+
+      yAxis: {
+          title: {
+              text: 'Number of Sign Boards'
+          }
+      },
+
+      xAxis: {
+          accessibility: {
+              rangeDescription: 'Range: 2010 to 2017'
+          }
+      },
+
+      // legend: {
+      //     layout: 'horizontal',
+      //     align: 'bottom',
+      //     verticalAlign: 'bottom'
+      // },
+
+      plotOptions: {
+          series: {
+              label: {
+                  connectorAllowed: false
+              },
+              pointStart: 2010
+          }
+      },
+
+      series: [{
+          name: 'Total number of signboards',
+          data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+      }, {
+          name: 'Number of signboards planted',
+          data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
+      }, {
+          name: 'Number of signboards verified',
+          data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
+      }, {
+          name: 'Number of signboards not planted',
+          data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
+      }],
+
+      // responsive: {
+      //     rules: [{
+      //         condition: {
+      //             maxWidth: 500
+      //         },
+      //         chartOptions: {
+      //             legend: {
+      //                 layout: 'horizontal',
+      //                 // verticalAlign: 'bottom'
+      //             }
+      //         }
+      //     }]
+      // }
+
+  }), 200);
   }
 
-  zoomIn() {
-    if (this.zoom < this.options.maxZoom) this.zoom++
-  }
 
-  zoomOut() {
-    if (this.zoom > this.options.minZoom) this.zoom--
-  }
 
 }

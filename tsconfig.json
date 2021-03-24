@@ -21,9 +21,10 @@
       "dom"
     ]
   },
-  // "angularCompilerOptions": {
+  "angularCompilerOptions": {
   //   "strictInjectionParameters": false,
   //   "strictInputAccessModifiers": false,
   //   "strictTemplates": false
-  // }
+  // "strictMetadataEmit" : true
+  }
 }
