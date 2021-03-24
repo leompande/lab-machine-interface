@@ -9,6 +9,7 @@
         <input autocomplete="off" matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
       </mat-form-field>
     </div>
+    
     <div class="excel-button">
       <div class="custom-button" (click)="mapPriview()" *ngIf="tableConfigurations.showMap">
         <i style="margin-bottom: 5px; color: black" class="fa fa-map"></i>
@@ -23,7 +24,6 @@
         Pdf</div>
     </div>
   </div>
-
   <app-loader @fadeIn *ngIf="loading" message="{{ loadingMessage || 'Getting Data Please Wait...' }}"></app-loader>
   <table [ngClass]="{'table-bordered': tableConfigurations.showBorder}" mat-table [trackBy]="trackByFn"
     [dataSource]="dataSource" matSort class="mat-elevation-z0" *ngIf="tableList.length != 0; else noData">
