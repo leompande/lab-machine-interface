@@ -24,7 +24,9 @@
               "rxjs-compat",
               "lodash",
               "ngx-barcode6",
-              "rxjs/internal/operators"
+              "rxjs/internal/operators",
+              "highcharts",
+              "highcharts/modules/exporting"
            ],
             "outputPath": "dist/signboard-private-operator",
             "index": "src/index.html",

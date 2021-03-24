@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --base-href / --proxy-config proxy.conf.json",
-    "build": "ng build",
+    "serve": "node --max_old_space_size=4000 ./node_modules/@angular/cli/bin/ng serve",
+    "build": "node --max_old_space_size=4000 ./node_modules/@angular/cli/bin/ng build --aot --prod",
     "build:prod": "ng build --prod --aot",
     "test": "ng test",
     "lint": "ng lint",
