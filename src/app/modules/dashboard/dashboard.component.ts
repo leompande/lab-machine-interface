@@ -193,21 +193,21 @@ export class DashboardComponent implements OnInit {
           data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
       }],
 
-      // responsive: {
-      //     rules: [{
-      //         condition: {
-      //             maxWidth: 500
-      //         },
-      //         chartOptions: {
-      //             legend: {
-      //                 layout: 'horizontal',
-      //                 // verticalAlign: 'bottom'
-      //             }
-      //         }
-      //     }]
-      // }
+      responsive: {
+          rules: [{
+              condition: {
+                  maxWidth: 500
+              },
+              // chartOptions: {
+              //     legend: {
+              //         layout: 'horizontal',
+              //         // verticalAlign: 'bottom'
+              //     }
+              // }
+          }]
+      }
 
-  }), 200);
+  }), 400);
   }
 
 
