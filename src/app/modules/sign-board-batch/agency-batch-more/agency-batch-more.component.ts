@@ -2,7 +2,7 @@ import { Component, OnInit, Inject, ViewChild, EventEmitter, Output } from '@ang
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GoogleMap } from '@angular/google-maps';
 import { fadeIn } from 'src/app/shared/animations/router-animation';
-import { SignBoardBatchItem } from 'src/app/store/sign-board-batch-item/reducers/sign-board-batch-item';
+// import { SignBoardBatchItem } from 'src/app/store/sign-board-batch-item/reducers/sign-board-batch-item';
 import { SignBoardBatch } from 'src/app/store/sign-board-batch/reducers/sign-board-batch';
 import { Outlet } from 'src/app/store/outlet/reducers/outlet';
 import { SignBoardBatchService } from 'src/app/shared/services/model-services/signboardbatch.service';
@@ -18,11 +18,11 @@ import { LoadSignBoardBatches } from 'src/app/store/sign-board-batch/actions/sig
 })
 export class AgencyBatchMoreComponent implements OnInit {
   @ViewChild(GoogleMap, { static: false }) map: GoogleMap;
-  boardItems: SignBoardBatchItem[];
+  // boardItems: SignBoardBatchItem[];
   batch: SignBoardBatch;
   outlets: Outlet[];
   outlet: Outlet;
-  boardItem: SignBoardBatchItem;
+  // boardItem: SignBoardBatchItem;
   detailsVisible: boolean = false;
 
   zoom = 3;
@@ -79,11 +79,11 @@ export class AgencyBatchMoreComponent implements OnInit {
   actual_planting_date: any;
   isSaving: boolean = false;
   @Output() closeBatch: EventEmitter<any> = new EventEmitter();
-  
+
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { boardItems: SignBoardBatchItem[], batch: SignBoardBatch, outlets: Outlet[] },
+    @Inject(MAT_DIALOG_DATA) public data: {  batch: SignBoardBatch, outlets: Outlet[] },
     private signBoardService: SignBoardBatchService, private store: Store<ApplicationState>) {
-    this.boardItems = data.boardItems;
+    // this.boardItems = data.boardItems;
     this.batch = data.batch;
     this.outlets = data.outlets;
     this.planted_quantity = +this.batch.planted_quantity;
@@ -138,12 +138,12 @@ export class AgencyBatchMoreComponent implements OnInit {
   }
 
   previewSignBoard(rowId: string) {
-    this.boardItem = this.data.boardItems.find((item: SignBoardBatchItem) => item.id == rowId);
+    // this.boardItem = this.data.boardItems.find((item: SignBoardBatchItem) => item.id == rowId);
     this.outlet = this.outlets.find((outletItem: Outlet) => outletItem.name == this.batch.outlet);
     this.mapVisualizer.expectedLatitude = this.outlet ? +this.outlet.latitude : null;
     this.mapVisualizer.expectedLongitude = this.outlet ? +this.outlet.longitude : null;
-    this.mapVisualizer.actualLatitude = this.boardItem ? +this.boardItem.latitude : null;
-    this.mapVisualizer.actualLongitude = this.boardItem ? +this.boardItem.longitude : null;
+    // this.mapVisualizer.actualLatitude = this.boardItem ? +this.boardItem.latitude : null;
+    // this.mapVisualizer.actualLongitude = this.boardItem ? +this.boardItem.longitude : null;
     if (this.mapVisualizer.expectedLatitude && this.mapVisualizer.expectedLongitude) {
       this.center = {
         lat: this.mapVisualizer.expectedLatitude,

@@ -11,7 +11,7 @@ import * as fromUser from './user/reducers/user.reducer';
 import * as fromUserRole from './user-role/reducers/user-role.reducer';
 import * as fromSignBoard from './sign-board/reducers/sign-board.reducer';
 import * as fromSignBoardBatch from './sign-board-batch/reducers/sign-board-batch.reducer';
-import * as fromSignBoardBatchItem from './sign-board-batch-item/reducers/sign-board-batch-item.reducer';
+import * as fromAssignedBoardBatch from './assigned-board-batches/reducers/assigned-board-batch.reducer';
 import * as fromOrganisation from './organisation/reducers/organisation.reducer';
 import * as fromAgency from './agency/reducers/agency.reducer';
 import * as fromApplication from './application/reducers/application.reducer';
@@ -28,7 +28,7 @@ export interface ApplicationState {
   userRole: fromUserRole.State;
   signBoard: fromSignBoard.State;
   signBoardBatch: fromSignBoardBatch.State;
-  signBoardBatchItem: fromSignBoardBatchItem.State;
+  assignedBoardBatch: fromAssignedBoardBatch.State;
   application: fromApplication.State;
   organisation: fromOrganisation.State;
   campaign: fromCampaign.State;
@@ -43,7 +43,7 @@ export const reducers: ActionReducerMap<ApplicationState> = {
   userRole: fromUserRole.reducer,
   signBoard: fromSignBoard.reducer,
   signBoardBatch: fromSignBoardBatch.reducer,
-  signBoardBatchItem: fromSignBoardBatchItem.reducer,
+  assignedBoardBatch: fromAssignedBoardBatch.reducer,
   application: fromApplication.reducer,
   organisation: fromOrganisation.reducer,
   campaign: fromCampaign.reducer,

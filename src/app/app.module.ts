@@ -47,9 +47,12 @@ import { SignBoardBatchContainerComponent } from './modules/sign-board-batch/sig
 import { SignBoardBatchComponent } from './modules/sign-board-batch/sign-board-batch.component';
 import { AgencyBatchMoreComponent } from './modules/sign-board-batch/agency-batch-more/agency-batch-more.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
-import { NgxShimmerLoadingModule } from  'ngx-shimmer-loading';
+import { NgxShimmerLoadingModule } from 'ngx-shimmer-loading';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { BatchAssignmentContainerComponent } from './modules/batch-assignment/batch-assignment-container/batch-assignment-container.component';
+import { BatchAssignmentComponent } from './modules/batch-assignment/batch-assignment.component';
+import { AddEditBatchAssignmentComponent } from './modules/batch-assignment/add-edit/add-edit.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -92,7 +95,10 @@ export const MY_FORMATS = {
     OutletMapPreviewComponent,
     SignBoardBatchComponent,
     SignBoardBatchContainerComponent,
-    AgencyBatchMoreComponent
+    AgencyBatchMoreComponent,
+    BatchAssignmentComponent,
+    BatchAssignmentContainerComponent,
+    AddEditBatchAssignmentComponent
   ],
   imports: [
     BrowserModule,
@@ -115,8 +121,8 @@ export const MY_FORMATS = {
     SharedModule
   ],
   providers: [{ provide: RouterStateSerializer, useClass: CustomSerializer }, { provide: LocationStrategy, useClass: HashLocationStrategy },
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},],
+  { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+  { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

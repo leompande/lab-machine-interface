@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { SignBoardBatchItem } from 'src/app/store/sign-board-batch-item/reducers/sign-board-batch-item';
+// import { SignBoardBatchItem } from 'src/app/store/sign-board-batch-item/reducers/sign-board-batch-item';
 import { SignBoardBatch } from 'src/app/store/sign-board-batch/reducers/sign-board-batch';
 import { fadeIn } from 'src/app/shared/animations/router-animation';
 import { Outlet } from 'src/app/store/outlet/reducers/outlet';
@@ -14,11 +14,11 @@ import { GoogleMap } from '@angular/google-maps';
 })
 export class BoardBatchMoreComponent implements OnInit {
   @ViewChild(GoogleMap, { static: false }) map: GoogleMap;
-  boardItems: SignBoardBatchItem[];
+  // boardItems: SignBoardBatchItem[];
   batch: SignBoardBatch;
   outlets: Outlet[];
   outlet: Outlet;
-  boardItem: SignBoardBatchItem;
+  // boardItem: SignBoardBatchItem;
   detailsVisible: boolean = false;
 
   // Map visualization fields initiation
@@ -72,8 +72,8 @@ export class BoardBatchMoreComponent implements OnInit {
       actualLatitude: null,
       actualLongitude: null
     }
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { boardItems: SignBoardBatchItem[], batch: SignBoardBatch, outlets: Outlet[] }) {
-    this.boardItems = data.boardItems;
+  constructor(@Inject(MAT_DIALOG_DATA) public data: {  batch: SignBoardBatch, outlets: Outlet[] }) {
+    // this.boardItems = data.boardItems;
     this.batch = data.batch;
     this.outlets = data.outlets;
   }
@@ -107,17 +107,17 @@ export class BoardBatchMoreComponent implements OnInit {
   }
 
   approveSignBoard(){
-    console.log(this.boardItem);
+    // console.log(this.boardItem);
   }
 
 
   previewSignBoard(rowId: string) {
-    this.boardItem = this.data.boardItems.find((item: SignBoardBatchItem) => item.id == rowId);
+    // this.boardItem = this.data.boardItems.find((item: SignBoardBatchItem) => item.id == rowId);
     this.outlet = this.outlets.find((outletItem: Outlet) => outletItem.name == this.batch.outlet);
     this.mapVisualizer.expectedLatitude = this.outlet ? +this.outlet.latitude : null;
     this.mapVisualizer.expectedLongitude = this.outlet ? +this.outlet.longitude : null;
-    this.mapVisualizer.actualLatitude = this.boardItem ? +this.boardItem.latitude : null;
-    this.mapVisualizer.actualLongitude = this.boardItem ? +this.boardItem.longitude : null;
+    // this.mapVisualizer.actualLatitude = this.boardItem ? +this.boardItem.latitude : null;
+    // this.mapVisualizer.actualLongitude = this.boardItem ? +this.boardItem.longitude : null;
     if (this.mapVisualizer.expectedLatitude && this.mapVisualizer.expectedLongitude) {
       this.center = {
         lat: this.mapVisualizer.expectedLatitude,

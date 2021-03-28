@@ -1,4 +1,4 @@
-export class SignBoardBatchItem {
+export class AssignedBoardBatch {
     id: string;
     enrollment_id: string;
     organisation_unit_id: string;

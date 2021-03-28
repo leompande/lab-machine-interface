@@ -1,63 +1,63 @@
 <nav class="main-nav mat-elevation-z6">
-    <mat-toolbar class="toolbar no-print" color="primary">
-      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
+  <mat-toolbar class="toolbar no-print" color="primary">
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+      *ngIf="isHandset$ | async">
+      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
 
-      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="isOpen = !isOpen" title="Toggle Menu"
-        *ngIf="!(isHandset$ | async)">
-        <mat-icon class="secondary-color" aria-label="Side nav toggle icon">menu</mat-icon>
-      </button>
-      <!-- <span class="secondary-color">
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="isOpen = !isOpen" title="Toggle Menu"
+      *ngIf="!(isHandset$ | async)">
+      <mat-icon class="secondary-color" aria-label="Side nav toggle icon">menu</mat-icon>
+    </button>
+    <!-- <span class="secondary-color">
         <img src="assets/images/logo1.png" style="height: 44px; width: 130px; margin-left: 10px">
       </span> -->
-      <span style="display: inline-block; margin-top: 0px; margin-left: 17px; font-size: 33px;font-family: nunitoSemiBold;">
-        SBMS&nbsp; - &nbsp;
-      </span> <span *ngIf="!user|| user.organisation==''"> Sign Boards Management System</span> <span *ngIf="user&& user.organisation!=''">{{user.organisation}}</span>&nbsp;&nbsp;<span *ngIf="user&& user.organisation!='' && user.agency!=''" style="font-size: 14px;">{{user.agency}}</span>
+    <span
+      style="display: inline-block; margin-top: 0px; margin-left: 17px; font-size: 33px;font-family: nunitoSemiBold;">
+      SBMS&nbsp; - &nbsp;
+    </span> <span *ngIf="!user|| user.organisation==''"> Sign Boards Management System</span> <span
+      *ngIf="user&& user.organisation!=''">{{user.organisation}}</span>&nbsp;&nbsp;<span
+      *ngIf="user&& user.organisation!='' && user.agency!=''" style="font-size: 14px;">{{user.agency}}</span>
 
-      <!-- This fills the remaining space of the current row -->
-      <span class="example-fill-remaining-space"></span>
+    <!-- This fills the remaining space of the current row -->
+    <span class="example-fill-remaining-space"></span>
 
-      <mat-menu #appMenu="matMenu">
-        <a (click)="logout()" mat-menu-item>Logout</a>
-      </mat-menu>
+    <mat-menu #appMenu="matMenu">
+      <a (click)="logout()" mat-menu-item>Logout</a>
+    </mat-menu>
 
-      <button mat-button [matMenuTriggerFor]="appMenu">
-        <span class="secondary-color"><i class="fa fa-user-circle-o"> </i>
-          {{ user?.firstName }} {{ user?.lastName }}
-        </span>
-      </button>
-    </mat-toolbar>
-  </nav>
-  <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #drawer class="sidenav no-print" fixedInViewport="false" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async) && isOpen">
-      <mat-toolbar>Sign Board</mat-toolbar>
-      <mat-nav-list>
+    <button mat-button [matMenuTriggerFor]="appMenu">
+      <span class="secondary-color"><i class="fa fa-user-circle-o"> </i>
+        {{ user?.firstName }} {{ user?.lastName }}
+      </span>
+    </button>
+  </mat-toolbar>
+</nav>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #drawer class="sidenav no-print" fixedInViewport="false"
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async) && isOpen">
+    <mat-toolbar>Sign Board</mat-toolbar>
+    <mat-nav-list>
+      <ng-container>
         <ng-container>
-          <ng-container>
-              <ng-container *ngFor="let menu of menus">
-                <a
-                mat-list-item
-
-                [routerLink]="['/'+menu.url]"
-                routerLinkActive="active-menu"
-                *ngIf="user?.user_level != 'normal'"
-              >
-                <img [src]="'/assets/icons/'+menu.icon" style="width:25px;height:25px">
-                 &nbsp; {{menu.name}}
-              </a>
-              </ng-container>
-            <mat-divider></mat-divider>
+          <ng-container *ngFor="let menu of menus">
+            <a mat-list-item [routerLink]="['/'+menu.url]" routerLinkActive="active-menu"
+              *ngIf="user?.user_level != 'normal'">
+              <img [src]="'/assets/icons/'+menu.icon" style="width:25px;height:25px">
+              &nbsp; {{menu.name}}
+            </a>
           </ng-container>
+          <mat-divider></mat-divider>
         </ng-container>
+      </ng-container>
 
-      </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <div class="content" style="margin:1px;margin-top: 51px;height:90vh;"
-           [@routeAnimations]="o.isActivated ? o.activatedRoute : ''">
-        <router-outlet #o="outlet"></router-outlet>
-      </div>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="content" style="margin:1px;margin-top: 51px;height:90vh;"
+      [@routeAnimations]="o.isActivated ? o.activatedRoute : ''">
+      <router-outlet #o="outlet"></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

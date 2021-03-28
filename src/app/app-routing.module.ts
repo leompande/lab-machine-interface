@@ -11,6 +11,7 @@ import { UserContainerComponent } from './modules/user/user-container/user-conta
 import { AuthGuardService as AuthGuard } from './shared/services/auth-guard.service';
 import { OutletContainerComponent } from './modules/outlet/outlet-container/outlet-container.component';
 import { SignBoardBatchContainerComponent } from './modules/sign-board-batch/sign-board-bach-container/sign-board-batch-container.component';
+import { BatchAssignmentContainerComponent } from './modules/batch-assignment/batch-assignment-container/batch-assignment-container.component';
 
 const routes: Routes = [{
   path: '',
@@ -31,6 +32,12 @@ const routes: Routes = [{
       path: 'outlets',
       component: OutletContainerComponent,
       data: { state: 'outlets', roles: 'ORGANISATION_ADMIN' },
+      canActivate: [AuthGuard]
+    }
+    , {
+      path: 'batch-assignment',
+      component: BatchAssignmentContainerComponent,
+      data: { state: 'batch-assignment', roles: 'ORGANISATION_ADMIN' },
       canActivate: [AuthGuard]
     },
     {

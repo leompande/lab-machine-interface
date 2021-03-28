@@ -1,0 +1,91 @@
+<div class="form-container">
+    <div class="form-header">
+        <p><img src="/assets/icons/batch-assignment.png" style="width:25px">&nbsp;
+            <span *ngIf="!isUpdate">New Assignment Form</span>
+            <span *ngIf="isUpdate">Update Assignment Form</span>
+        </p>
+    </div>
+    <mat-divider></mat-divider>
+    <br />
+    <div class="form-body">
+        <form [formGroup]="form">
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Ownership</mat-label>
+                        <mat-select formControlName="ownership">
+                            <mat-option value="Public">Public</mat-option>
+                            <mat-option value="Private">Private</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Owner Name</mat-label>
+                        <input matInput placeholder="Owner Name" formControlName="ownerName">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Name</mat-label>
+                        <input matInput placeholder="Name" formControlName="name">
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Street</mat-label>
+                        <input matInput placeholder="Street" formControlName="street">
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <tulonge-org-unit-filter-closed #ouSelector [startingOus]="startingOus"
+                        [orgunit_tree_config]="orgunit_tree_config" (orgUnitUpdate)="onOrgunitSelected($event)">
+                    </tulonge-org-unit-filter-closed>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Latitude</mat-label>
+                        <input matInput type="number" placeholder="Latitude" formControlName="latitude">
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Longitude</mat-label>
+                        <input matInput type="number" placeholder="Longitude" formControlName="longitude">
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>P.O.Box</mat-label>
+                        <input matInput placeholder="P.O.Box" formControlName="box">
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input matInput placeholder="Email" formControlName="email">
+                    </mat-form-field>
+                </div>
+                <div class="col">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Phone</mat-label>
+                        <input matInput placeholder="Phone" formControlName="phone">
+                    </mat-form-field>
+                </div>
+            </div>
+        </form>
+    </div>
+    <br />
+    <div class="form-footer">
+        <app-save-area [isUpdate]="isUpdate" [loading]="loading" (onCancel)="cancel()" (onSave)="save()">
+        </app-save-area>
+        <button id="closeButton" mat-button mat-dialog-close style="display: none;">Cancel</button>
+    </div>
+</div>
