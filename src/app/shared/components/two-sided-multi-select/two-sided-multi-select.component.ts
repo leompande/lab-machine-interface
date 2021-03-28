@@ -35,7 +35,7 @@ export class TwoSidedMultiSelectComponent implements OnInit {
   }
 
   filterAvailable(event: { target: { value: string; }; }){
-this.availableFilterValue = event.target.value;
+    this.availableFilterValue = event.target.value;
   }
 
   selectItem(itemId?: string, side?: string) {
@@ -104,8 +104,8 @@ this.availableFilterValue = event.target.value;
         ...this.availableItems
       ];
       this.availableItems = [];
-    } 
-    
+    }
+
     if(side=="right"){
       this.availableItems = [
         ...this.availableItems,
@@ -113,7 +113,7 @@ this.availableFilterValue = event.target.value;
       ];
       this.selectedItems = [];
     }
-    
+
     this.changed.emit(this.selectedItems);
   }
 

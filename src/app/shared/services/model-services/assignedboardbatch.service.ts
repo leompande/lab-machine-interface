@@ -32,7 +32,7 @@ export class AssignedBoardBatchService {
     });
   }
 
-  saveUpdateAssignedBoardBatch(isUpdate, signBoardBatch: AssignedBoardBatch, trackedEntityInstanceId: string, eventDate: any): Observable<any> {
+  saveUpdateAssignedBoardBatch(isUpdate, signBoardBatch?: AssignedBoardBatch, trackedEntityInstanceId?: string, eventDate?: any): Observable<any> {
 
     return Observable.create((observer: any) => {
       let trackedEntityInstancePayload = this.trackerService.prepareTrackedEntityPayload('AssignedBoardBatchs', signBoardBatch.organisation_unit_id, signBoardBatch, !isUpdate ? 'add' : 'edit', trackedEntityInstanceId, eventDate);

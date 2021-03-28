@@ -12,6 +12,7 @@ export class SignBoardBatch {
   board_width: string;
   outlet: string;
   signboard_quantity: string;
+  assigned_quantity: string;
   planted_quantity: string;
   latitude: string;
   longitude: string;

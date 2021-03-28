@@ -1,91 +1,93 @@
 <div class="form-container">
-    <div class="form-header">
-        <p><img src="/assets/icons/batch-assignment.png" style="width:25px">&nbsp;
-            <span *ngIf="!isUpdate">New Assignment Form</span>
-            <span *ngIf="isUpdate">Update Assignment Form</span>
-        </p>
-    </div>
-    <mat-divider></mat-divider>
-    <br />
-    <div class="form-body">
-        <form [formGroup]="form">
-            <div class="row">
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Ownership</mat-label>
-                        <mat-select formControlName="ownership">
-                            <mat-option value="Public">Public</mat-option>
-                            <mat-option value="Private">Private</mat-option>
-                        </mat-select>
-                    </mat-form-field>
-                </div>
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Owner Name</mat-label>
-                        <input matInput placeholder="Owner Name" formControlName="ownerName">
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Name</mat-label>
-                        <input matInput placeholder="Name" formControlName="name">
-                    </mat-form-field>
-                </div>
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Street</mat-label>
-                        <input matInput placeholder="Street" formControlName="street">
-                    </mat-form-field>
-                </div>
-                <div class="col">
-                    <tulonge-org-unit-filter-closed #ouSelector [startingOus]="startingOus"
-                        [orgunit_tree_config]="orgunit_tree_config" (orgUnitUpdate)="onOrgunitSelected($event)">
-                    </tulonge-org-unit-filter-closed>
-                </div>
+  <div class="form-header">
+    <p><img src="/assets/icons/batch-assignment.png" style="width:25px">&nbsp;
+      <span *ngIf="!isUpdate">New Assignment Form</span>
+      <span *ngIf="isUpdate">Update Assignment Form</span>
+    </p>
+  </div>
+  <mat-divider></mat-divider>
+  <br />
+  <div class="form-body">
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col">
+          <app-one-sided-multi-select [config]="campaignConfig" [items]="availableCampaigns"
+            (onChange)="selectCampaignChange($event)">
+          </app-one-sided-multi-select>
+        </div>
+      </div>
+      <div @fadeIn class="row" *ngIf="campaignIsSelected == true">
+        <div class="col">
+          <app-one-sided-multi-select [config]="batchConfig" [items]="availableBatches" [selected]="selectedBatches"
+            (onChange)="selecteBatchChange($event)">
+          </app-one-sided-multi-select>
+        </div>
+      </div>
+      <div @fadeIn class="row" *ngIf="(form.value.board_width || form.value.board_width) && selectedBatches.length>0">
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Board Height</mat-label>
+            <input matInput type="number" readonly="readonly" placeholder="Board height" formControlName="board_width">
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Board Width</mat-label>
+            <input matInput type="number" readonly="readonly" placeholder="Board Width" formControlName="board_height">
+          </mat-form-field>
+        </div>
+      </div>
+      <div @fadeIn class="row" *ngIf="(form.value.board_width || form.value.board_width) && selectedBatches.length>0">
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Total Quantity</mat-label>
+            <input matInput type="number" readonly="readonly" placeholder="Total Quantity"
+              formControlName="signboard_quantity">
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>Assigned Quantity</mat-label>
+            <input matInput type="number" placeholder="Assigned Quantity" formControlName="assigned_quantity"
+              (change)="changeAssignedQuantity($event)">
+          </mat-form-field>
+        </div>
+      </div>
+      <p @fadeIn *ngIf="form.value.signboard_quantity < assignedQuantity"
+        style="font-weight:bold;color:orange;font-size:12px">*** Assigned number of boards should not exceeds
+        total quantity</p>
+      <!-- <p>{{selectedBatch?.assigned_quantity}}</p>
+      <p>{{assignedQuantity}}</p> -->
+      <p @fadeIn *ngIf="form.value.signboard_quantity<(selectedBatch?.assigned_quantity + assignedQuantity)"
+        style="font-weight:bold;color:orange;font-size:12px">*** Assigned number of boards should not exceeds
+        remaining unassigned quantity </p>
 
-            </div>
-            <div class="row">
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Latitude</mat-label>
-                        <input matInput type="number" placeholder="Latitude" formControlName="latitude">
-                    </mat-form-field>
-                </div>
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Longitude</mat-label>
-                        <input matInput type="number" placeholder="Longitude" formControlName="longitude">
-                    </mat-form-field>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>P.O.Box</mat-label>
-                        <input matInput placeholder="P.O.Box" formControlName="box">
-                    </mat-form-field>
-                </div>
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Email</mat-label>
-                        <input matInput placeholder="Email" formControlName="email">
-                    </mat-form-field>
-                </div>
-                <div class="col">
-                    <mat-form-field appearance="outline">
-                        <mat-label>Phone</mat-label>
-                        <input matInput placeholder="Phone" formControlName="phone">
-                    </mat-form-field>
-                </div>
-            </div>
-        </form>
-    </div>
-    <br />
-    <div class="form-footer">
-        <app-save-area [isUpdate]="isUpdate" [loading]="loading" (onCancel)="cancel()" (onSave)="save()">
-        </app-save-area>
-        <button id="closeButton" mat-button mat-dialog-close style="display: none;">Cancel</button>
-    </div>
+      <div @fadeIn class="row"
+        *ngIf="form.value.signboard_quantity<(selectedBatch?.assigned_quantity + assignedQuantity)">
+        <div class="col">
+          <label>District</label>
+          <tulonge-org-unit-filter-closed #ouSelector [startingOus]="startingOus"
+            [orgunit_tree_config]="orgunit_tree_config" (orgUnitUpdate)="onOrgunitSelected($event)">
+          </tulonge-org-unit-filter-closed>
+        </div>
+        <div class="col">
+          <app-one-sided-multi-select [config]="agencyConfig" [items]="availableAgencies" [selected]="selectedAgencies"
+            (onChange)="selecteAgencyChange($event)">
+          </app-one-sided-multi-select>
+        </div>
+      </div>
+      <div @fadeIn class="row"
+        *ngIf="form.value.signboard_quantity<(selectedBatch?.assigned_quantity + assignedQuantity) && showOrgUnitSelectionError == false">
+        <div class="col">
+          <app-two-sided-multi-select [label]="'Outlets'" [availableItems]="filteredOutlets"></app-two-sided-multi-select>
+        </div>
+      </div>
+    </form>
+  </div>
+  <br />
+  <div class="form-footer">
+    <app-save-area [isUpdate]="isUpdate" [loading]="loading" (onCancel)="cancel()" (onSave)="save()">
+    </app-save-area>
+    <button id="closeButton" mat-button mat-dialog-close style="display: none;">Cancel</button>
+  </div>
 </div>
