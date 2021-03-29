@@ -56,87 +56,27 @@ export class SignBoardBatchService {
 
 
   saveUpdateSignBoardBatch(isUpdate, signBoardBatch: SignBoardBatch | any, trackedEntityInstanceId: string, eventDate: any): Observable<any> {
-    console.log(isUpdate, signBoardBatch.batch_reference_number, trackedEntityInstanceId, eventDate);
     return Observable.create((observer: any) => {
-      let events = [];
-      // event.outlet + "."+event.agency + "."+event.boardHeight + "." + event.boardWidth + "." + event.boardQuantity + ((index == events.length - 1) ? "" : "_")
-
-      let substring = signBoardBatch.batch_reference_number.substring(0, signBoardBatch.batch_reference_number.length - 1);
-      let last_number = signBoardBatch.batch_reference_number.substring(signBoardBatch.batch_reference_number.length - 1);
-      console.log(substring);
-      console.log(last_number);
-      let counter = +last_number;
-      let last_reference = "";
-      console.log(signBoardBatch.boards_config.split("_"));
-      let signBoardBatches = signBoardBatch.boards_config.split("_").map(config => {
-        const parameter = config.split("*");
-        console.log(parameter);
-        const outlet = parameter[0];
-        const agency_name = parameter[1];
-        const height = +parameter[2];
-        const weight = +parameter[3];
-        const count = +parameter[4];
-        let new_batch_reference = substring + "" + counter;
-        const batch = {
-          ...signBoardBatch,
-          batch_reference_number: new_batch_reference,
-          board_height: height,
-          board_width: weight,
-          agency_name: agency_name,
-          outlet: outlet,
-          signboard_quantity: count,
-          trackedEntityInstanceId: makeId()
-        };
-        for (let eventCount = 0; eventCount < count; eventCount++) {
-          events = [...events, this.trackerService.prepareSingleEvent(
-            'SignBoardBatches',
-            signBoardBatch.organisation_unit_id,
-            "SignBoards",
-            prepareSignBoardData((eventCount + 1), batch),
-            null
-          )];
-        }
-        last_reference = new_batch_reference
-        counter++;
-        batch.signboard_quantity = events.length;
-        return batch;
-      });
-      let boardsNumber = 0;
-      signBoardBatches.forEach(async (signBoardbatchItem: SignBoardBatch) => {
-        boardsNumber++;
-        console.log(boardsNumber);
-        let trackedEntityInstancePayload = this.trackerService.prepareTrackedEntityPayload('SignBoardBatches', signBoardbatchItem.organisation_unit_id, signBoardbatchItem, !isUpdate ? 'add' : 'edit', signBoardbatchItem.trackedEntityInstance, eventDate);
-        if (isUpdate) {
-          this.trackerService.updateTrackedEntityInstance([trackedEntityInstancePayload], signBoardbatchItem.trackedEntityInstance).subscribe(async (results: any) => {
-
-            const abbreviation = this.prepareAbbreviation(this.user.organisation);
-            try {
-              await this.dataStore.saveData('batch-reference', abbreviation, +last_reference.split("/")[1]).toPromise();
-            } catch (e) {
-            }
-            if (boardsNumber == signBoardBatches.length) {
-              this.store.dispatch(new LoadSignBoardBatches());
-            }
-            observer.next(results);
-            observer.complete();
-          }, error => {
-            observer.error(error);
-            observer.complete();
-          });
-        } else {
-          this.trackerService.saveTrackedEntityInstances([trackedEntityInstancePayload]).subscribe((results: any) => {
-            if (boardsNumber == signBoardBatches.length) {
-              this.store.dispatch(new LoadSignBoardBatches());
-            }
-
-            observer.next(results);
-            observer.complete();
-          }, error => {
-            observer.error(error);
-            observer.complete();
-          });
-        }
-      });
+      let trackedEntityInstancePayload = this.trackerService.prepareTrackedEntityPayload('SignBoardBatches', 'zs9X8YYBOnK', signBoardBatch, !isUpdate ? 'add' : 'edit', signBoardBatch.trackedEntityInstance, eventDate);
+      if (isUpdate) {
+        this.trackerService.updateTrackedEntityInstance(trackedEntityInstancePayload, signBoardBatch.trackedEntityInstance).subscribe(async (results: any) => {
+          this.store.dispatch(new LoadSignBoardBatches());
+          observer.next(results);
+          observer.complete();
+        }, error => {
+          observer.error(error);
+          observer.complete();
+        });
+      } else {
+        this.trackerService.saveTrackedEntityInstances([trackedEntityInstancePayload]).subscribe((results: any) => {
+          this.store.dispatch(new LoadSignBoardBatches());
+          observer.next(results);
+          observer.complete();
+        }, error => {
+          observer.error(error);
+          observer.complete();
+        });
+      }
 
     });
   }

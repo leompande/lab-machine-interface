@@ -46,7 +46,7 @@ export const signBoardBatchMetadata = {
       name: 'Assigned Quanity',
       id: 'SfnCK5LRsFq',
       valueType:'NUMBER',
-      key: 'assigned_quanity'
+      key: 'assigned_quantity'
     },
     // {
     //   name: 'Region',

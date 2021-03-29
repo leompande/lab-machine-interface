@@ -8,6 +8,9 @@ import { Campaign } from 'src/app/store/campaign/reducers/campaign';
 import { SignBoardBatch } from 'src/app/store/sign-board-batch/reducers/sign-board-batch';
 import { Outlet } from 'src/app/store/outlet/reducers/outlet';
 import { Agency } from 'src/app/store/agency/reducers/agency';
+import { ApplicationState } from 'src/app/store';
+import { Store } from '@ngrx/store';
+import { LoadAssignedBoardBatches } from 'src/app/store/assigned-board-batches/actions/assigned-board-batch.actions';
 
 @Component({
   selector: 'app-batch-assignment',
@@ -52,13 +55,17 @@ export class BatchAssignmentComponent implements OnInit {
     empty_msg: 'No Assignments'
   };
 
-  constructor(public dialog: MatDialog, private assignedBoardBatchService: AssignedBoardBatchService) { }
+  constructor(public dialog: MatDialog, private assignedBoardBatchService: AssignedBoardBatchService, private store: Store<ApplicationState>) { }
 
   ngOnInit(): void {
   }
 
 
-  deleteOutlet() { }
+  async deleteOutlet(boardBatchId: string) {
+    const assignedBatch: AssignedBoardBatch = this.assignedBoardBatches.find((batch) => batch.id == boardBatchId);
+    const response = await this.assignedBoardBatchService.deleteAssignedBoardBatch(assignedBatch.trackedEntityInstance, assignedBatch.id).toPromise();
+    this.store.dispatch(new LoadAssignedBoardBatches());
+  }
 
   printArrival() { }
 

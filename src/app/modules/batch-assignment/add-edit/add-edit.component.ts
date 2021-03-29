@@ -12,6 +12,10 @@ import { Outlet } from 'src/app/store/outlet/reducers/outlet';
 import { Item } from 'src/app/shared/components/two-sided-multi-select/two-sided-multi-select.component';
 import { HttpClientService } from 'src/app/shared/services/dhis2/http-client.service';
 import { Agency } from 'src/app/store/agency/reducers/agency';
+import { SignBoardBatchService } from 'src/app/shared/services/model-services/signboardbatch.service';
+import { ApplicationState } from 'src/app/store';
+import { Store } from '@ngrx/store';
+import { LoadAssignedBoardBatches } from 'src/app/store/assigned-board-batches/actions/assigned-board-batch.actions';
 
 @Component({
   selector: 'app-add-edit',
@@ -26,9 +30,12 @@ export class AddEditBatchAssignmentComponent implements OnInit {
 
   campaings: Campaign[];
   batches: SignBoardBatch[];
+  agencies: Agency[];
+
   selectedAgencies: Agency[] = [];
   outlets: Outlet[];
   selectedBatch: SignBoardBatch;
+  selectedAgency: Agency;
 
   availableAgencies: ListItem[];
 
@@ -91,12 +98,24 @@ export class AddEditBatchAssignmentComponent implements OnInit {
 
   assignedQuantity: number = 0;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { currentObject: any, campaigns: Campaign[], batches: SignBoardBatch[], outlets: Outlet[], agencies:Agency[] }, private assignedBoardBatchService: AssignedBoardBatchService, private http: HttpClientService) {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: {
+      currentObject: any,
+      campaigns: Campaign[],
+      batches: SignBoardBatch[],
+      outlets: Outlet[],
+      agencies: Agency[]
+    },
+    private assignedBoardBatchService: AssignedBoardBatchService,
+    private batchService: SignBoardBatchService,
+    private http: HttpClientService,
+    private store: Store<ApplicationState>) {
     this.isUpdate = data.currentObject != null;
     this.startingOus = data.currentObject ? [data.currentObject.wardId] : null;
     this.campaings = data.campaigns;
     this.batches = data.batches;
     this.outlets = data.outlets;
+    this.agencies = data.agencies;
     this.availableCampaigns = data.campaigns.map(campaign => {
       return {
         id: campaign.id,
@@ -153,6 +172,8 @@ export class AddEditBatchAssignmentComponent implements OnInit {
   selecteBatchChange(event: any) {
     const availableBatch = this.batches.filter(batch => batch.id == event[0].id);
     const batch: SignBoardBatch = availableBatch[0];
+    console.log("Selected Batch");
+    console.log(batch);
     this.selectedBatch = batch;
     this.selectedBatches.push(batch);
     this.form.controls['board_width'].setValue(batch.board_width);
@@ -164,7 +185,8 @@ export class AddEditBatchAssignmentComponent implements OnInit {
   }
 
   selecteAgencyChange(event: any) {
-    console.log(event);
+    this.selectedAgency = this.agencies.find(agency => agency.id == event[0].id);
+    this.form.controls['agency_name'].setValue(this.selectedAgency.name);
   }
 
   changeAssignedQuantity(event: any) {
@@ -200,7 +222,6 @@ export class AddEditBatchAssignmentComponent implements OnInit {
           chosed: false
         }
       });
-      console.log(this.filteredOutlets);
     } else if (selectedOrganisationUnit && selectedOrganisationUnit.level != 5) {
       this.showOrgUnitSelectionError = true;
     }
@@ -211,14 +232,27 @@ export class AddEditBatchAssignmentComponent implements OnInit {
     this.loading = true;
     const formValue = {
       ...this.form.value,
-      districtId: this.orgUnitData.districtId,
+      organisation_unit_id: this.orgUnitData.districtId,
       district: this.orgUnitData.district,
       region: this.orgUnitData.region
     };
-    console.log(formValue);
-    // await this.assignedBoardBatchService.saveUpdateAssignedBoardBatch(formValue).toPromise();
-    // this.loading = false;
-    // this.cancel();
+    const response = await this.assignedBoardBatchService.saveUpdateAssignedBoardBatch(false, formValue, '', '').toPromise();
+    if (response['httpStatus'] == 'OK') {
+      try {
+
+        this.selectedBatch = {
+          ...this.selectedBatch,
+          assigned_quantity: this.selectedBatch.assigned_quantity != null ? (+this.selectedBatch.assigned_quantity) + formValue.assigned_quantity : formValue.assigned_quantity
+        }
+        const updateReponse = await this.batchService.saveUpdateSignBoardBatch(true, this.selectedBatch, this.selectedBatch.trackedEntityInstance, null).toPromise();
+      } catch (e) {
+        console.log(e);
+      }
+
+    }
+    this.store.dispatch(new LoadAssignedBoardBatches());
+    this.loading = false;
+    this.cancel();
   }
 
   cancel() {

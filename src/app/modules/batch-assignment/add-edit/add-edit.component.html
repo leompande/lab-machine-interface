@@ -23,65 +23,71 @@
           </app-one-sided-multi-select>
         </div>
       </div>
-      <div @fadeIn class="row" *ngIf="(form.value.board_width || form.value.board_width) && selectedBatches.length>0">
-        <div class="col">
-          <mat-form-field appearance="outline">
-            <mat-label>Board Height</mat-label>
-            <input matInput type="number" readonly="readonly" placeholder="Board height" formControlName="board_width">
-          </mat-form-field>
+      <p @fadeIn *ngIf="selectedBatch && selectedBatch?.assigned_quantity == selectedBatch?.signboard_quantity"
+        style="font-weight: bold;color:red;font-size: 12px;"> *** Selected batch is exausted, no assigment allowed.</p>
+      <ng-container *ngIf="selectedBatch && selectedBatch?.assigned_quantity != selectedBatch?.signboard_quantity">
+        <div @fadeIn class="row" *ngIf="(form.value.board_width || form.value.board_width) && selectedBatches.length>0">
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Board Height</mat-label>
+              <input matInput type="number" readonly="readonly" placeholder="Board height"
+                formControlName="board_width">
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Board Width</mat-label>
+              <input matInput type="number" readonly="readonly" placeholder="Board Width"
+                formControlName="board_height">
+            </mat-form-field>
+          </div>
         </div>
-        <div class="col">
-          <mat-form-field appearance="outline">
-            <mat-label>Board Width</mat-label>
-            <input matInput type="number" readonly="readonly" placeholder="Board Width" formControlName="board_height">
-          </mat-form-field>
+        <div @fadeIn class="row" *ngIf="(form.value.board_width || form.value.board_width) && selectedBatches.length>0">
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Total Quantity</mat-label>
+              <input matInput type="number" readonly="readonly" placeholder="Total Quantity"
+                formControlName="signboard_quantity">
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Assigned Quantity</mat-label>
+              <input matInput type="number" placeholder="Assigned Quantity" formControlName="assigned_quantity"
+                (change)="changeAssignedQuantity($event)">
+            </mat-form-field>
+          </div>
         </div>
-      </div>
-      <div @fadeIn class="row" *ngIf="(form.value.board_width || form.value.board_width) && selectedBatches.length>0">
-        <div class="col">
-          <mat-form-field appearance="outline">
-            <mat-label>Total Quantity</mat-label>
-            <input matInput type="number" readonly="readonly" placeholder="Total Quantity"
-              formControlName="signboard_quantity">
-          </mat-form-field>
-        </div>
-        <div class="col">
-          <mat-form-field appearance="outline">
-            <mat-label>Assigned Quantity</mat-label>
-            <input matInput type="number" placeholder="Assigned Quantity" formControlName="assigned_quantity"
-              (change)="changeAssignedQuantity($event)">
-          </mat-form-field>
-        </div>
-      </div>
-      <p @fadeIn *ngIf="form.value.signboard_quantity < assignedQuantity"
-        style="font-weight:bold;color:orange;font-size:12px">*** Assigned number of boards should not exceeds
-        total quantity</p>
-      <!-- <p>{{selectedBatch?.assigned_quantity}}</p>
-      <p>{{assignedQuantity}}</p> -->
-      <p @fadeIn *ngIf="form.value.signboard_quantity<(selectedBatch?.assigned_quantity + assignedQuantity)"
-        style="font-weight:bold;color:orange;font-size:12px">*** Assigned number of boards should not exceeds
-        remaining unassigned quantity </p>
+        <p @fadeIn *ngIf="form.value.signboard_quantity < form.value.assigned_quantity"
+          style="font-weight:bold;color:orange;font-size:12px">*** Assigned number of boards should not exceeds
+          total quantity</p>
+        <p @fadeIn
+          *ngIf="form.value.signboard_quantity< +(selectedBatch?.assigned_quantity)+ (+form.value.assigned_quantity)"
+          style="font-weight:bold;color:orange;font-size:12px">*** Assigned number of boards should not exceeds
+          remaining unassigned quantity </p>
 
-      <div @fadeIn class="row"
-        *ngIf="form.value.signboard_quantity<(selectedBatch?.assigned_quantity + assignedQuantity)">
-        <div class="col">
-          <label>District</label>
-          <tulonge-org-unit-filter-closed #ouSelector [startingOus]="startingOus"
-            [orgunit_tree_config]="orgunit_tree_config" (orgUnitUpdate)="onOrgunitSelected($event)">
-          </tulonge-org-unit-filter-closed>
+        <div @fadeIn class="row"
+          *ngIf="form.value.signboard_quantity<(selectedBatch?.assigned_quantity + assignedQuantity)">
+          <div class="col">
+            <label>District</label>
+            <tulonge-org-unit-filter-closed #ouSelector [startingOus]="startingOus"
+              [orgunit_tree_config]="orgunit_tree_config" (orgUnitUpdate)="onOrgunitSelected($event)">
+            </tulonge-org-unit-filter-closed>
+          </div>
+          <div class="col">
+            <app-one-sided-multi-select [config]="agencyConfig" [items]="availableAgencies"
+              [selected]="selectedAgencies" (onChange)="selecteAgencyChange($event)">
+            </app-one-sided-multi-select>
+          </div>
         </div>
-        <div class="col">
-          <app-one-sided-multi-select [config]="agencyConfig" [items]="availableAgencies" [selected]="selectedAgencies"
-            (onChange)="selecteAgencyChange($event)">
-          </app-one-sided-multi-select>
+        <div @fadeIn class="row"
+          *ngIf="form.value.signboard_quantity<(selectedBatch?.assigned_quantity + assignedQuantity) && showOrgUnitSelectionError == false">
+          <div class="col">
+            <app-two-sided-multi-select [label]="'Outlets'" [availableItems]="filteredOutlets">
+            </app-two-sided-multi-select>
+          </div>
         </div>
-      </div>
-      <div @fadeIn class="row"
-        *ngIf="form.value.signboard_quantity<(selectedBatch?.assigned_quantity + assignedQuantity) && showOrgUnitSelectionError == false">
-        <div class="col">
-          <app-two-sided-multi-select [label]="'Outlets'" [availableItems]="filteredOutlets"></app-two-sided-multi-select>
-        </div>
-      </div>
+      </ng-container>
     </form>
   </div>
   <br />

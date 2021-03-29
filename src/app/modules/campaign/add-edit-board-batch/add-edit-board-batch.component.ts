@@ -74,22 +74,7 @@ export class AddEditBoardBatchComponent implements OnInit {
       });
     }
 
-    // this.chosedAgency = data.currentObject ? data.agencies.filter(agency => agency.name == data.currentObject.agency_name).map(agency => {
-    //   return {
-    //     id: agency.id,
-    //     name: agency.name,
-    //     value: agency.name,
-    //     chosed: false
-    //   }
-    // }) : [];
-    // this.chosedOutlet = data.currentObject ? data.outlets.filter(outlet => outlet.name == data.currentObject.outlet).map(outlet => {
-    //   return {
-    //     id: outlet.id,
-    //     name: outlet.name,
-    //     value: outlet.name,
-    //     chosed: false
-    //   }
-    // }) : [];
+
     this.availableAgencies = data.agencies.map(agency => {
       return {
         id: agency.id,
@@ -113,10 +98,6 @@ export class AddEditBoardBatchComponent implements OnInit {
       board_height: new FormControl(this.isUpdate ? data.currentObject.board_height : ''),
       board_width!: new FormControl(this.isUpdate ? data.currentObject.board_width : ''),
       signboard_quantity!: new FormControl(this.isUpdate ? data.currentObject.signboard_quantity : ''),
-      region!: new FormControl(this.isUpdate ? data.currentObject.region : ''),
-      district_council_name!: new FormControl(this.isUpdate ? data.currentObject.district_council_name : ''),
-      outlet!: new FormControl(this.isUpdate ? data.currentObject.outlet : ''),
-      agency_name!: new FormControl(this.isUpdate ? data.currentObject.agency_name : ''),
       start_date!: new FormControl(this.isUpdate ? data.currentObject.start_date : ''),
       end_date!: new FormControl(this.isUpdate ? data.currentObject.end_date : '')
     });
@@ -126,18 +107,6 @@ export class AddEditBoardBatchComponent implements OnInit {
   }
 
 
-  // async onOrgunitSelected(event: any) {
-  //   if (event.value) {
-  //     const data = await this.http.get("/api/organisationUnits/" + event.value + ".json?fields=id,name,parent[id,name,parent[id,name]]").toPromise();
-  //     this.orgUnitData = {
-  //       wardId: data['id'],
-  //       ward: data ? data['name'] : "",
-  //       district: data ? data['parent'] ? data['parent']['name'] : "" : "",
-  //       region: data ? data['parent'] ? data['parent']['parent'] ? data['parent']['parent']['name'] : "" : "" : "",
-  //     };
-  //   }
-
-  // }
 
   async onOrgunitSelected(event) {
     const selectedOrganisationUnit = event.items[0];
@@ -181,20 +150,16 @@ export class AddEditBoardBatchComponent implements OnInit {
     this.selectedOutlet = event[0].name;
   }
   async save() {
-    this.loading = true;
+    // this.loading = true;
     try {
       const formValues = {
         ...this.form.value,
-        boards_config: this.boards_config,
         start_date: this.form.value.start_date ? new Date(this.form.value.start_date).toISOString().substr(0, 10) : new Date().toISOString().substr(0, 10),
         end_date: this.form.value.end_date ? new Date(this.form.value.end_date).toISOString().substr(0, 10) : new Date().toISOString().substr(0, 10),
-        organisation_unit_id: this.organisation_unit_id,
-        region: this.orgUnitData.region,
-        district_council_name: this.district_council_name,
-        agency_name: this.selectedAgency,
-      };
 
-      // let trackedEntityInstanceId = this.data.currentObject && this.data.currentObject.trackedEntityInstance ? this.data.currentObject.trackedEntityInstance : makeId();
+      };
+      console.log(formValues);
+      let trackedEntityInstanceId = this.data.currentObject && this.data.currentObject.trackedEntityInstance ? this.data.currentObject.trackedEntityInstance : makeId();
       let eventDate;
       await this.signBoardBatchService.saveUpdateSignBoardBatch(this.isUpdate, formValues, null, eventDate).toPromise();
       this.loading = false;

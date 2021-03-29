@@ -22,14 +22,14 @@ export class TrackerService {
   }
 
   // save tracked entity Instances
-  saveTrackedEntityInstances(trackedEntityInstances:any[]) {
+  saveTrackedEntityInstances(trackedEntityInstances: any[]) {
     return this.http.post(`30/trackedEntityInstances`, {
       trackedEntityInstances: trackedEntityInstances
     });
   }
 
-  updateTrackedEntityInstance(trackedEntityInstances:any, trackedEntityInstanceId) {
-    return this.http.put(`30/trackedEntityInstances/`+trackedEntityInstanceId, trackedEntityInstances);
+  updateTrackedEntityInstance(trackedEntityInstances: any, trackedEntityInstanceId) {
+    return this.http.put(`30/trackedEntityInstances/` + trackedEntityInstanceId, trackedEntityInstances);
   }
 
   saveEvents(events) {
@@ -40,10 +40,10 @@ export class TrackerService {
 
   deleteEvent(eventId) {
     return new Observable(observe => {
-      this.http.delete(`30/events/${eventId}?strategy=DELETE`).subscribe((response)=>{
+      this.http.delete(`30/events/${eventId}?strategy=DELETE`).subscribe((response) => {
         observe.next(response);
         observe.complete();
-      }, (error)=>{
+      }, (error) => {
         observe.error(error);
         observe.complete();
 
@@ -53,35 +53,35 @@ export class TrackerService {
   }
 
   deleteTrackedEntityInstance(trackedEntityInstanceId: string): Observable<any> {
-return new Observable(observe => {
-  this.http.delete(`30/trackedEntityInstances/`+trackedEntityInstanceId).subscribe((response)=>{
-    let formData: FormData = new FormData();
-    formData.append('analyticsTableClear','false');
-    formData.append('analyticsTableAnalyze','false');
-    formData.append('zeroDataValueRemoval','false');
-    formData.append('softDeletedDataValueRemoval','true');
-    formData.append('softDeletedEventRemoval','true');
-    formData.append('softDeletedEnrollmentRemoval','true');
-    formData.append('softDeletedTrackedEntityInstanceRemoval','true');
-    formData.append('periodPruning','false');
-    formData.append('expiredInvitationsClear','false');
-    formData.append('sqlViewsDrop','false');
-    formData.append('sqlViewsCreate','false');
-    formData.append('categoryOptionComboUpdate','false');
-    formData.append('ouPathsUpdate','true');
-    formData.append('cacheClear','true');
-    formData.append('appReload','true');
-    this.http.post('maintenance',formData).subscribe((results)=>{
-      observe.next(results);
-    observe.complete();
+    return new Observable(observe => {
+      this.http.delete(`30/trackedEntityInstances/` + trackedEntityInstanceId).subscribe((response) => {
+        let formData: FormData = new FormData();
+        formData.append('analyticsTableClear', 'false');
+        formData.append('analyticsTableAnalyze', 'false');
+        formData.append('zeroDataValueRemoval', 'false');
+        formData.append('softDeletedDataValueRemoval', 'true');
+        formData.append('softDeletedEventRemoval', 'true');
+        formData.append('softDeletedEnrollmentRemoval', 'true');
+        formData.append('softDeletedTrackedEntityInstanceRemoval', 'true');
+        formData.append('periodPruning', 'false');
+        formData.append('expiredInvitationsClear', 'false');
+        formData.append('sqlViewsDrop', 'false');
+        formData.append('sqlViewsCreate', 'false');
+        formData.append('categoryOptionComboUpdate', 'false');
+        formData.append('ouPathsUpdate', 'true');
+        formData.append('cacheClear', 'true');
+        formData.append('appReload', 'true');
+        this.http.post('maintenance', formData).subscribe((results) => {
+          observe.next(results);
+          observe.complete();
+        });
+      }, (error) => {
+        observe.error(error);
+        observe.complete();
+
+      });
+
     });
-  }, (error)=>{
-    observe.error(error);
-    observe.complete();
-
-  });
-
-});
   }
 
   deleteEvents(events) {
@@ -174,7 +174,7 @@ return new Observable(observe => {
     });
   }
 
-  transformEventData(key, stageKey,eventData){
+  transformEventData(key, stageKey, eventData) {
     let dataValues = [];
     const metadata = TrackedEntityTypes[key];
     if (!metadata) {
@@ -182,12 +182,12 @@ return new Observable(observe => {
     } else {
       const stage = metadata.stage[stageKey];
 
-      eventData.forEach(event=>{
+      eventData.forEach(event => {
         let eventObject = {};
         stage.dataElements.forEach(element => {
           eventObject[element.key] = event[element.key];
         });
-        dataValues = [...dataValues,eventObject];
+        dataValues = [...dataValues, eventObject];
       });
     }
     return dataValues;
@@ -379,42 +379,47 @@ return new Observable(observe => {
     trackedEntityInstance,
     eventDate
   ) {
-    const metadata = TrackedEntityTypes[key];
-    const date = eventDate || new Date().toISOString().substring(0, 10);
-    const returnItem = {
-      trackedEntityType: metadata.id,
-      orgUnit: ou,
-      attributes: metadata.attributes.map((attribute: any) => {
-        return {
-          attribute: attribute.id,
-          value: values[attribute.key]
-        };
-      })
-    };
-    if (trackedEntityInstance !== null) {
-      returnItem["trackedEntityInstance"] = trackedEntityInstance;
+    try {
+      const metadata = TrackedEntityTypes[key];
+      console.log(metadata);
+      const date = eventDate || new Date().toISOString().substring(0, 10);
+      const returnItem = {
+        trackedEntityType: metadata.id,
+        orgUnit: ou,
+        attributes: metadata.attributes.map((attribute: any) => {
+          return {
+            attribute: attribute.id,
+            value: values[attribute.key]
+          };
+        })
+      };
+      if (trackedEntityInstance !== null) {
+        returnItem["trackedEntityInstance"] = trackedEntityInstance;
+      }
+      if (action === "add") {
+        returnItem["enrollments"] = [
+          {
+            orgUnit: ou,
+            program: metadata.program,
+            enrollmentDate: date,
+            incidentDate: date
+          }
+        ];
+      } else {
+        returnItem["trackedEntityInstance"] = trackedEntityInstance;
+        returnItem["programOwners"] = [
+          {
+            ownerOrgUnit: ou,
+            program: metadata.program,
+            trackedEntityInstance
+          }
+        ];
+      }
+      return returnItem;
+    } catch (e) {
+      console.log(e);
     }
-    if (action === "add") {
-      returnItem["enrollments"] = [
-        {
-          orgUnit: ou,
-          program: metadata.program,
-          enrollmentDate: date,
-          incidentDate: date
-        }
-      ];
-    } else {
-      returnItem["trackedEntityInstance"] = trackedEntityInstance;
-      returnItem["programOwners"] = [
-        {
-          ownerOrgUnit: ou,
-          program: metadata.program,
-          trackedEntityInstance
-        }
-      ];
-    }
-
-    return returnItem;
+    return null;
   }
 
   /**

@@ -22,7 +22,7 @@ export class AssignedBoardBatchService {
     return Observable.create((observer: any) => {
       this.trackerService.getTrackedEntityInstance(
         "AssignedBatchMetadata",
-        "zs9X8YYBOnK").subscribe((response) => {
+        "zs9X8YYBOnK", "DESCENDANTS").subscribe((response) => {
           observer.next(response);
           observer.complete();
         }, (error) => {
@@ -33,9 +33,8 @@ export class AssignedBoardBatchService {
   }
 
   saveUpdateAssignedBoardBatch(isUpdate, signBoardBatch?: AssignedBoardBatch, trackedEntityInstanceId?: string, eventDate?: any): Observable<any> {
-
     return Observable.create((observer: any) => {
-      let trackedEntityInstancePayload = this.trackerService.prepareTrackedEntityPayload('AssignedBoardBatchs', signBoardBatch.organisation_unit_id, signBoardBatch, !isUpdate ? 'add' : 'edit', trackedEntityInstanceId, eventDate);
+      let trackedEntityInstancePayload = this.trackerService.prepareTrackedEntityPayload('AssignedBatchMetadata', signBoardBatch.organisation_unit_id, signBoardBatch, !isUpdate ? 'add' : 'edit', trackedEntityInstanceId, eventDate);
       let events = [];
       isUpdate ? this.trackerService.updateTrackedEntityInstance([trackedEntityInstancePayload], signBoardBatch.trackedEntityInstance).subscribe((results: any) => {
         this.store.dispatch(new LoadAssignedBoardBatches());
@@ -46,24 +45,8 @@ export class AssignedBoardBatchService {
         observer.complete();
       }) :
         this.trackerService.saveTrackedEntityInstances([trackedEntityInstancePayload]).subscribe((results: any) => {
-          for (let eventCount = 0; eventCount < (+signBoardBatch.signboard_quantity); eventCount++) {
-            events = [...events, this.trackerService.prepareEvents('AssignedBoardBatchs',
-              signBoardBatch.organisation_unit_id,
-              trackedEntityInstanceId,
-              "SignBoards",
-              trackedEntityInstancePayload['enrollments'][0],
-              prepareSignBoardData((eventCount + 1), signBoardBatch),
-              null,
-              null)];
-          }
-          this.trackerService.saveEvents(events).subscribe((eventResults) => {
-            this.store.dispatch(new LoadAssignedBoardBatches());
-            observer.next(eventResults);
+          observer.next(results);
             observer.complete();
-          }, eventsError => {
-            observer.error(eventsError);
-            observer.complete();
-          });
         }, error => {
           observer.error(error);
           observer.complete();
