@@ -47,28 +47,28 @@ $sign-board-theme: mat-light-theme((
 // that you are using.
 @include angular-material-theme($sign-board-theme);
 
-@font-face { font-family: nunitoRegular; 
+@font-face { font-family: nunitoRegular;
   src: url('./assets/fonts/Nunito-Regular.ttf'); }
-@font-face { font-family: nunitoBold; 
+@font-face { font-family: nunitoBold;
   src: url('./assets/fonts/Nunito-Bold.ttf'); }
-@font-face { font-family: nunitoBoldItalic; 
+@font-face { font-family: nunitoBoldItalic;
   src: url('./assets/fonts/Nunito-BoldItalic.ttf'); }
-@font-face { font-family: nunitoExtraBold; 
+@font-face { font-family: nunitoExtraBold;
   src: url('./assets/fonts/Nunito-ExtraBold.ttf'); }
-@font-face { font-family: nunitoExtraBoldItalic; 
+@font-face { font-family: nunitoExtraBoldItalic;
   src: url('./assets/fonts/Nunito-BoldItalic.ttf'); }
-@font-face { font-family: nunitoItalic; 
+@font-face { font-family: nunitoItalic;
   src: url('./assets/fonts/Nunito-Italic.ttf'); }
-@font-face { font-family: nunitoLight; 
+@font-face { font-family: nunitoLight;
   src: url('./assets/fonts/Nunito-Light.ttf'); }
-@font-face { font-family: nunitoBlack; 
+@font-face { font-family: nunitoBlack;
   src: url('./assets/fonts/Nunito-Black.ttf'); }
-@font-face { font-family: nunitoSemiBold; 
+@font-face { font-family: nunitoSemiBold;
     src: url('./assets/fonts/Nunito-SemiBold.ttf'); }
-          
-        
-  html, body { 
-    height: 100%; 
+
+
+  html, body {
+    height: 100%;
     font-family: nunitoLight!important;
     // background-color: rgb(243, 242, 242);
   }
@@ -78,88 +78,88 @@ $sign-board-theme: mat-light-theme((
     background-color: white !important;
   }
 
-  
 
-  
+
+
 
 .model-card {
     max-height: 95vh !important;
     overflow: auto !important;
     border-radius: 10px !important;
   }
-  
+
   .model-card .mat-card-content {
     margin-bottom: 5px !important;
   }
-  
+
   .mat-dialog-container {
     border-radius: 10px !important;
   }
-  
+
   .model-card .mat-form-field-disabled {
     opacity: 0.5 !important;
   }
-  
+
   .model-card .mat-card-title {
     margin-bottom: 0 !important;
   }
-  
+
   .model-card::-webkit-scrollbar {
     width: 10px !important;
   }
-  
+
   .model-card::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3) !important;
     border-radius: 10px !important;
   }
-  
+
   .model-card .model-card::-webkit-scrollbar-thumb {
     border-radius: 10px !important;
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3) !important;
   }
-  
+
   .action-button {
     height: 43px;
   }
-  
+
   .mat-form-field-appearance-outline .mat-form-field-infix {
     padding: 10px 0 10px 0 !important;
   }
-  
+
   .mat-form-field-appearance-outline .mat-form-field-wrapper {
     margin: 0 0!important;
   }
   .mat-form-field {
     width: 100% !important;
   }
-  
+
   .mat-card-actions {
     margin-right: 5px !important;
     margin-left: 0 !important;
   }
-  
+
   .mat-dialog-container {
     padding: 0 !important;
   }
-  
+
   .mat-drawer-inner-container {
     overflow: hidden!important;
   }
-  
+
   .mat-drawer-inner-container:hover {
     overflow: auto!important;
   }
-  
-  
+
+
   .mat-drawer-inner-container::-webkit-scrollbar {
     width: 8px !important;
   }
-  
+
   .mat-drawer-inner-container::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3) !important;
     border-radius: 10px !important;
   }
-  
+
   .mat-drawer-inner-container .model-card::-webkit-scrollbar-thumb {
     border-radius: 10px !important;
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3) !important;
@@ -168,11 +168,11 @@ $sign-board-theme: mat-light-theme((
   .success {
     background-color: green !important;
   }
-  
+
   .error {
     background-color: rgba(250, 69, 0, 0.5) !important;
   }
-  
+
   .warning {
     background-color: rgba(250, 207, 26, 0.54) !important;
   }
@@ -185,7 +185,7 @@ $sign-board-theme: mat-light-theme((
   .no-click-backdrop {
     pointer-events: none;
   }
-  
+
 .form-container{
   padding:10px;
 }
@@ -285,4 +285,14 @@ color: white;
   border-bottom: 0px !important;
   height: 35px!important;
   font-family: nunitoBold;
+}
+
+.custom-radial-button{
+  padding:10px;
+  text-align: center;
+  font-family: nunitoBold;
+  border-radius: 30px;
+  cursor: pointer;
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3) !important;
+  display: inline;
 }

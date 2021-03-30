@@ -35,6 +35,7 @@ export class CampaignComponent implements OnInit {
   @Input() loadCampaign$: Observable<any>;
   allSignBoards: any[] = [];
   loadReference: boolean = false;
+  loadCampaignForm: boolean = false;
 
 
   constructor(public dialog: MatDialog, private campaignService: CampaignService, private signBoardService: SignBoardService, private signBoardBatchService: SignBoardBatchService) {
@@ -45,7 +46,11 @@ export class CampaignComponent implements OnInit {
   }
 
   async createEditCampaign(currentObject?: any) {
+    if (currentObject == null ){
+      this.loadCampaignForm = true;
+    }
     const reference = currentObject ? currentObject.reference : await this.campaignService.getReference().toPromise();
+    this.loadCampaignForm = false;
     const dialogRef = this.dialog.open(AddEditCampaignComponent, {
       data: {
         currentObject: currentObject,

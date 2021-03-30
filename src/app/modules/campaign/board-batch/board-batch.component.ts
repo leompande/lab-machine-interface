@@ -20,17 +20,18 @@ export class BoardBatchComponent implements OnInit {
   tableConfigurations = {
     tableColumns: [
       { name: 'batch_reference_number', label: 'Batch No.' },
+      { name: 'start_date', label: 'Start Date' },
+      { name: 'end_date', label: 'End Date' },
       // { name: 'region', label: 'Region' },
       // { name: 'district_council_name', label: 'District Council' },
       // { name: 'outlet', label: 'Outlet' },
       { name: 'board_height', label: 'Board Height' },
       { name: 'board_width', label: 'Board Width' },
       { name: 'signboard_quantity', label: 'Quantity' },
-      { name: 'planted_quantity', label: 'Planted Quantity' },
+      { name: 'asigned_quantity', label: 'Assigned to Date' },
       // { name: 'agency_name', label: 'Agency' },
-      { name: 'start_date', label: 'Planting Start Date' },
-      { name: 'end_date', label: 'Planting End Date' },
-      {name: 'status', label: 'Status'}
+      { name: 'planted_quantity', label: 'Planted Quantity' },
+      { name: 'status', label: 'Status' } // Not Started , In progress, Completed
     ],
     tableCaption: ' ',
     tableNotifications: '',
@@ -45,7 +46,7 @@ export class BoardBatchComponent implements OnInit {
   };
   @Input() loading: boolean;
   outlets: Outlet[];
-  constructor(public dialog: MatDialog, private signBoardBatch: SignBoardBatchService,  private store: Store<ApplicationState>) {
+  constructor(public dialog: MatDialog, private signBoardBatch: SignBoardBatchService, private store: Store<ApplicationState>) {
     this.store.select(fromOuletSelector.selectAll).subscribe((outlets) => {
       this.outlets = outlets;
     });

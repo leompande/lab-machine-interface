@@ -68,14 +68,16 @@
   }
 
   .add-button-area-bottom-left-aligned{
-    position: fixed !important;
-    right: 20px;
-    bottom: 30px;
+    position: relative;
   }
 
-  .add-button-area-bottom-left-aligned div{
+  .add-button-area-bottom-left-aligned > div{
     background-color: rgba(97,172,247)!important;
     color: white;
+    position: fixed!important;
+    right: 10px;
+    bottom: 20px;
+    margin-bottom: 20px;
   }
 
   .hide-content{
@@ -107,3 +109,5 @@
     color:white;
 
   }
+
+
