@@ -48,7 +48,7 @@ export class SignBoardListComponent implements OnInit, OnChanges {
     deleting: {},
     empty_msg: 'No Sign Biards'
   };
-  @Input() loading: boolean ;
+  @Input() loading: boolean;
   @Output() creatEditSignBoard = new EventEmitter;
   @Output() creatEditSignBoardBatch = new EventEmitter;
   @Output() deletingSignBoard = new EventEmitter;
@@ -57,6 +57,8 @@ export class SignBoardListComponent implements OnInit, OnChanges {
   @Output() deletingCampaign = new EventEmitter;
   @Output() editingCampaign = new EventEmitter;
   @Input() loadReference: boolean;
+
+  campaingActions = {};
 
   constructor(public dialog: MatDialog, private storeService: DatastoreService) {
 
@@ -67,6 +69,14 @@ export class SignBoardListComponent implements OnInit, OnChanges {
 
   ngOnChanges(): void {
     this.searchHeaders = this.campaigns && this.campaigns.length > 0 ? Object.keys(this.campaigns[0]).map(key => { return { name: key } }) : [];
+  }
+
+  showDropDown(id: string, event) {
+    event.stopPropagation();
+    if (!this.campaingActions[id]) {
+      this.campaingActions = {};
+    }
+    this.campaingActions[id] = this.campaingActions[id] ? !this.campaingActions[id] : true;
   }
 
   searchCampaign(event) {
@@ -82,12 +92,16 @@ export class SignBoardListComponent implements OnInit, OnChanges {
     return [];
   }
 
-  editCampaign(campaign: Campaign) {
+  editCampaign(campaign: Campaign, event: any) {
+    event.stopPropagation();
+    this.showDetails(campaign);
     this.editingCampaign.emit(campaign);
 
   }
 
-  deleteCampaign(campaign: Campaign, signBoards: SignBoard[]) {
+  deleteCampaign(campaign: Campaign, signBoards: SignBoard[], event: any) {
+    event.stopPropagation();
+    this.showDetails(campaign);
     if (signBoards && signBoards.filter((board: SignBoard) => board.campaign_reference_number == campaign.reference).length > 0) {
     } else {
       this.deletingCampaign.emit(campaign);
@@ -133,6 +147,7 @@ export class SignBoardListComponent implements OnInit, OnChanges {
   }
 
   showDetails(campaign) {
+    this.campaingActions = {};
     this.showable[campaign.id] = this.showable[campaign.id] ? !this.showable[campaign.id] : true;
   }
 

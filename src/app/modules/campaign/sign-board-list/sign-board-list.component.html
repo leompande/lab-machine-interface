@@ -22,11 +22,30 @@
           calendar_today</mat-icon>: {{campaign.end_date|date:'fullDate'}}
       </div>
       <div class="col small-body-summary">
+
         <div style="display:inline-block;padding:5px;" class="pull-right">
-          <div class="campaign-control-button" (click)="editCampaign(campaign)"><i class="fa fa-pencil"></i>
+          <div @fadeIn class="sign-board-button" *ngIf="!loadReference" (click)="updateSignBoardBatch(campaign, null)">
+            <i class="fa fa-plus"></i>
+            Create Batch</div>
+          <div @fadeIn class="sign-board-button-circular" *ngIf="loadReference">
+            <mat-spinner [diameter]="20"></mat-spinner>
           </div>
-          <div class="campaign-control-button" style="color:red" (click)="deleteCampaign(campaign,signBoards)"><i
-              class="fa fa-trash-o"></i></div>
+          &nbsp;
+          <div class="campaign-control-button" (click)="showDropDown(campaign.id,$event)"><i
+              class="fa fa-ellipsis-v"></i>
+          </div>
+          <div @fadeIn class="drop-down-menu" *ngIf="campaingActions[campaign.id]">
+            <div class="drop-down-menu-container">
+              <div>
+                <p style="color:black" class="menu-item" (click)="editCampaign(campaign,$event)"><i
+                    class="fa fa-pencil"></i>&nbsp; Edit Campaign</p>
+              </div>
+              <div>
+                <p style="color:red" class="menu-item" (click)="deleteCampaign(campaign,signBoards,$event)"><i
+                    class="fa fa-trash-o"></i>&nbsp;Delete Campaing</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -40,11 +59,6 @@
       <div class="row">
         <div class="col">Sign Board Batches</div>
         <div class="col">
-          <div @fadeIn class="sign-board-button pull-right" *ngIf="!loadReference"
-            (click)="updateSignBoardBatch(campaign, null)">
-            Create New
-            Batch</div><br />
-          <div @fadeIn class="pull-right" *ngIf="loadReference">Please...</div>
         </div>
       </div>
     </div>
