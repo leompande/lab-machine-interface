@@ -24,10 +24,10 @@
       <div class="col small-body-summary">
 
         <div style="display:inline-block;padding:5px;" class="pull-right">
-          <div @fadeIn class="sign-board-button" *ngIf="!loadReference" (click)="updateSignBoardBatch(campaign, null)">
+          <div @fadeIn class="sign-board-button" *ngIf="!creatingBatchAction[campaign.id]" (click)="updateSignBoardBatch(campaign, null)">
             <i class="fa fa-plus"></i>
             Create Batch</div>
-          <div @fadeIn class="sign-board-button-circular" *ngIf="loadReference">
+          <div @fadeIn class="sign-board-button-circular" *ngIf="creatingBatchAction[campaign.id]">
             <mat-spinner [diameter]="20"></mat-spinner>
           </div>
           &nbsp;

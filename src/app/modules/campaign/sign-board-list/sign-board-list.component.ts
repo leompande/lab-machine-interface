@@ -59,15 +59,21 @@ export class SignBoardListComponent implements OnInit, OnChanges {
   @Input() loadReference: boolean;
 
   campaingActions = {};
+  creatingBatchAction = {};
 
   constructor(public dialog: MatDialog, private storeService: DatastoreService) {
 
   }
 
   ngOnInit(): void {
+    console.log(this.loadReference);
   }
 
+
   ngOnChanges(): void {
+    if (this.loadReference == false){
+      this.creatingBatchAction = {};
+    }
     this.searchHeaders = this.campaigns && this.campaigns.length > 0 ? Object.keys(this.campaigns[0]).map(key => { return { name: key } }) : [];
   }
 
@@ -109,6 +115,8 @@ export class SignBoardListComponent implements OnInit, OnChanges {
   }
 
   updateSignBoardBatch(campaign: Campaign, batchId: any) {
+    this.creatingBatchAction = {};
+    this.creatingBatchAction[campaign.id] = true;
     this.creatEditSignBoardBatch.emit({ campaign, batch: this.signBoardBatches.find((batch: any) => batch.id == batchId) });
   }
 
