@@ -15,8 +15,8 @@ export class OutletAssignmentEffects {
     ofType(OutletAssignmentActionTypes.LoadOutletAssignments),
     switchMap((action: LoadOutletAssignments) =>
       this.signBoardService.listOutletAssignments().pipe(
-        switchMap((assignedBoardBatches: OutletAssignment[]) => [
-          new LoadOutletAssignmentsSuccess({ OutletAssignments: assignedBoardBatches }),
+        switchMap((outletAssignments: OutletAssignment[]) => [
+          new LoadOutletAssignmentsSuccess({ OutletAssignments: outletAssignments }),
           new DoneLoadingOutletAssignments()
         ]),
         catchError((error: any) => of(new LoadOutletAssignmentsFailure(error)))

@@ -21,6 +21,7 @@ export class OutletAssignmentService {
       this.trackerService.getTrackedEntityInstance(
         "OutletAssignmentMetadata",
         "zs9X8YYBOnK", "DESCENDANTS").subscribe((response) => {
+          console.log(response);
           observer.next(response);
           observer.complete();
         }, (error) => {
@@ -44,11 +45,25 @@ export class OutletAssignmentService {
       }) :
         this.trackerService.saveTrackedEntityInstances([trackedEntityInstancePayload]).subscribe((results: any) => {
           observer.next(results);
-            observer.complete();
+          observer.complete();
         }, error => {
           observer.error(error);
           observer.complete();
         });
+    });
+  }
+
+  saveOutletAssignments(outletAssignments?: OutletAssignment[]): Observable<any> {
+    return Observable.create((observer: any) => {
+      let trackedEntityInstancePayloads = [];
+      trackedEntityInstancePayloads = outletAssignments.map(assignment=>this.trackerService.prepareTrackedEntityPayload('OutletAssignmentMetadata', assignment.organisation_unit_id, assignment, 'add', assignment.trackedEntityInstance, null));
+      this.trackerService.saveTrackedEntityInstances(trackedEntityInstancePayloads).subscribe((results: any) => {
+        observer.next(trackedEntityInstancePayloads);
+        observer.complete();
+      }, error => {
+        observer.error(error);
+        observer.complete();
+      });
     });
   }
 

@@ -16,6 +16,9 @@ import { SignBoardBatchService } from 'src/app/shared/services/model-services/si
 import { ApplicationState } from 'src/app/store';
 import { Store } from '@ngrx/store';
 import { LoadAssignedBoardBatches } from 'src/app/store/assigned-board-batches/actions/assigned-board-batch.actions';
+import { OutletAssignmentService } from 'src/app/shared/services/model-services/outletassignment.service';
+import { OutletAssignment } from 'src/app/store/outlet-assignment/reducers/outlet-assignment';
+import { LoadOutletAssignments } from 'src/app/store/outlet-assignment/actions/outlet-assignment.actions';
 
 @Component({
   selector: 'app-add-edit',
@@ -100,6 +103,8 @@ export class AddEditBatchAssignmentComponent implements OnInit {
 
   hasAssignmentError: boolean = false;
 
+  assignedOutlets: { outlet: string, value: string }[] = [];
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {
       currentObject: any,
@@ -111,7 +116,8 @@ export class AddEditBatchAssignmentComponent implements OnInit {
     private assignedBoardBatchService: AssignedBoardBatchService,
     private batchService: SignBoardBatchService,
     private http: HttpClientService,
-    private store: Store<ApplicationState>) {
+    private store: Store<ApplicationState>,
+    private outAssignmentService: OutletAssignmentService) {
     this.isUpdate = data.currentObject != null;
     this.startingOus = data.currentObject ? [data.currentObject.wardId] : null;
     this.campaings = data.campaigns;
@@ -195,11 +201,11 @@ export class AddEditBatchAssignmentComponent implements OnInit {
     this.assignedQuantity = event.target.value;
   }
 
-  onOutletAssigned(event: any){
-    console.log(event);
+  onOutletAssigned(event: any) {
+    this.assignedOutlets = event;
   }
 
-  assignmentError(event){
+  assignmentError(event) {
     this.hasAssignmentError = event;
   }
 
@@ -246,8 +252,32 @@ export class AddEditBatchAssignmentComponent implements OnInit {
       district: this.orgUnitData.district,
       region: this.orgUnitData.region,
       start_date: this.selectedBatch.start_date,
-      end_date:this.selectedBatch.end_date
+      end_date: this.selectedBatch.end_date,
+      status: 'ACTIVE'
     };
+    let assignemnts: OutletAssignment[] = [];
+    this.assignedOutlets.forEach(assignedOutlet => {
+
+      assignemnts = [...assignemnts, {
+        id: makeId(),
+        enrollment_id: makeId(),
+        organisation_unit_id: formValue.organisation_unit_id,
+        trackedEntityInstance: makeId(),
+        outlet: assignedOutlet.outlet,
+        campaign_reference_number: formValue.campaign_reference_number,
+        batch_reference_number: formValue.batch_reference_number,
+        latitude: formValue.latitude,
+        longitude: formValue.longitude,
+        assigned_quantity: assignedOutlet.value,
+        planted_quantity: '0',
+        board_height: formValue.board_height,
+        board_width: formValue.board_width,
+        planted_date: null,
+        start_date: formValue.start_date,
+        end_date: formValue.end_date,
+        status: "PENDING",
+      }];
+    });
     const response = await this.assignedBoardBatchService.saveUpdateAssignedBoardBatch(false, formValue, '', '').toPromise();
     if (response['httpStatus'] == 'OK') {
       try {
@@ -257,12 +287,14 @@ export class AddEditBatchAssignmentComponent implements OnInit {
           assigned_quantity: this.selectedBatch.assigned_quantity != null ? (+this.selectedBatch.assigned_quantity) + formValue.assigned_quantity : formValue.assigned_quantity
         }
         const updateReponse = await this.batchService.saveUpdateSignBoardBatch(true, this.selectedBatch, this.selectedBatch.trackedEntityInstance, null).toPromise();
+        const outletAssignResponse = await this.outAssignmentService.saveOutletAssignments(assignemnts).toPromise();
       } catch (e) {
         console.log(e);
       }
 
     }
     this.store.dispatch(new LoadAssignedBoardBatches());
+    this.store.dispatch(new LoadOutletAssignments());
     this.loading = false;
     this.cancel();
   }

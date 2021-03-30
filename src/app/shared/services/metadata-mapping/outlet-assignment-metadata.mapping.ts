@@ -68,6 +68,16 @@ export const outletAssignmentMetadata = {
       id: "XT0KiRNrONx",
       valueType: 'TEXT',
       key: 'planted_date'
+    },{
+      name: "Start Date",
+      id: "dfhqlFItBfb",
+      valueType: 'TEXT',
+      key: 'start_date'
+    },{
+      name: "End Date",
+      id: "Al7FVVC6179",
+      valueType: 'TEXT',
+      key: 'end_date'
     },
     {
       name: "Signboard status",

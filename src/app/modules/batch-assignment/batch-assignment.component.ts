@@ -40,7 +40,7 @@ export class BatchAssignmentComponent implements OnInit, OnChanges {
       { name: 'start_date', label: 'Start Planting Date' },
       { name: 'end_date', label: 'End Planting Date' },
       { name: 'actual_planting_date', label: 'Actual finshing planting date' },
-      { name: 'sign_board_status', label: 'Status' }
+      // { name: 'status', label: 'Status' }
 
     ],
     tableCaption: ' ',

@@ -50,7 +50,18 @@ export const assignedBatchMetadata = {
       id: 'DfHE0niLTb9',
       valueType: 'TEXT',
       key: 'agency_name'
-    }
+    },{
+      name: 'Start Date',
+      id: 'dfhqlFItBfb',
+      valueType: 'TEXT',
+      key: 'start_date'
+  },
+  {
+      name: 'End Date',
+      id: 'Al7FVVC6179',
+      valueType: 'TEXT',
+      key: 'end_date'
+  }
   ],
   stage: {
     SignBoardRequest: {
