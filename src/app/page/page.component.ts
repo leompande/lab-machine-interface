@@ -16,6 +16,7 @@ import { LoadSignBoards } from '../store/sign-board/actions/sign-board.actions';
 import { LoadOutlets } from '../store/outlet/actions/outlet.actions';
 import { LoadSignBoardBatches } from '../store/sign-board-batch/actions/sign-board-batch.actions';
 import { LoadAssignedBoardBatches } from '../store/assigned-board-batches/actions/assigned-board-batch.actions';
+import { LoadOutletAssignments } from '../store/outlet-assignment/actions/outlet-assignment.actions';
 
 @Component({
   selector: 'app-page',
@@ -51,6 +52,7 @@ export class PageComponent {
     this.store.dispatch(new LoadSignBoardBatches());
     this.store.dispatch(new LoadOutlets());
     this.store.dispatch(new LoadAssignedBoardBatches());
+    this.store.dispatch(new LoadOutletAssignments());
   }
 
   logout() {

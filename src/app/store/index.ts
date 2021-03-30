@@ -18,6 +18,7 @@ import * as fromApplication from './application/reducers/application.reducer';
 import * as fromCampaign from './campaign/reducers/campaign.reducer';
 import * as fromOrganisationUnits from './organization-unit/organization-unit.reducer';
 import * as fromOutlets from './outlet/reducers/outlet.reducer';
+import * as fromOutletAssignment from './outlet-assignment/reducers/outlet-assignment.reducer';
 
 import { environment } from '../../environments/environment';
 import { RouterStateUrl } from './router/router.reducer';
@@ -29,6 +30,7 @@ export interface ApplicationState {
   signBoard: fromSignBoard.State;
   signBoardBatch: fromSignBoardBatch.State;
   assignedBoardBatch: fromAssignedBoardBatch.State;
+  outletAssignment: fromOutletAssignment.State;
   application: fromApplication.State;
   organisation: fromOrganisation.State;
   campaign: fromCampaign.State;
@@ -44,6 +46,7 @@ export const reducers: ActionReducerMap<ApplicationState> = {
   signBoard: fromSignBoard.reducer,
   signBoardBatch: fromSignBoardBatch.reducer,
   assignedBoardBatch: fromAssignedBoardBatch.reducer,
+  outletAssignment: fromOutletAssignment.reducer,
   application: fromApplication.reducer,
   organisation: fromOrganisation.reducer,
   campaign: fromCampaign.reducer,

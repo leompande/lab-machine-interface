@@ -8,6 +8,7 @@ import { UserRoleEffects } from './user-role/effects/user-role.effects';
 import { OutletEffects } from './outlet/effects/outlet.effects';
 import { SignBoardBatchEffects } from './sign-board-batch/effects/sign-board-batch.effects';
 import { AssignedBoardBatchEffects } from './assigned-board-batches/effects/assigned-board-batch.effects';
+import { OutletAssignmentEffects } from './outlet-assignment/effects/outlet-assignment.effects';
 
 export const effects = [
   OutletEffects,
@@ -17,8 +18,9 @@ export const effects = [
   SignBoardEffects,
   SignBoardBatchEffects,
   AssignedBoardBatchEffects,
+  AssignedBoardBatchEffects,
   ApplicationEffects,
   OrganisationEffects,
   UserRoleEffects,
-  OrganisationEffects
+  OutletAssignmentEffects
 ];
