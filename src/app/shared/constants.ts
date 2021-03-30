@@ -11,7 +11,7 @@ export const menus: any = [
     icon: 'campaign.png',
     access: 'ORGANISATION_ADMIN'
   }, {
-    name: 'Assignements',
+    name: 'Assign Boards',
     url: 'batch-assignment',
     icon: 'batch-assignment.png',
     access: 'ORGANISATION_ADMIN'

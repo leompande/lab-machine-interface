@@ -98,6 +98,8 @@ export class AddEditBatchAssignmentComponent implements OnInit {
 
   assignedQuantity: number = 0;
 
+  hasAssignmentError: boolean = false;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {
       currentObject: any,
@@ -191,6 +193,14 @@ export class AddEditBatchAssignmentComponent implements OnInit {
 
   changeAssignedQuantity(event: any) {
     this.assignedQuantity = event.target.value;
+  }
+
+  onOutletAssigned(event: any){
+    console.log(event);
+  }
+
+  assignmentError(event){
+    this.hasAssignmentError = event;
   }
 
   async onOrgunitSelected(event: any) {

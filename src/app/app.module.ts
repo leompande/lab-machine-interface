@@ -53,6 +53,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { BatchAssignmentContainerComponent } from './modules/batch-assignment/batch-assignment-container/batch-assignment-container.component';
 import { BatchAssignmentComponent } from './modules/batch-assignment/batch-assignment.component';
 import { AddEditBatchAssignmentComponent } from './modules/batch-assignment/add-edit/add-edit.component';
+import { OutletValueAssignmentComponent } from './shared/components/outlet-value-assignment/outlet-value-assignment.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -98,7 +99,8 @@ export const MY_FORMATS = {
     AgencyBatchMoreComponent,
     BatchAssignmentComponent,
     BatchAssignmentContainerComponent,
-    AddEditBatchAssignmentComponent
+    AddEditBatchAssignmentComponent,
+    OutletValueAssignmentComponent
   ],
   imports: [
     BrowserModule,
