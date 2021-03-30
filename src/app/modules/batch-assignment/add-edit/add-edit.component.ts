@@ -244,7 +244,9 @@ export class AddEditBatchAssignmentComponent implements OnInit {
       ...this.form.value,
       organisation_unit_id: this.orgUnitData.districtId,
       district: this.orgUnitData.district,
-      region: this.orgUnitData.region
+      region: this.orgUnitData.region,
+      start_date: this.selectedBatch.start_date,
+      end_date:this.selectedBatch.end_date
     };
     const response = await this.assignedBoardBatchService.saveUpdateAssignedBoardBatch(false, formValue, '', '').toPromise();
     if (response['httpStatus'] == 'OK') {

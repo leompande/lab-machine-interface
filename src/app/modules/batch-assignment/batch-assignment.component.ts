@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { AssignedBoardBatchService } from 'src/app/shared/services/model-services/assignedboardbatch.service';
@@ -17,7 +17,7 @@ import { LoadAssignedBoardBatches } from 'src/app/store/assigned-board-batches/a
   templateUrl: './batch-assignment.component.html',
   styleUrls: ['./batch-assignment.component.scss']
 })
-export class BatchAssignmentComponent implements OnInit {
+export class BatchAssignmentComponent implements OnInit, OnChanges {
 
   @Input()
   assignedBoardBatches!: AssignedBoardBatch[];
@@ -30,7 +30,7 @@ export class BatchAssignmentComponent implements OnInit {
 
   tableConfigurations = {
     tableColumns: [
-      { name: 'campaign', label: 'Campaign Name' },
+      { name: 'campaign_reference_number', label: 'Campaign Reference' },
       { name: 'batch_reference_number', label: 'Batch Reference' },
       { name: 'board_height', label: 'Board Height' },
       { name: 'board_width', label: 'Board Width' },
@@ -55,9 +55,26 @@ export class BatchAssignmentComponent implements OnInit {
     empty_msg: 'No Assignments'
   };
 
+  // mappedBatchValues: any[] = [];
+
   constructor(public dialog: MatDialog, private assignedBoardBatchService: AssignedBoardBatchService, private store: Store<ApplicationState>) { }
 
   ngOnInit(): void {
+  }
+
+  ngOnChanges(changes:any): void {
+    // if (changes.campaings && changes.campaings.firstChange == false && changes.campaings.currentValue.length>0){
+    //   console.log(changes.campaings.currentValue);
+    //   this.mappedBatchValues = this.assignedBoardBatches.map(batch=>{
+    //     console.log(batch);
+    //     return {
+    //       ...batch,
+    //       campaign: this.campaings.find(campaing=>campaing.reference==batch.campaign_reference_number).campaign_name
+    //     }
+    //   });
+    //   console.log(this.mappedBatchValues);
+    // }
+
   }
 
 

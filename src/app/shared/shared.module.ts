@@ -21,6 +21,7 @@ import { NgxBarcode6Module } from 'ngx-barcode6';
 import { BoardCollectorComponent } from './components/board-collector/board-collector.component';
 import { AuthorizableActionDirective } from './directives/authorizable-action.directive';
 import { LoaderComponent } from './components/loader/loader.component';
+import { BatchMapperPipe } from './pipes/batch-mapper';
 @NgModule({
   declarations: [
     OneSidedMultiSelectComponent,
@@ -36,6 +37,7 @@ import { LoaderComponent } from './components/loader/loader.component';
     FormatNumberPipe,
     DragDropDirective,
     FilterSignBoardPipe,
+    BatchMapperPipe,
     BoardCollectorComponent,AuthorizableActionDirective, LoaderComponent],
   imports: [
     CommonModule,
