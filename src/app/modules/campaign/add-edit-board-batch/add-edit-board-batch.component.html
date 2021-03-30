@@ -27,7 +27,7 @@
         <div class="col">
           <mat-form-field appearance="outline">
             <mat-label>Start Plant Date</mat-label>
-            <input matInput [matDatepicker]="start_date" formControlName="start_date">
+            <input matInput [matDatepicker]="start_date" [min]="minDate" [max]="maxDate" formControlName="start_date">
             <mat-datepicker-toggle matSuffix [for]="start_date" placeholder="Start Date">
             </mat-datepicker-toggle>
             <mat-datepicker touchUi #start_date></mat-datepicker>
@@ -36,7 +36,7 @@
         <div class="col">
           <mat-form-field appearance="outline">
             <mat-label>End Plant Date</mat-label>
-            <input matInput [matDatepicker]="end_date" formControlName="end_date" >
+            <input matInput [matDatepicker]="end_date"  [min]="minDate" [max]="maxDate" formControlName="end_date" >
             <mat-datepicker-toggle matSuffix [for]="end_date" placeholder="End Date">
             </mat-datepicker-toggle>
             <mat-datepicker touchUi #end_date></mat-datepicker>

@@ -62,9 +62,17 @@ export class AddEditBoardBatchComponent implements OnInit {
     boardWidth: number, boardHeight: number, boardQuantity: number
   }[] = [];
 
+  minDate: Date;
+  maxDate: Date;
+
+  campaign: Campaign;
+
   constructor(@Inject(MAT_DIALOG_DATA) public data: { currentObject: SignBoardBatch, campaign: Campaign, organisation: Organisation, agencies: Agency[], outlets: Outlet[], reference: string }, private signBoardBatchService: SignBoardBatchService, private http: HttpClientService) {
     this.isUpdate = data.currentObject != null;
     this.startingOus = this.isUpdate ? [data.currentObject.organisation_unit_id] : [];
+    this.campaign = data.campaign;
+    this.minDate = new Date(this.campaign.start_date);
+    this.maxDate = new Date(this.campaign.end_date);
 
     if (data.currentObject != null) {
       this.boardList.push({
