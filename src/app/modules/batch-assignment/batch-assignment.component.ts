@@ -37,16 +37,14 @@ export class BatchAssignmentComponent implements OnInit, OnChanges {
     tableColumns: [
       { name: 'campaign_name', label: 'Campaign' },
       { name: 'batch_reference_number', label: 'Batch Reference' },
-      { name: 'board_height', label: 'Board Height', type:'NUMBER' },
-      { name: 'board_width', label: 'Board Width', type:'NUMBER' },
-      { name: 'signboard_quantity', label: 'Assigned Quantity', type:'NUMBER' },
-      { name: 'planted_quantity', label: 'Planted Quantity', type:'NUMBER' },
+      { name: 'board_height', label: 'Board Height', type: 'NUMBER' },
+      { name: 'board_width', label: 'Board Width', type: 'NUMBER' },
+      { name: 'signboard_quantity', label: 'Assigned Quantity', type: 'NUMBER' },
+      { name: 'planted_quantity', label: 'Planted Quantity', type: 'NUMBER' },
       { name: 'agency_name', label: 'Assigned Agency' },
       { name: 'start_date', label: 'Start Planting Date' },
       { name: 'end_date', label: 'End Planting Date' },
-      { name: 'actual_planting_date', label: 'Actual finshing planting date' },
-      // { name: 'status', label: 'Status' }
-
+      { name: 'actual_planting_date', label: 'Actual finshing planting date' }
     ],
     tableCaption: ' ',
     tableNotifications: '',
@@ -66,12 +64,12 @@ export class BatchAssignmentComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
 
-  ngOnChanges(changes:any): void {
-    if (this.assignedBoardBatches.length>0){
-      this.assignedBoardBatchesMappedList = this.assignedBoardBatches.map((signboard)=>{
+  ngOnChanges(changes: any): void {
+    if (this.assignedBoardBatches.length > 0) {
+      this.assignedBoardBatchesMappedList = this.assignedBoardBatches.map((signboard) => {
         return {
           ...signboard,
-          campaign_name: this.campaings.find(campaign=>campaign.reference === signboard.campaign_reference_number).campaign_name
+          campaign_name: this.campaings.find(campaign => campaign.reference === signboard.campaign_reference_number).campaign_name
         };
       });
     }
@@ -85,7 +83,7 @@ export class BatchAssignmentComponent implements OnInit, OnChanges {
     this.store.dispatch(new LoadAssignedBoardBatches());
   }
 
-  printPreview(data:any) {
+  printPreview(data: any) {
     const dialogRef = this.dialog.open(PreviewAssignmentComponent, {
       data: {
         currentObject: this.assignedBoardBatches.find(boardBatch => boardBatch.id == data),
@@ -104,7 +102,7 @@ export class BatchAssignmentComponent implements OnInit, OnChanges {
 
     dialogRef.afterClosed().subscribe(result => {
     });
-   }
+  }
 
   updateOutlet(boardBatchId: string) {
     const dialogRef = this.dialog.open(AddEditBatchAssignmentComponent, {

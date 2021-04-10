@@ -1,5 +1,5 @@
 import { SignBoardBatch } from '../store/sign-board-batch/reducers/sign-board-batch';
-
+import * as _ from 'lodash';
 export function makeId(): string {
   let text = '';
   const possible_combinations = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -34,6 +34,68 @@ export function prepareSignBoardData(indexNumber, signBoardBatch: SignBoardBatch
 
 
   return signBoard;
+}
+
+export function getVisualizationCategories(categoryType: string, metaData:any){
+  if (categoryType === 'pe'){
+    const items = metaData.items;
+    const dimensions = metaData.dimensions;
+    return dimensions.pe.map(peItem=>{
+      return items[peItem].name;
+    });
+  }
+}
+
+export function getVisualizationSeries(seriesType: string, filterType: string, metaData:any, rows:any[], headers:any[]){
+  const dimensions = metaData.dimensions;
+  const items = metaData.items;
+  const indexOfPe = _.findIndex(headers,(item)=>item.name=='pe');
+  const indexOfOu = _.findIndex(headers,(item)=>item.name=='ou');
+  const indexOfDx = _.findIndex(headers,(item)=>item.name=='dx');
+  const indexOfValue = _.findIndex(headers,(item)=>item.name=='value');
+return dimensions.dx.map((dxItem:string)=>{
+  return {
+    name: items[dxItem].name,
+    data: dimensions.pe.map((peItem:string)=>{
+      const row = rows.find((row:any[])=>{
+        return row[indexOfPe] == peItem && row[indexOfDx] == dxItem;
+      });
+      return +row[indexOfValue];
+    })
+  }
+});
+}
+
+export function combineVisualizationObject(categories,series){
+  return {
+
+    title: {
+      text: ''
+    },
+
+    subtitle: {
+      text: ''
+    },
+
+    yAxis: {
+      title: {
+        text: 'Number of Sign Boards'
+      }
+    },
+
+    xAxis: {
+      categories
+    },
+    series,
+    responsive: {
+      rules: [{
+        condition: {
+          maxWidth: 500
+        }
+      }]
+    }
+
+  };
 }
 
 

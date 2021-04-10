@@ -12,6 +12,7 @@ import { fadeIn } from 'src/app/shared/animations/router-animation';
 import { Moment } from 'moment';
 import * as Highcharts from 'highcharts';
 import * as HighchartsExporting from 'highcharts/modules/exporting';
+import { VisualizationService } from 'src/app/shared/services/dhis2/visualization-service';
 HighchartsExporting(Highcharts);
 
 @Component({
@@ -35,6 +36,7 @@ export class DashboardComponent implements OnInit {
   showStartEndDate: boolean = false;
   showMonthYear: boolean = false;
   showYears: boolean = false;
+  show5Years: boolean = false;
 
   years: { id: string, value: any, name: string }[];
   months: { id: string, value: any, name: string }[]
@@ -53,7 +55,12 @@ export class DashboardComponent implements OnInit {
 
   options: Object;
 
-  constructor(private store: Store<ApplicationState>) {
+  showFilters: boolean = false;
+
+  currentPeriodType: string = "5Yearly";
+  currentFiveYearPeriod: string = "2021-2016";
+
+  constructor(private store: Store<ApplicationState>, private visualizationService: VisualizationService) {
     this.years = get5Years();
     this.months = getMonths();
     this.user = new Function("return " + localStorage.getItem('sb-user'))();
@@ -81,8 +88,12 @@ export class DashboardComponent implements OnInit {
     this.store.select(signBoardbatchSelector.selectNotPlantedSignBoards(this.user.agency)).subscribe(results => {
       this.dashboardSummary.notPlantedBoards = results;
     });
+    this.updateDashboardVisualization(this.currentPeriodType, null, null, null, null, this.currentFiveYearPeriod);
 
+  }
 
+  toggleShowFilters() {
+    this.showFilters = true;
   }
 
 
@@ -90,6 +101,7 @@ export class DashboardComponent implements OnInit {
     this.showStartEndDate = false;
     this.showMonthYear = false;
     this.showYears = false;
+    this.currentPeriodType = event.value;
     switch (event.value) {
       case 'Daily':
         this.showStartEndDate = true;
@@ -100,20 +112,27 @@ export class DashboardComponent implements OnInit {
       case 'Yearly':
         this.showYears = true;
         break;
+        case '5Yearly':
+          this.show5Years = true;
+          break;
       default:
         break;
     }
-    this.updateDashboardVisualization(event.value, null, null, event.value, null);
+    this.updateDashboardVisualization(this.currentPeriodType, null, null, event.value, null, null);
   }
 
   changeStartDate(event: any) {
     this.minDateEndDate = this.startDate;
-    this.updateDashboardVisualization(null, this.startDate, this.endDate, null, null);
+    this.updateDashboardVisualization(this.currentPeriodType, this.startDate, this.endDate, null, null, null);
   }
 
   changeEndDate(event: any) {
     this.maxDateStartDate = this.endDate;
-    this.updateDashboardVisualization(null, this.startDate, this.endDate, null, null);
+    this.updateDashboardVisualization(this.currentPeriodType, this.startDate, this.endDate, null, null, null);
+  }
+
+  change5YearPeriod(event: any){
+    this.updateDashboardVisualization(this.currentPeriodType, null, null, null, null, event.value);
   }
 
   goNextYear() {
@@ -127,30 +146,34 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  updateDashboardVisualization(type?: string, startDate?: Moment, endDate?: Moment, month?: any, year?: any) {
-    if (startDate != null) {
-      console.log(startDate.calendar());
+  async updateDashboardVisualization(type?: string, startDate?: Moment, endDate?: Moment, month?: any, year?: any, fiveYearly?:any) {
+    if (type == 'Daily' && startDate != null && endDate != null) {
+      const visualizationObject = await this.visualizationService.getDailyVisualizationObjects(startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'));
+      setTimeout(() => Highcharts.chart('summaryChartVisualization', visualizationObject), 400);
     }
 
-    if (endDate != null) {
-      console.log(endDate.calendar());
-    }
 
     if (month != null) {
       console.log(month);
     }
 
-    if (year != null) {
-      console.log(year);
+    if (type == 'Yearly' && year != null) {
+      const visualizationObject = await this.visualizationService.getYealyVisualizationObjects(year);
+      setTimeout(() => Highcharts.chart('summaryChartVisualization', visualizationObject), 400);
+    }
+
+    if (type == '5Yearly' && fiveYearly != null) {
+      const visualizationObject = await this.visualizationService.get5YealyVisualizationObjects(fiveYearly);
+      setTimeout(() => Highcharts.chart('summaryChartVisualization', visualizationObject), 400);
     }
   }
 
   changeYear(event) {
-    this.updateDashboardVisualization(null, null, null, null, event.value);
+    this.updateDashboardVisualization(this.currentPeriodType, null, null, null, event.value);
   }
 
   changeMonth(event) {
-    this.updateDashboardVisualization(null, null, null, event.value, null);
+    this.updateDashboardVisualization(this.currentPeriodType, null, null, event.value, null);
   }
 
 
