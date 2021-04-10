@@ -1,0 +1,24 @@
+.form-container{
+  max-height: 90vh;
+}
+
+.marker-button-area{
+  display: inline;
+  padding: 10px;
+  border-radius: 30px;
+}
+
+.marker-button-area:hover{
+  padding: 10px;
+  background-color: #cccccc;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.marker-button-area:active{
+  padding: 10px;
+  background-color: #a09e9e;
+  border-radius: 30px;
+  cursor: pointer;
+}
+

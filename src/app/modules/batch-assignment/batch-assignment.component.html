@@ -2,7 +2,7 @@
     <!-- <app-loader [message]="'  '" *ngIf="(loading$|async) == true"></app-loader> -->
     <div class="display-pane">
         <vvs-main-data-table *ngIf="tableConfigurations.tableColumns && assignedBoardBatches"
-            [tableConfigurations]="tableConfigurations" [tableList]="assignedBoardBatches" (rowPreview)="printArrival($event)"
+            [tableConfigurations]="tableConfigurations" [tableList]="assignedBoardBatches" (rowPreview)="printPreview($event)"
             (rowDelete)="deleteOutlet($event)" (rowUpdate)="updateOutlet($event)" [loading]="loading$ | async">
         </vvs-main-data-table>
     </div>

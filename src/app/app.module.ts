@@ -54,6 +54,7 @@ import { BatchAssignmentContainerComponent } from './modules/batch-assignment/ba
 import { BatchAssignmentComponent } from './modules/batch-assignment/batch-assignment.component';
 import { AddEditBatchAssignmentComponent } from './modules/batch-assignment/add-edit/add-edit.component';
 import { OutletValueAssignmentComponent } from './shared/components/outlet-value-assignment/outlet-value-assignment.component';
+import { PreviewAssignmentComponent } from './modules/batch-assignment/preview-assignment/preview-assignment.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -100,7 +101,8 @@ export const MY_FORMATS = {
     BatchAssignmentComponent,
     BatchAssignmentContainerComponent,
     AddEditBatchAssignmentComponent,
-    OutletValueAssignmentComponent
+    OutletValueAssignmentComponent,
+    PreviewAssignmentComponent
   ],
   imports: [
     BrowserModule,

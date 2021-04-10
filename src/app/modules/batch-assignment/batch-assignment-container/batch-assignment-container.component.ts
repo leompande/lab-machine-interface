@@ -8,10 +8,12 @@ import * as campaignSelector from '../../../store/campaign/selectors/campaign.se
 import * as signBoardBatchSelector from '../../../store/sign-board-batch/selectors/sign-board-batch.selectors';
 import * as outletSelector from '../../../store/outlet/selectors/outlet.selectors';
 import * as agencySelector from '../../../store/agency/selectors/agency.selectors';
+import * as outletsAssignmentSelector from '../../../store/outlet-assignment/selectors/outlet-assignment.selectors';
 import { Campaign } from 'src/app/store/campaign/reducers/campaign';
 import { SignBoardBatch } from 'src/app/store/sign-board-batch/reducers/sign-board-batch';
 import { Outlet } from 'src/app/store/outlet/reducers/outlet';
 import { Agency } from 'src/app/store/agency/reducers/agency';
+import { OutletAssignment } from 'src/app/store/outlet-assignment/reducers/outlet-assignment';
 
 @Component({
   selector: 'app-batch-assignment-container',
@@ -27,6 +29,7 @@ export class BatchAssignmentContainerComponent implements OnInit {
   signBoardBatches$: Observable<SignBoardBatch[]>;
   outlets$: Observable<Outlet[]>;
   agencies$: Observable<Agency[]>;
+  outletsAssignments$: Observable<OutletAssignment[]>;
   constructor(private store: Store<ApplicationState>) {
     this.assignedBatches$ = this.store.pipe(select(assignedBatchSelector.selectAll));
     this.assignedBatchEntities$ = this.store.pipe(select(assignedBatchSelector.selectEntities));
@@ -35,6 +38,7 @@ export class BatchAssignmentContainerComponent implements OnInit {
     this.signBoardBatches$ = this.store.pipe(select(signBoardBatchSelector.selectAll));
     this.outlets$ = this.store.pipe(select(outletSelector.selectAll));
     this.agencies$ = this.store.pipe(select(agencySelector.selectAll));
+    this.outletsAssignments$ = this.store.pipe(select(outletsAssignmentSelector.selectAll));
   }
 
   ngOnInit(): void {

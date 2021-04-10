@@ -11,6 +11,8 @@ import { Agency } from 'src/app/store/agency/reducers/agency';
 import { ApplicationState } from 'src/app/store';
 import { Store } from '@ngrx/store';
 import { LoadAssignedBoardBatches } from 'src/app/store/assigned-board-batches/actions/assigned-board-batch.actions';
+import { PreviewAssignmentComponent } from './preview-assignment/preview-assignment.component';
+import { OutletAssignment } from 'src/app/store/outlet-assignment/reducers/outlet-assignment';
 
 @Component({
   selector: 'app-batch-assignment',
@@ -27,6 +29,7 @@ export class BatchAssignmentComponent implements OnInit, OnChanges {
   @Input() batches: SignBoardBatch[];
   @Input() outlets: Outlet[];
   @Input() agencies: Agency[];
+  @Input() outletsAssignments: OutletAssignment[];
 
   tableConfigurations = {
     tableColumns: [
@@ -47,7 +50,7 @@ export class BatchAssignmentComponent implements OnInit, OnChanges {
     tableNotifications: '',
     showBorder: true,
     allowPagination: true,
-    actionIcons: { edit: true, delete: true, more: false },
+    actionIcons: { edit: true, delete: true, more: true },
     doneLoading: false,
     showSearch: true,
     showMap: true,
@@ -63,17 +66,6 @@ export class BatchAssignmentComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes:any): void {
-    // if (changes.campaings && changes.campaings.firstChange == false && changes.campaings.currentValue.length>0){
-    //   console.log(changes.campaings.currentValue);
-    //   this.mappedBatchValues = this.assignedBoardBatches.map(batch=>{
-    //     console.log(batch);
-    //     return {
-    //       ...batch,
-    //       campaign: this.campaings.find(campaing=>campaing.reference==batch.campaign_reference_number).campaign_name
-    //     }
-    //   });
-    //   console.log(this.mappedBatchValues);
-    // }
 
   }
 
@@ -84,7 +76,26 @@ export class BatchAssignmentComponent implements OnInit, OnChanges {
     this.store.dispatch(new LoadAssignedBoardBatches());
   }
 
-  printArrival() { }
+  printPreview(data:any) {
+    const dialogRef = this.dialog.open(PreviewAssignmentComponent, {
+      data: {
+        currentObject: this.assignedBoardBatches.find(boardBatch => boardBatch.id == data),
+        campaigns: this.campaings,
+        batches: this.batches,
+        outlets: this.outlets,
+        outletsAssignments: this.outletsAssignments,
+        agencies: this.agencies
+      },
+      width: '80%',
+      maxHeight: '80%',
+      disableClose: true,
+      hasBackdrop: true,
+      closeOnNavigation: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    });
+   }
 
   updateOutlet(boardBatchId: string) {
     const dialogRef = this.dialog.open(AddEditBatchAssignmentComponent, {
