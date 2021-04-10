@@ -39,8 +39,8 @@ export class BoardBatchMoreComponent implements OnInit {
   tableConfigurations = {
     tableColumns: [
       { name: 'bar_code', label: 'Bar Code', type: 'barcode' },
-      { name: 'board_height', label: 'Board Height' },
-      { name: 'board_width', label: 'Board Width' },
+      { name: 'board_height', label: 'Board Height', type:'NUMBER' },
+      { name: 'board_width', label: 'Board Width', type:'NUMBER' },
       { name: 'date_to_be_planted', label: 'Expected planting date' },
       { name: 'actual_planting_date', label: 'Actual Planting Date' },
       { name: 'sign_board_status', label: 'Status' },

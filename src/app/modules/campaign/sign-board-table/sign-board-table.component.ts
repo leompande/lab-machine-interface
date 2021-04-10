@@ -185,8 +185,8 @@ export class SignBoardTableComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  isNumber(item: any) {
-    return !isNaN(item) || item === 'N/A';
+  isNumber(item:any){
+    return item == 'NUMBER';
   }
 
   viewItemDetails(itemId: any) {

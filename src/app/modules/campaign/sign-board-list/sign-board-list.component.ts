@@ -32,8 +32,8 @@ export class SignBoardListComponent implements OnInit, OnChanges {
   tableConfigurations = {
     tableColumns: [
       { name: 'district_council_name', label: 'District Council' },
-      { name: 'board_height', label: 'Board Height' },
-      { name: 'board_width', label: 'Board Width' },
+      { name: 'board_height', label: 'Board Height', type:'NUMBER' },
+      { name: 'board_width', label: 'Board Width', type:'NUMBER' },
       { name: 'street_name', label: 'Street name' },
       { name: 'date_to_be_planted', label: 'Date to plant' },
     ],
