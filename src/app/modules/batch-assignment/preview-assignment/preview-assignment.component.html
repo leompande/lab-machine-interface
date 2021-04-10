@@ -1,8 +1,14 @@
 <div class="form-container">
   <div class="form-header">
-    <p><img src="/assets/icons/batch-assignment.png" style="width:25px">&nbsp;
-      <span >Batch Assignment</span>
-    </p>
+    <div class="row">
+      <div class="col"><img src="/assets/icons/batch-assignment.png" style="width:25px">&nbsp;
+        <span >Batch Assignment</span>
+      </div>
+      <div class="col" style="text-align: right;">
+        <div id="closeButton" class="custom-button" mat-dialog-close >Close</div>
+      </div>
+    </div>
+    <div></div>
   </div>
   <mat-divider></mat-divider>
   <br />
@@ -82,7 +88,10 @@
   <div class="form-footer">
     <!-- <app-save-area [isUpdate]="isUpdate" [isEnabled]="!hasAssignmentError && form.dirty && !showOrgUnitSelectionError" [loading]="loading"
       (onCancel)="cancel()" (onSave)="save()">
-    </app-save-area>
-    <button id="closeButton" mat-button mat-dialog-close style="display: none;">Cancel</button> -->
+    </app-save-area>-->
+    <div style="text-align: right;">
+      <div id="closeButton" class="custom-button danger-custom-button-color " mat-dialog-close >Close</div>
+    </div>
+
   </div>
 </div>
