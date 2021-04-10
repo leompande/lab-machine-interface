@@ -28,7 +28,7 @@ export class BoardBatchComponent implements OnInit {
       { name: 'board_height', label: 'Board Height', type:'NUMBER' },
       { name: 'board_width', label: 'Board Width', type:'NUMBER' },
       { name: 'signboard_quantity', label: 'Quantity', type:'NUMBER' },
-      { name: 'asigned_quantity', label: 'Assigned to Date' },
+      { name: 'assigned_quantity', label: 'Assigned to Date', type:'NUMBER' },
       // { name: 'agency_name', label: 'Agency' },
       { name: 'planted_quantity', label: 'Planted Quantity', type:'NUMBER' },
       { name: 'status', label: 'Status' } // Not Started , In progress, Completed

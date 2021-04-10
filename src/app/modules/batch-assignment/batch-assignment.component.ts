@@ -13,6 +13,7 @@ import { Store } from '@ngrx/store';
 import { LoadAssignedBoardBatches } from 'src/app/store/assigned-board-batches/actions/assigned-board-batch.actions';
 import { PreviewAssignmentComponent } from './preview-assignment/preview-assignment.component';
 import { OutletAssignment } from 'src/app/store/outlet-assignment/reducers/outlet-assignment';
+import { sign } from 'crypto';
 
 @Component({
   selector: 'app-batch-assignment',
@@ -30,10 +31,11 @@ export class BatchAssignmentComponent implements OnInit, OnChanges {
   @Input() outlets: Outlet[];
   @Input() agencies: Agency[];
   @Input() outletsAssignments: OutletAssignment[];
+  assignedBoardBatchesMappedList: AssignedBoardBatch[] = [];
 
   tableConfigurations = {
     tableColumns: [
-      { name: 'campaign_reference_number', label: 'Campaign Reference' },
+      { name: 'campaign_name', label: 'Campaign' },
       { name: 'batch_reference_number', label: 'Batch Reference' },
       { name: 'board_height', label: 'Board Height', type:'NUMBER' },
       { name: 'board_width', label: 'Board Width', type:'NUMBER' },
@@ -58,7 +60,6 @@ export class BatchAssignmentComponent implements OnInit, OnChanges {
     empty_msg: 'No Assignments'
   };
 
-  // mappedBatchValues: any[] = [];
 
   constructor(public dialog: MatDialog, private assignedBoardBatchService: AssignedBoardBatchService, private store: Store<ApplicationState>) { }
 
@@ -66,6 +67,14 @@ export class BatchAssignmentComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes:any): void {
+    if (this.assignedBoardBatches.length>0){
+      this.assignedBoardBatchesMappedList = this.assignedBoardBatches.map((signboard)=>{
+        return {
+          ...signboard,
+          campaign_name: this.campaings.find(campaign=>campaign.reference === signboard.campaign_reference_number).campaign_name
+        };
+      });
+    }
 
   }
 
