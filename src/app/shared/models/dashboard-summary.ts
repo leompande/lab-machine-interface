@@ -1,7 +1,7 @@
 export interface DashboardSummary {
   totalBoards: number;
   loadTotalDashboards?:boolean;
-  plantedSignBoards: number;
+  assignedSignBoards: number;
   loadPlantedDashboards?:boolean;
   plantedVerifiedBoards: number;
   loadVerifiedDashboards?:boolean;

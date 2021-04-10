@@ -25,7 +25,7 @@ export class DashboardComponent implements OnInit {
 
   dashboardSummary: DashboardSummary = {
     totalBoards: 0,
-    plantedSignBoards: 0,
+    assignedSignBoards: 0,
     plantedVerifiedBoards: 0,
     notPlantedBoards: 0
   }
@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit {
   showStartEndDate: boolean = false;
   showMonthYear: boolean = false;
   showYears: boolean = false;
-  show5Years: boolean = false;
+  show5Years: boolean = true;
 
   years: { id: string, value: any, name: string }[];
   months: { id: string, value: any, name: string }[]
@@ -77,17 +77,17 @@ export class DashboardComponent implements OnInit {
       }
     });
 
-    this.store.select(signBoardbatchSelector.selectTotalSignBoards(this.user.agency)).subscribe(results => {
-      this.dashboardSummary.totalBoards = results;
-    });
+    // this.store.select(signBoardbatchSelector.selectTotalSignBoards(this.user.agency)).subscribe(results => {
+    //   this.dashboardSummary.totalBoards = results;
+    // });
 
-    this.store.select(signBoardbatchSelector.selectPlantedSignBoards(this.user.agency)).subscribe(results => {
-      this.dashboardSummary.plantedSignBoards = results;
-    });
+    // this.store.select(signBoardbatchSelector.selectPlantedSignBoards(this.user.agency)).subscribe(results => {
+    //   this.dashboardSummary.plantedSignBoards = results;
+    // });
 
-    this.store.select(signBoardbatchSelector.selectNotPlantedSignBoards(this.user.agency)).subscribe(results => {
-      this.dashboardSummary.notPlantedBoards = results;
-    });
+    // this.store.select(signBoardbatchSelector.selectNotPlantedSignBoards(this.user.agency)).subscribe(results => {
+    //   this.dashboardSummary.notPlantedBoards = results;
+    // });
     this.updateDashboardVisualization(this.currentPeriodType, null, null, null, null, this.currentFiveYearPeriod);
 
   }
@@ -101,6 +101,7 @@ export class DashboardComponent implements OnInit {
     this.showStartEndDate = false;
     this.showMonthYear = false;
     this.showYears = false;
+    this.show5Years = false;
     this.currentPeriodType = event.value;
     switch (event.value) {
       case 'Daily':
@@ -137,19 +138,18 @@ export class DashboardComponent implements OnInit {
 
   goNextYear() {
     this.years = get5Years('+', this.years[0], this.years[4]);
-    console.log("Data next year");
   }
 
   goPrevYear() {
     this.years = get5Years('-', this.years[4], this.years[0]);
-    console.log("Data prev year");
   }
 
 
   async updateDashboardVisualization(type?: string, startDate?: Moment, endDate?: Moment, month?: any, year?: any, fiveYearly?:any) {
     if (type == 'Daily' && startDate != null && endDate != null) {
-      const visualizationObject = await this.visualizationService.getDailyVisualizationObjects(startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'));
-      setTimeout(() => Highcharts.chart('summaryChartVisualization', visualizationObject), 400);
+      const visualizationObjects = await this.visualizationService.getDailyVisualizationObjects(startDate.format('YYYY-MM-DD'), endDate.format('YYYY-MM-DD'));
+      this.dashboardSummary =  visualizationObjects.table;
+      setTimeout(() => Highcharts.chart('summaryChartVisualization', visualizationObjects.chart), 400);
     }
 
 
@@ -158,13 +158,15 @@ export class DashboardComponent implements OnInit {
     }
 
     if (type == 'Yearly' && year != null) {
-      const visualizationObject = await this.visualizationService.getYealyVisualizationObjects(year);
-      setTimeout(() => Highcharts.chart('summaryChartVisualization', visualizationObject), 400);
+      const visualizationObjects = await this.visualizationService.getYealyVisualizationObjects(year);
+      this.dashboardSummary =  visualizationObjects.table;
+      setTimeout(() => Highcharts.chart('summaryChartVisualization', visualizationObjects.chart), 400);
     }
 
     if (type == '5Yearly' && fiveYearly != null) {
-      const visualizationObject = await this.visualizationService.get5YealyVisualizationObjects(fiveYearly);
-      setTimeout(() => Highcharts.chart('summaryChartVisualization', visualizationObject), 400);
+      const visualizationObjects = await this.visualizationService.get5YealyVisualizationObjects(fiveYearly);
+      this.dashboardSummary =  visualizationObjects.table;
+      setTimeout(() => Highcharts.chart('summaryChartVisualization', visualizationObjects.chart), 400);
     }
   }
 
@@ -176,80 +178,7 @@ export class DashboardComponent implements OnInit {
     this.updateDashboardVisualization(this.currentPeriodType, null, null, event.value, null);
   }
 
-
-
-
-
-
   ngOnInit() {
-    setTimeout(() => Highcharts.chart('summaryChartVisualization', {
-
-      title: {
-        text: ''
-      },
-
-      subtitle: {
-        text: ''
-      },
-
-      yAxis: {
-        title: {
-          text: 'Number of Sign Boards'
-        }
-      },
-
-      xAxis: {
-        accessibility: {
-          rangeDescription: 'Range: 2010 to 2017'
-        }
-      },
-
-      // legend: {
-      //     layout: 'horizontal',
-      //     align: 'bottom',
-      //     verticalAlign: 'bottom'
-      // },
-
-      plotOptions: {
-        series: {
-          label: {
-            connectorAllowed: false
-          },
-          pointStart: 2010
-        }
-      },
-
-      series: [{
-        name: 'Total number of signboards',
-        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-      }, {
-        name: 'Number of signboards planted',
-        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-      }, {
-        name: 'Number of signboards verified',
-        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-      }, {
-        name: 'Number of signboards not planted',
-        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-      }],
-
-      responsive: {
-        rules: [{
-          condition: {
-            maxWidth: 500
-          },
-          // chartOptions: {
-          //     legend: {
-          //         layout: 'horizontal',
-          //         // verticalAlign: 'bottom'
-          //     }
-          // }
-        }]
-      }
-
-    }), 400);
   }
-
-
 
 }

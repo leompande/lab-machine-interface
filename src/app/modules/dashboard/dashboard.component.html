@@ -31,7 +31,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div @fadeIn  class="col">
+      <div @fadeIn  class="col" *ngIf="show5Years">
         <mat-form-field appearance="outline">
           <mat-label>5 Years</mat-label>
           <mat-select (selectionChange)="change5YearPeriod($event)" [(value)]="currentFiveYearPeriod">
@@ -94,12 +94,12 @@
         </div>
         <div class="top-visualization-card-contents">
           <mat-chip-list class="pull-right">
-            <mat-chip style="font-size: larger;">{{dashboardSummary.totalBoards}}</mat-chip>
+            <mat-chip style="font-size: larger;">{{dashboardSummary.totalBoards|number}}</mat-chip>
           </mat-chip-list>
         </div>
       </div>
     </div>
-    <div @fadeIn class="top-visualization-card">Planted Sign Boards
+    <div @fadeIn class="top-visualization-card">Assigned Sign Boards
       <div class="top-card-container">
         <div class="top-visualization-card-avatar">
           <img src="/assets/icons/planted.png" style="width:60px">
@@ -107,7 +107,7 @@
         <div class="top-visualization-card-contents">
           <mat-chip-list class="pull-right">
             <mat-chip style="font-size: larger;background-color: rgb(202, 202, 6);color: black;">
-              {{dashboardSummary.plantedSignBoards}}</mat-chip>
+              {{dashboardSummary.assignedSignBoards|number}}</mat-chip>
           </mat-chip-list>
         </div>
       </div>
@@ -120,7 +120,7 @@
         <div class="top-visualization-card-contents">
           <mat-chip-list class="pull-right">
             <mat-chip style="font-size: larger;background-color: green;color:white;">
-              {{dashboardSummary.plantedVerifiedBoards}}</mat-chip>
+              {{dashboardSummary.plantedVerifiedBoards|number}}</mat-chip>
           </mat-chip-list>
         </div>
       </div>
@@ -132,7 +132,7 @@
         </div>
         <div class="top-visualization-card-contents">
           <mat-chip-list class="pull-right">
-            <mat-chip style="font-size: larger;background-color: red;color:white">{{dashboardSummary.notPlantedBoards}}
+            <mat-chip style="font-size: larger;background-color: red;color:white">{{dashboardSummary.notPlantedBoards|number}}
             </mat-chip>
           </mat-chip-list>
         </div>

@@ -66,7 +66,11 @@ return dimensions.dx.map((dxItem:string)=>{
 });
 }
 
-export function combineVisualizationObject(categories,series){
+export function getSum(series, name){
+return series.find(serie=>serie.name==name).data.reduce((a,b)=>a+b, 0)
+}
+
+export function combineChartVisualizationObject(categories,series){
   return {
 
     title: {

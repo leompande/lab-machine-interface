@@ -87,7 +87,19 @@ export class UserService {
           })
             .subscribe((data: any) => {
               localStorage.setItem('sb-web-token', token);
-              this.dataStoreService.getData('users', data.id).subscribe(userStoreData => {
+              this.dataStoreService.getData('users', data.id).subscribe((userStoreData:any) => {
+                console.log(userStoreData);
+                if (userStoreData.roleId == 'AGENCY_ADMIN'){
+                  localStorage.setItem('defaultRoute','signboardbaches');
+                }
+
+                if(userStoreData.roleId == 'ORGANISATION_ADMIN') {
+                  localStorage.setItem('defaultRoute','dashboard');
+                }
+
+                if (userStoreData.roleId == 'AGENCY_NORMAL_USER') {
+                  localStorage.setItem('defaultRoute','');
+                }
                 localStorage.setItem('sb-user', JSON.stringify(userStoreData));
                 localStorage.setItem('sb-user-id', data.id);
                 localStorage.setItem('sb-user-organisation-unit', this.getUserOu(data));
@@ -95,7 +107,7 @@ export class UserService {
                 observer.next('Login successful..');
                 observer.complete();
               });
-              
+
             },
               error1 => {
                 const errorMessage = error1.message;

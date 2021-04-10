@@ -21,10 +21,11 @@ export class AppComponent {
     private store: Store<ApplicationState>,
     public router: Router,
     private userService: UserService){
-      
+
       this.userService.subject.subscribe((response)=>{
+        console.log(response);
         if (response.isLogedIn == true){
-          localStorage.getItem('currentRoute') && localStorage.getItem('currentRoute') != '/login' ?this.router.navigateByUrl(localStorage.getItem('currentRoute')):this.router.navigateByUrl('dashboard');
+          localStorage.getItem('currentRoute') && localStorage.getItem('currentRoute') != '/login' ?this.router.navigateByUrl(localStorage.getItem('currentRoute')):this.router.navigateByUrl(localStorage.getItem('defaultRoute'));
         } else{
           this.router.navigateByUrl('/login');
         }
@@ -36,5 +37,5 @@ export class AppComponent {
         });
   }
 
-  
+
 }

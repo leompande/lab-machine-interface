@@ -20,7 +20,7 @@ const routes: Routes = [{
     {
       path: 'dashboard',
       component: DashboardComponent,
-      data: { state: 'dashboard', roles: 'SUPER_USER,ORGANISATION_ADMIN,AGENCY_ADMIN' }
+      data: { state: 'dashboard', roles: 'SUPER_USER,ORGANISATION_ADMIN' }
     },
     {
       path: 'campaigns',

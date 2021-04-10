@@ -3,7 +3,7 @@ export const menus: any = [
     name: 'Dashboard',
     url: 'dashboard',
     icon: 'dashboards.png',
-    access: 'SUPER_USER,ORGANISATION_ADMIN,AGENCY_ADMIN'
+    access: 'SUPER_USER,ORGANISATION_ADMIN'
   },
   {
     name: 'Campaigns',
