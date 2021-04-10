@@ -36,8 +36,8 @@
     <ng-container *ngFor="let column of tableConfigurations.tableColumns" matColumnDef="{{ column.name }}">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ column.label }}</th>
       <td mat-cell *matCellDef="let element"
-        [ngClass]="{'right-align':isNumber(element[column?.name]) && tableConfigurations.showBorder,'center-align':!tableConfigurations.showBorder && isNumber(element[column?.name])}">
-        {{element[column?.name] | formatNumber:column?.label }}</td>
+        [ngClass]="{'right-align':isNumber(column?.type) && tableConfigurations.showBorder,'center-align':!tableConfigurations.showBorder && isNumber(column?.type)}">
+        {{element[column?.name] | formatNumber:column?.type }}</td>
     </ng-container>
 
     <!--Action Icons-->

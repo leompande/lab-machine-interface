@@ -18,14 +18,14 @@ import { MatSort } from '@angular/material/sort';
 })
 export class MainDataTableComponent implements OnInit, OnChanges {
   routeAnimationsElements = ROUTE_ANIMATIONS_ELEMENTS;
-  
+
   /** Table Inputs */
   @Input()
   tableList = [];
   totalAmount!: number;
   @Input()
   tableConfigurations: {
-    tableColumns: Array<{ name: string; label: string }>;
+    tableColumns: Array<{ name: string; label: string, type?: string }>;
     identifierColumn?: string;
     tableCaption: string;
     allowPagination: boolean;
@@ -139,7 +139,7 @@ export class MainDataTableComponent implements OnInit, OnChanges {
     }
   }
   ngOnInit() {
- this.dataSource = new MatTableDataSource(this.tableList.sort(function(a:any, b:any) { 
+ this.dataSource = new MatTableDataSource(this.tableList.sort(function(a:any, b:any) {
  a = new Date(a.created);
  b = new Date(b.created);
  return a >b ? -1 : a < b ? 1 : 0;
@@ -170,7 +170,7 @@ export class MainDataTableComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    this.dataSource = new MatTableDataSource(this.tableList.sort(function(a:any, b:any) { 
+    this.dataSource = new MatTableDataSource(this.tableList.sort(function(a:any, b:any) {
  a = new Date(a.created);
  b = new Date(b.created);
  return a >b ? -1 : a < b ? 1 : 0;
@@ -184,7 +184,7 @@ export class MainDataTableComponent implements OnInit, OnChanges {
   }
 
   isNumber(item:any){
-    return !isNaN(item) || item === 'N/A';
+    return item == 'NUMBER';
   }
 
   viewItemDetails(itemId:any) {

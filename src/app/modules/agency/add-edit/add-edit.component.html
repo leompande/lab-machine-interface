@@ -1,6 +1,6 @@
 <div class="form-container">
     <div class="form-header">
-        <p ><img src="/assets/icons/agents.png" style="width:25px">&nbsp; 
+        <p ><img src="/assets/icons/agents.png" style="width:25px">&nbsp;
             <span *ngIf="!isUpdate">New Agency Form</span>
             <span *ngIf="isUpdate">Update Agency Form</span>
             </p>
@@ -19,13 +19,13 @@
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>TIN</mat-label>
-                        <input matInput placeholder="TIN" formControlName="tin">
+                        <input matInput placeholder="TIN" type="number" formControlName="tin">
                       </mat-form-field>
                 </div>
                 <div class="col">
                     <mat-form-field appearance="outline">
                         <mat-label>VRN</mat-label>
-                        <input matInput placeholder="VRN" formControlName="vrn">
+                        <input matInput placeholder="VRN" type="number" formControlName="vrn">
                       </mat-form-field>
                 </div>
             </div>

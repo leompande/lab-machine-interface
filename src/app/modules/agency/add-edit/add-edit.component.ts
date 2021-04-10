@@ -53,7 +53,10 @@ export class AddEditAgencyComponent implements OnInit {
 
   async save() {
     this.loading = true;
-    await this.agencyService.saveAgency({...this.form.value,organisationId:this.selectedItems[0].id,organisationName:this.selectedItems[0].name}, this.data.agencies).toPromise();
+    const formValue = {
+      ...this.form.value
+    };
+    await this.agencyService.saveAgency({...formValue,organisationId:this.selectedItems[0].id,organisationName:this.selectedItems[0].name}, this.data.agencies).toPromise();
     this.loading = false;
     this.cancel();
   }

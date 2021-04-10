@@ -25,8 +25,8 @@ export class AgencyComponent implements OnInit {
   tableConfigurations = {
     tableColumns: [
       { name: 'name', label: 'Name' },
-      { name: 'tin', label: 'TIN' },
-      { name: 'vrn', label: 'VRN' },
+      { name: 'tin', label: 'TIN', type:'TEXT' },
+      { name: 'vrn', label: 'VRN', type:'TEXT' },
       { name: 'address', label: 'Address' },
       { name: 'email', label: 'Email' },
       { name: 'phone', label: 'Phone' },
@@ -69,6 +69,10 @@ export class AgencyComponent implements OnInit {
     });
   }
 
+  printArrival(data:any){
+
+  }
+
   async deleteAgency(agencyId: any) {
     var agency = this.agencies.find(agent=>agent.id==agencyId);
     await this.agencyService.deleteAgency(agency, this.agencies.filter(agent=>agent.organisationId==agency?.organisationId)).toPromise();
@@ -80,7 +84,7 @@ export class AgencyComponent implements OnInit {
       maxHeight: '80%',
       disableClose: true,
       hasBackdrop: true, data: {
-        currentObject: null, 
+        currentObject: null,
         organisations: this.organisations,
         agencies: this.agencies
       },

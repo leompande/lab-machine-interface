@@ -7,8 +7,8 @@ import { DatePipe } from '@angular/common';
   name: 'formatNumber'
 })
 export class FormatNumberPipe implements PipeTransform {
-  transform(value, label: string = '') {
-   if (value && !checkForNonNumbers(label)) {
+  transform(value, type: string = '') {
+   if (value && type === 'NUMBER') {
       if (isNaN(value)) {
         if (isDate(value)) {
           return new DatePipe('en-US').transform(value, 'dd/MM/yyyy');

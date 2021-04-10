@@ -53,7 +53,7 @@ export class AddEditOutletComponent implements OnInit {
       ownerName!: new FormControl(this.isUpdate ? data.currentObject.ownerName : '')
     });
     if (data.currentObject){
-      this.onOrgunitSelected(data.currentObject.ward);
+      this.onOrgunitSelected(data.currentObject.wardId);
     }
   }
 
