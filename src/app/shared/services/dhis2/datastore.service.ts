@@ -36,6 +36,7 @@ export class DatastoreService {
    * @param data
    */
   saveData(path: string, key: string, data: any) {
+    console.log("Outlet");
     return new Observable(observer => {
       // try to update the dataStore first
       this.http.put(`dataStore/${path}/${key}`, data).subscribe(

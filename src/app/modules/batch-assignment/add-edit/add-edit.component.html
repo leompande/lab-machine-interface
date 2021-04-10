@@ -1,7 +1,7 @@
 <div class="form-container">
   <div class="form-header">
     <p><img src="/assets/icons/batch-assignment.png" style="width:25px">&nbsp;
-      <span *ngIf="!isUpdate">Creat Batch Assignment</span>
+      <span *ngIf="!isUpdate">Batch Assignment</span>
       <span *ngIf="isUpdate">Update Batch Assignment</span>
     </p>
   </div>
@@ -35,7 +35,7 @@
       <ng-container *ngIf="selectedBatch && selectedBatch?.assigned_quantity != selectedBatch?.signboard_quantity">
         <div @fadeIn class="row">
           <div class="col">
-            <label>District</label>
+            <label>Outlet District</label>
             <tulonge-org-unit-filter-closed #ouSelector [startingOus]="startingOus"
               [orgunit_tree_config]="orgunit_tree_config" (orgUnitUpdate)="onOrgunitSelected($event)">
             </tulonge-org-unit-filter-closed>
@@ -64,6 +64,15 @@
               <mat-label>Total Batch Quantity</mat-label>
               <input matInput type="number" readonly="readonly" placeholder="Total Quantity"
                 formControlName="signboard_quantity">
+            </mat-form-field>
+          </div>
+        </div>
+        <div @fadeIn class="row" *ngIf="selectedBatch && showOrgUnitSelectionError == false && organisation_unit_id">
+          <div class="col">
+            <mat-form-field appearance="outline">
+              <mat-label>Assigned to date</mat-label>
+              <input matInput type="number" readonly="readonly" placeholder="Assigned to Date"
+                value="{{selectedBatch.assigned_quantity}}">
             </mat-form-field>
           </div>
           <div class="col">

@@ -43,6 +43,7 @@
                     <tulonge-org-unit-filter-closed #ouSelector [startingOus]="startingOus"
                         [orgunit_tree_config]="orgunit_tree_config" (orgUnitUpdate)="onOrgunitSelected($event)">
                     </tulonge-org-unit-filter-closed>
+                    <app-loader *ngIf="orgUnitLoading" [message]="'Loading ward information'"></app-loader>
                 </div>
 
             </div>

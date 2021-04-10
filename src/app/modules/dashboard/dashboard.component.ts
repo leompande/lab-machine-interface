@@ -83,7 +83,7 @@ export class DashboardComponent implements OnInit {
     });
 
 
-}
+  }
 
 
   changePeriodType(event: any) {
@@ -103,16 +103,17 @@ export class DashboardComponent implements OnInit {
       default:
         break;
     }
+    this.updateDashboardVisualization(event.value, null, null, event.value, null);
   }
 
   changeStartDate(event: any) {
     this.minDateEndDate = this.startDate;
-    this.updateDashboardVisualization(null, this.startDate,this.endDate,null, null);
+    this.updateDashboardVisualization(null, this.startDate, this.endDate, null, null);
   }
 
   changeEndDate(event: any) {
     this.maxDateStartDate = this.endDate;
-    this.updateDashboardVisualization(null, this.startDate,this.endDate,null, null);
+    this.updateDashboardVisualization(null, this.startDate, this.endDate, null, null);
   }
 
   goNextYear() {
@@ -126,14 +127,30 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  updateDashboardVisualization(type?: string, startDate?: Moment, endDate?: any, month?:any, year?: any){
-    if ( startDate != null ) {
+  updateDashboardVisualization(type?: string, startDate?: Moment, endDate?: Moment, month?: any, year?: any) {
+    if (startDate != null) {
       console.log(startDate.calendar());
     }
 
-    if ( endDate == null ){
-      console.log(endDate);
+    if (endDate != null) {
+      console.log(endDate.calendar());
     }
+
+    if (month != null) {
+      console.log(month);
+    }
+
+    if (year != null) {
+      console.log(year);
+    }
+  }
+
+  changeYear(event) {
+    this.updateDashboardVisualization(null, null, null, null, event.value);
+  }
+
+  changeMonth(event) {
+    this.updateDashboardVisualization(null, null, null, event.value, null);
   }
 
 
@@ -145,23 +162,23 @@ export class DashboardComponent implements OnInit {
     setTimeout(() => Highcharts.chart('summaryChartVisualization', {
 
       title: {
-          text: ''
+        text: ''
       },
 
       subtitle: {
-          text: ''
+        text: ''
       },
 
       yAxis: {
-          title: {
-              text: 'Number of Sign Boards'
-          }
+        title: {
+          text: 'Number of Sign Boards'
+        }
       },
 
       xAxis: {
-          accessibility: {
-              rangeDescription: 'Range: 2010 to 2017'
-          }
+        accessibility: {
+          rangeDescription: 'Range: 2010 to 2017'
+        }
       },
 
       // legend: {
@@ -171,43 +188,43 @@ export class DashboardComponent implements OnInit {
       // },
 
       plotOptions: {
-          series: {
-              label: {
-                  connectorAllowed: false
-              },
-              pointStart: 2010
-          }
+        series: {
+          label: {
+            connectorAllowed: false
+          },
+          pointStart: 2010
+        }
       },
 
       series: [{
-          name: 'Total number of signboards',
-          data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
+        name: 'Total number of signboards',
+        data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
       }, {
-          name: 'Number of signboards planted',
-          data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
+        name: 'Number of signboards planted',
+        data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
       }, {
-          name: 'Number of signboards verified',
-          data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
+        name: 'Number of signboards verified',
+        data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
       }, {
-          name: 'Number of signboards not planted',
-          data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
+        name: 'Number of signboards not planted',
+        data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
       }],
 
       responsive: {
-          rules: [{
-              condition: {
-                  maxWidth: 500
-              },
-              // chartOptions: {
-              //     legend: {
-              //         layout: 'horizontal',
-              //         // verticalAlign: 'bottom'
-              //     }
-              // }
-          }]
+        rules: [{
+          condition: {
+            maxWidth: 500
+          },
+          // chartOptions: {
+          //     legend: {
+          //         layout: 'horizontal',
+          //         // verticalAlign: 'bottom'
+          //     }
+          // }
+        }]
       }
 
-  }), 400);
+    }), 400);
   }
 
 

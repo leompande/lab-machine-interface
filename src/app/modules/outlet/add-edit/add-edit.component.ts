@@ -4,6 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { makeId } from 'src/app/shared/helpers';
 import { OutletService } from 'src/app/shared/services/model-services/outlet.service';
 import { HttpClient } from '@angular/common/http';
+import { HttpClientService } from 'src/app/shared/services/dhis2/http-client.service';
 
 @Component({
   selector: 'app-add-edit',
@@ -34,7 +35,8 @@ export class AddEditOutletComponent implements OnInit {
     region: string
   };
   startingOus: any;
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { currentObject: any }, private outletService: OutletService, private http: HttpClient) {
+  orgUnitLoading: boolean = false;
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { currentObject: any }, private outletService: OutletService, private http: HttpClientService) {
     this.isUpdate = data.currentObject != null;
     this.startingOus = data.currentObject?[data.currentObject.wardId]:null;
     this.form = new FormGroup({
@@ -50,6 +52,9 @@ export class AddEditOutletComponent implements OnInit {
       ownership!: new FormControl(this.isUpdate ? data.currentObject.ownership : ''),
       ownerName!: new FormControl(this.isUpdate ? data.currentObject.ownerName : '')
     });
+    if (data.currentObject){
+      this.onOrgunitSelected(data.currentObject.ward);
+    }
   }
 
   ngOnInit(): void {
@@ -57,29 +62,40 @@ export class AddEditOutletComponent implements OnInit {
 
   async onOrgunitSelected(event: any) {
     if (event.value) {
-      const data = await this.http.get("/api/organisationUnits/" + event.value + ".json?fields=id,name,parent[id,name,parent[id,name]]").toPromise();
+      this.orgUnitLoading = true;
+      const data = await this.http.get("organisationUnits/" + event.value + ".json?fields=id,name,parent[id,name,parent[id,name]]").toPromise();
       this.orgUnitData = {
         wardId: data['id'],
         ward: data ? data['name'] : "",
         district: data ? data['parent'] ? data['parent']['name'] : "" : "",
         region: data ? data['parent'] ? data['parent']['parent'] ? data['parent']['parent']['name'] : "" : "" : "",
       };
+      this.orgUnitLoading = false;
     }
 
   }
 
   async save() {
+    try{
+
     this.loading = true;
-    const formValue = {
-      ...this.form.value,
-      wardId: this.orgUnitData.wardId,
-      ward:this.orgUnitData.ward,
-      district: this.orgUnitData.district,
-      region: this.orgUnitData.region
-    };
-    await this.outletService.saveOutlet(formValue).toPromise();
-    this.loading = false;
-    this.cancel();
+      const formValue = {
+        ...this.form.value,
+        wardId: this.orgUnitData.wardId,
+        ward:this.orgUnitData.ward,
+        district: this.orgUnitData.district,
+        region: this.orgUnitData.region
+      };
+      console.log(formValue);
+      await this.outletService.saveOutlet(formValue).toPromise();
+      this.loading = false;
+      this.cancel();
+    } catch(e){
+      console.log(this.orgUnitData);
+      console.log("Am fucked here");
+      console.log(e);
+    }
+
   }
 
   cancel() {

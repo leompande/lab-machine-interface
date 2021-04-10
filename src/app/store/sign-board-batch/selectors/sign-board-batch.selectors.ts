@@ -31,7 +31,6 @@ export const getStatus = (agencies: Agency[]) => createSelector(selectAll, (batc
     statustemplate.number_of_boards_planted = getPlantedSignBoards(agencyBatches);
     const value = +((statustemplate.number_of_boards_planted / statustemplate.number_boards_assigned)*100).toFixed(0);
     statustemplate.percentage_planted = isNaN(value)?0:value;
-    console.log(statustemplate);
     return statustemplate;
   });
 

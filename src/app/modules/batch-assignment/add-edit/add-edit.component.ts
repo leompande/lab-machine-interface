@@ -163,11 +163,11 @@ export class AddEditBatchAssignmentComponent implements OnInit {
       this.campaignIsSelected = true;
       const selectedCampaign: Campaign = this.campaings.filter(campaign => campaign.id == event[0].id) ? this.campaings.filter(campaign => campaign.id == event[0].id)[0] : null;
       const selectedBatchItems = this.batches.filter(batch => batch.campaign_reference_number == selectedCampaign.reference);
-      this.availableBatches = selectedBatchItems.map(campaign => {
+      this.availableBatches = selectedBatchItems.map(batch => {
         return {
-          id: campaign.id,
-          name: campaign.batch_reference_number,
-          value: campaign.id,
+          id: batch.id,
+          name: batch.batch_reference_number + " ("+batch.board_height+"x"+batch.board_width+")",
+          value: batch.id,
           chosed: false
         }
       });
@@ -178,10 +178,8 @@ export class AddEditBatchAssignmentComponent implements OnInit {
   }
 
   selecteBatchChange(event: any) {
-    const availableBatch = this.batches.filter(batch => batch.id == event[0].id);
+    const availableBatch = this.batches.filter((batch:any) => batch.id == event[0].id);
     const batch: SignBoardBatch = availableBatch[0];
-    console.log("Selected Batch");
-    console.log(batch);
     this.selectedBatch = batch;
     this.selectedBatches.push(batch);
     this.form.controls['board_width'].setValue(batch.board_width);
@@ -278,16 +276,25 @@ export class AddEditBatchAssignmentComponent implements OnInit {
         status: "PENDING",
       }];
     });
-    const response = await this.assignedBoardBatchService.saveUpdateAssignedBoardBatch(false, formValue, '', '').toPromise();
+
+    try{
+      this.selectedBatch = {
+        ...this.selectedBatch,
+        assigned_quantity: this.selectedBatch.assigned_quantity != null ? (+this.selectedBatch.assigned_quantity) + formValue.assigned_quantity : formValue.assigned_quantity
+      }
+    } catch(e){
+
+    }
+
+
+    const response = await this.assignedBoardBatchService.saveUpdateAssignedBoardBatch(false, {...formValue,signboard_quantity: this.selectedBatch.assigned_quantity}, '', '').toPromise();
     if (response['httpStatus'] == 'OK') {
       try {
 
-        this.selectedBatch = {
-          ...this.selectedBatch,
-          assigned_quantity: this.selectedBatch.assigned_quantity != null ? (+this.selectedBatch.assigned_quantity) + formValue.assigned_quantity : formValue.assigned_quantity
-        }
         const updateReponse = await this.batchService.saveUpdateSignBoardBatch(true, this.selectedBatch, this.selectedBatch.trackedEntityInstance, null).toPromise();
         const outletAssignResponse = await this.outAssignmentService.saveOutletAssignments(assignemnts).toPromise();
+        console.log(updateReponse);
+        console.log(outletAssignResponse);
       } catch (e) {
         console.log(e);
       }
