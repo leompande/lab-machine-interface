@@ -7,7 +7,7 @@ import { DoneLoagingUsers, UpsertUser, LoadUsers } from 'src/app/store/user/acti
 import { UpsertUserRole, DoneLoagingUserRoles } from 'src/app/store/user-role/actions/user-role.actions';
 import { Tables } from '../../tables.database';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject, BehaviorSubject, forkJoin } from 'rxjs';
+import { Observable, BehaviorSubject, forkJoin } from 'rxjs';
 import { HttpClientService } from '../dhis2/http-client.service';
 import { ManifestService } from '../dhis2/manifest.service';
 import { first } from 'rxjs/operators';
@@ -87,18 +87,17 @@ export class UserService {
           })
             .subscribe((data: any) => {
               localStorage.setItem('sb-web-token', token);
-              this.dataStoreService.getData('users', data.id).subscribe((userStoreData:any) => {
-                console.log(userStoreData);
-                if (userStoreData.roleId == 'AGENCY_ADMIN'){
-                  localStorage.setItem('defaultRoute','signboardbaches');
+              this.dataStoreService.getData('users', data.id).subscribe((userStoreData: any) => {
+                if (userStoreData.roleId == 'AGENCY_ADMIN') {
+                  localStorage.setItem('defaultRoute', 'signboardbaches');
                 }
 
-                if(userStoreData.roleId == 'ORGANISATION_ADMIN') {
-                  localStorage.setItem('defaultRoute','dashboard');
+                if (userStoreData.roleId == 'ORGANISATION_ADMIN') {
+                  localStorage.setItem('defaultRoute', 'dashboard');
                 }
 
                 if (userStoreData.roleId == 'AGENCY_NORMAL_USER') {
-                  localStorage.setItem('defaultRoute','');
+                  localStorage.setItem('defaultRoute', '');
                 }
                 localStorage.setItem('sb-user', JSON.stringify(userStoreData));
                 localStorage.setItem('sb-user-id', data.id);

@@ -13,7 +13,6 @@ import { Store } from '@ngrx/store';
 import { LoadAssignedBoardBatches } from 'src/app/store/assigned-board-batches/actions/assigned-board-batch.actions';
 import { PreviewAssignmentComponent } from './preview-assignment/preview-assignment.component';
 import { OutletAssignment } from 'src/app/store/outlet-assignment/reducers/outlet-assignment';
-import { sign } from 'crypto';
 
 @Component({
   selector: 'app-batch-assignment',

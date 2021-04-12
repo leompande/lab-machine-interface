@@ -9,6 +9,7 @@ import * as campaignSelector from '../../../store/campaign/selectors/campaign.se
 import { map } from 'rxjs/operators';
 import { SignBoardBatch } from '../../../store/sign-board-batch/reducers/sign-board-batch';
 import { Outlet } from '../../../store/outlet/reducers/outlet';
+import { AssignedBoardBatch } from 'src/app/store/assigned-board-batches/reducers/assigned-board-batch';
 
 @Component({
   selector: 'app-sign-board-batch-container',
@@ -16,6 +17,8 @@ import { Outlet } from '../../../store/outlet/reducers/outlet';
   styleUrls: ['./sign-board-batch-container.component.scss']
 })
 export class SignBoardBatchContainerComponent implements OnInit {
+  assignedBatches$: Observable<AssignedBoardBatch[]>;
+  assignedBatchEntities$: Observable<{ [id: string]: AssignedBoardBatch }>;
   signBoardBatches$: Observable<SignBoardBatch[]>;
   signBoardBatchEntities$: Observable<{ [id: string]: SignBoardBatch }>;
   outlets$: Observable<Outlet[]>;
