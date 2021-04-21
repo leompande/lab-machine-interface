@@ -55,6 +55,7 @@ import { BatchAssignmentComponent } from './modules/batch-assignment/batch-assig
 import { AddEditBatchAssignmentComponent } from './modules/batch-assignment/add-edit/add-edit.component';
 import { OutletValueAssignmentComponent } from './shared/components/outlet-value-assignment/outlet-value-assignment.component';
 import { PreviewAssignmentComponent } from './modules/batch-assignment/preview-assignment/preview-assignment.component';
+import { GoogleMapsModule } from '@angular/google-maps';
 
 export const MY_FORMATS = {
   parse: {
@@ -119,7 +120,8 @@ export const MY_FORMATS = {
     AngularFireAuthModule,
     NgbModule,
     EffectsModule.forRoot(effects),
-    NgxShimmerLoadingModule
+    NgxShimmerLoadingModule,
+    GoogleMapsModule
   ],
   exports: [
     SharedModule

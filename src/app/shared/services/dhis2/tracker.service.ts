@@ -381,7 +381,6 @@ export class TrackerService {
   ) {
     try {
       const metadata = TrackedEntityTypes[key];
-      console.log(metadata);
       const date = eventDate || new Date().toISOString().substring(0, 10);
       const returnItem = {
         trackedEntityType: metadata.id,

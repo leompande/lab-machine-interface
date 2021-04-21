@@ -21,7 +21,6 @@ export class OutletAssignmentService {
       this.trackerService.getTrackedEntityInstance(
         "OutletAssignmentMetadata",
         "zs9X8YYBOnK", "DESCENDANTS").subscribe((response) => {
-          console.log(response);
           observer.next(response);
           observer.complete();
         }, (error) => {

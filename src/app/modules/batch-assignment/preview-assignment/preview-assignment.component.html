@@ -35,6 +35,10 @@
             <td> {{data.currentObject.signboard_quantity}} </td>
           </tr>
           <tr>
+            <td style="font-weight: bold;">Planted Quantity:</td>
+            <td> {{data.currentObject.assigned_quantity}} </td>
+          </tr>
+          <tr>
             <td style="font-weight: bold;">Expected Planting Dates:</td>
             <td> {{data.currentObject.start_date}} to {{data.currentObject.end_date}}</td>
           </tr>
@@ -42,48 +46,71 @@
       </table>
       <br />
       <p style="font-weight: bold;">Outlet Distributions</p>
-      <ng-container *ngFor="let outletAssignemt of outletAssignemtList;let i=index">
-        <div class="row">
-          <div class="col">{{i+1}}</div>
-          <div class="col-11">
-            <table class="table table-bordered">
 
-              <tbody>
-                <tr>
-                  <td style="font-weight: bold;">Oulet Name:</td>
-                  <td>
-                    {{outletAssignemt?.outlet?.name}} - Owner: {{outletAssignemt?.outlet?.ownerName}}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Contacts:</td>
-                  <td>Phone: {{outletAssignemt?.outlet?.phone}}, Box: {{outletAssignemt?.outlet?.box}}, Email:
-                    {{outletAssignemt?.outlet?.email}}</td>
-                </tr>
-                <tr>
-                  <td>Location:</td>
-                  <td>Region: {{outletAssignemt?.outlet?.region}}, District: {{outletAssignemt?.outlet?.district}},
-                    Ward: {{outletAssignemt?.outlet?.ward}}&nbsp;&nbsp;
-                    <span class="marker-button-area">
-                      <i class="fa fa-map-marker"></i>
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td style="font-weight: bold;">Assigned Quantity:</td>
-                  <td>{{outletAssignemt?.assigned_quantity}}</td>
-                </tr>
-                <tr>
-                  <td style="font-weight: bold;">Planted Quantity:</td>
-                  <td> {{outletAssignemt?.planted_quantity}}</td>
-                </tr>
-              </tbody>
-            </table>
+      <ul class="nav nav-pills nav-fill">
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="{'active':showMap}" style="cursor: pointer;" aria-current="page"
+            (click)="viewMap()">Map</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="{'active':showTable}" style="cursor: pointer;" (click)="viewTable()">Table</a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div @fadeIn class="tab-pane fade show active" *ngIf="showMap" role="tabpanel" aria-labelledby="home-tab">
+          <br/>
+          <div class="map-container">
+            <google-map width="100%" [options]="mapOptions">
+              <map-marker *ngFor="let marker of markers" [position]="marker.position" [label]="marker.label"></map-marker>
+            </google-map>
           </div>
+
         </div>
+        <div @fadeIn class="tab-pane fade show active" *ngIf="showTable" role="tabpanel" aria-labelledby="profile-tab">
+          <br/>
+          <ng-container *ngFor="let outletAssignemt of outletAssignemtList;let i=index">
+            <div class="row">
+              <div class="col">{{i+1}}</div>
+              <div class="col-11">
+                <table class="table table-bordered">
+                  <tbody>
+                    <tr>
+                      <td style="font-weight: bold;">Oulet Name:</td>
+                      <td>
+                        {{outletAssignemt?.outlet?.name}} - Owner: {{outletAssignemt?.outlet?.ownerName}}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Contacts:</td>
+                      <td>Phone: {{outletAssignemt?.outlet?.phone}}, Box: {{outletAssignemt?.outlet?.box}}, Email:
+                        {{outletAssignemt?.outlet?.email}}</td>
+                    </tr>
+                    <tr>
+                      <td>Location:</td>
+                      <td>Region: {{outletAssignemt?.outlet?.region}}, District: {{outletAssignemt?.outlet?.district}},
+                        Ward: {{outletAssignemt?.outlet?.ward}}&nbsp;&nbsp;
+                        <span class="marker-button-area">
+                          <i class="fa fa-map-marker"></i>
+                        </span>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: bold;">Assigned Quantity:</td>
+                      <td>{{outletAssignemt?.assigned_quantity}}</td>
+                    </tr>
+                    <tr>
+                      <td style="font-weight: bold;">Planted Quantity:</td>
+                      <td> {{outletAssignemt?.planted_quantity}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-      </ng-container>
+          </ng-container>
 
+        </div>
+      </div>
     </div>
   </div>
   <br />

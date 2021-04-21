@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormControl } from '@angular/forms';
 import { makeId } from 'src/app/shared/helpers';
@@ -19,6 +19,7 @@ import { LoadAssignedBoardBatches } from 'src/app/store/assigned-board-batches/a
 import { OutletAssignmentService } from 'src/app/shared/services/model-services/outletassignment.service';
 import { OutletAssignment } from 'src/app/store/outlet-assignment/reducers/outlet-assignment';
 import { LoadOutletAssignments } from 'src/app/store/outlet-assignment/actions/outlet-assignment.actions';
+import { GoogleMap } from '@angular/google-maps';
 
 @Component({
   selector: 'app-preview',
@@ -106,6 +107,18 @@ export class PreviewAssignmentComponent implements OnInit {
   assignedOutlets: { outlet: string, value: string }[] = [];
   campaign_name: string;
   outletAssignemtList: any[];
+  showMap: boolean = true;
+  showTable: boolean = false;
+
+  @ViewChild(GoogleMap) map!: GoogleMap;
+
+  mapOptions: google.maps.MapOptions = {
+    center: { lat: -6.369008, lng: 34.8888 },
+    zoom: 6
+  }
+  markers = [];
+
+
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {
@@ -121,61 +134,56 @@ export class PreviewAssignmentComponent implements OnInit {
     private http: HttpClientService,
     private store: Store<ApplicationState>,
     private outAssignmentService: OutletAssignmentService) {
-    // console.log(data.currentObject);
-    // console.log(data.batches);
-    // console.log(data.outlets);
-    console.log(data.outletsAssignments);
-    this.campaign_name = data.campaigns.find(campaing=>{
+
+    this.campaign_name = data.campaigns.find(campaing => {
       return campaing.reference === data.currentObject.campaign_reference_number
     }).campaign_name;
-    this.outletAssignemtList = data.outletsAssignments.filter(assignment=>{
-      return assignment.batch_reference_number == data.currentObject.batch_reference_number
-      // && assignment.organisation_unit_id == data.currentObject.wardId
-      ;
-    }).map(assignment=>{
+    this.outletAssignemtList = data.outletsAssignments.filter(assignment => {
+      return assignment.batch_reference_number == data.currentObject.batch_reference_number;
+    }).map(assignment => {
+      if (assignment.latitude != null && assignment.longitude != null) {
+        this.markers = [
+          ...this.markers,
+          {
+            position: { lat: +assignment.latitude, lng: +assignment.longitude },
+            label:data.outlets.find(outlet => outlet.id == assignment.outlet).name
+          }
+        ];
+      }
+
       return {
         ...assignment,
-        outlet: data.outlets.find(outlet=>outlet.id==assignment.outlet)
+        outlet: data.outlets.find(outlet => outlet.id == assignment.outlet)
       }
     });
-
-    // this.isUpdate = data.currentObject != null;
-    // this.startingOus = data.currentObject ? [data.currentObject.wardId] : null;
-    // this.campaings = data.campaigns;
-    // this.batches = data.batches;
-    // this.outlets = data.outlets;
-    // this.agencies = data.agencies;
-    // this.availableCampaigns = data.campaigns.map(campaign => {
-    //   return {
-    //     id: campaign.id,
-    //     name: campaign.campaign_name,
-    //     value: campaign.id,
-    //     chosed: false
-    //   }
-    // });
-
-    // this.availableAgencies = data.agencies.map(agency => {
-    //   return {
-    //     id: agency.id,
-    //     name: agency.name,
-    //     value: agency.id,
-    //     chosed: false
-    //   }
-    // });
-
-    // this.form = new FormGroup({
-    //   id: new FormControl(this.isUpdate ? data.currentObject.id : makeId()),
-    //   campaign_reference_number: new FormControl(this.isUpdate ? data.currentObject.campaign_reference_number : ''),
-    //   batch_reference_number: new FormControl(this.isUpdate ? data.currentObject.batch_reference_number : ''),
-    //   board_height: new FormControl(this.isUpdate ? data.currentObject.board_height : ''),
-    //   board_width!: new FormControl(this.isUpdate ? data.currentObject.board_width : ''),
-    //   signboard_quantity!: new FormControl(this.isUpdate ? data.currentObject.signboard_quantity : ''),
-    //   assigned_quantity!: new FormControl(this.isUpdate ? data.currentObject.assigned_quantity : ''),
-    //   agency_name!: new FormControl(this.isUpdate ? data.currentObject.agency_name : '')
-    // });
   }
 
   ngOnInit(): void {
+  }
+
+  ngAfterViewInit() {
+
+    this.map.fitBounds(this.getBounds(this.markers));
+  }
+
+  getBounds(markers) {
+    let north;
+    let south;
+    let east;
+    let west;
+
+    for (const marker of markers) {
+      // set the coordinates to marker's lat and lng on the first run.
+      // if the coordinates exist, get max or min depends on the coordinates.
+      north = north !== undefined ? Math.max(north, marker.position.lat) : marker.position.lat;
+      south = south !== undefined ? Math.min(south, marker.position.lat) : marker.position.lat;
+      east = east !== undefined ? Math.max(east, marker.position.lng) : marker.position.lng;
+      west = west !== undefined ? Math.min(west, marker.position.lng) : marker.position.lng;
+    };
+
+    const bounds = { north, south, east, west };
+
+    return bounds;
   }
 
   selectCampaignChange(event: any) {
@@ -226,6 +234,16 @@ export class PreviewAssignmentComponent implements OnInit {
 
   assignmentError(event) {
     this.hasAssignmentError = event;
+  }
+
+  viewTable() {
+    this.showMap = false;
+    this.showTable = true;
+  }
+
+  viewMap() {
+    this.showMap = true;
+    this.showTable = false;
   }
 
   async onOrgunitSelected(event: any) {
