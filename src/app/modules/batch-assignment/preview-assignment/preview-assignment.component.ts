@@ -146,7 +146,7 @@ export class PreviewAssignmentComponent implements OnInit {
           ...this.markers,
           {
             position: { lat: +assignment.latitude, lng: +assignment.longitude },
-            label:data.outlets.find(outlet => outlet.id == assignment.outlet).name
+            label: data.outlets.find(outlet => outlet.id == assignment.outlet).name
           }
         ];
       }
@@ -332,8 +332,6 @@ export class PreviewAssignmentComponent implements OnInit {
 
         const updateReponse = await this.batchService.saveUpdateSignBoardBatch(true, this.selectedBatch, this.selectedBatch.trackedEntityInstance, null).toPromise();
         const outletAssignResponse = await this.outAssignmentService.saveOutletAssignments(assignemnts).toPromise();
-        console.log(updateReponse);
-        console.log(outletAssignResponse);
       } catch (e) {
         console.log(e);
       }
