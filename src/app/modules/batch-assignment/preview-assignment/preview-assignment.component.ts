@@ -114,6 +114,7 @@ export class PreviewAssignmentComponent implements OnInit {
 
   mapOptions: google.maps.MapOptions = {
     center: { lat: -6.369008, lng: 34.8888 },
+    scrollwheel: false,
     zoom: 6
   }
   markers = [];
@@ -142,11 +143,12 @@ export class PreviewAssignmentComponent implements OnInit {
       return assignment.batch_reference_number == data.currentObject.batch_reference_number;
     }).map(assignment => {
       if (assignment.latitude != null && assignment.longitude != null) {
+        let outlet = data.outlets.find(outlet => outlet.id == assignment.outlet);
         this.markers = [
           ...this.markers,
           {
             position: { lat: +assignment.latitude, lng: +assignment.longitude },
-            label: data.outlets.find(outlet => outlet.id == assignment.outlet).name
+            label: outlet ? outlet.name : ''
           }
         ];
       }

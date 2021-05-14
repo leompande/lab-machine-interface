@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { SignBoardBatch } from 'src/app/store/sign-board-batch/reducers/sign-board-batch';
 import { Outlet } from 'src/app/store/outlet/reducers/outlet';
+import { AgencyBatchMoreComponent } from './agency-batch-more/agency-batch-more.component';
+import { SignBoardBatchService } from 'src/app/shared/services/model-services/signboardbatch.service';
 
 @Component({
   selector: 'app-sign-board-batch',
@@ -39,7 +41,7 @@ export class SignBoardBatchComponent implements OnInit {
     empty_msg: 'No Sign Boards'
   };
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, private sigBoardBatchItemService:SignBoardBatchService) { }
 
   ngOnInit(): void {
   }
@@ -47,23 +49,23 @@ export class SignBoardBatchComponent implements OnInit {
   rowPreview(rowId: string) {
     const batch: SignBoardBatch = this.signBoardBatches.find((item: any) => item.id == rowId);
     this.loading = true;
-    // this.sigBoardBatchItemService.listSignBoardBatchItems(batch.organisation_unit_id).subscribe((boardItems) => {
-    //   this.loading = false;
-    //   const dialogRef = this.dialog.open(AgencyBatchMoreComponent, {
-    //     width: '95%',
-    //     maxHeight: '700px',
-    //     disableClose: true,
-    //     hasBackdrop: true, data: {
-    //       boardItems: boardItems.filter((boardItem: SignBoardBatchItem) => boardItem.batch_reference_number == batch.batch_reference_number),
-    //       batch: batch,
-    //       outlets: this.outlets
-    //     },
-    //     closeOnNavigation: true
-    //   });
-    //   dialogRef.afterClosed().subscribe((result: any) => {
-    //   });
-    // }, (error: any) => {
-    // });
+    this.sigBoardBatchItemService.listSignBoardBatches().subscribe((boardItems) => {
+      this.loading = false;
+      const dialogRef = this.dialog.open(AgencyBatchMoreComponent, {
+        width: '95%',
+        maxHeight: '700px',
+        disableClose: true,
+        hasBackdrop: true, data: {
+          // boardItems: boardItems.filter((boardItem: SignBoardBatchItem) => boardItem.batch_reference_number == batch.batch_reference_number),
+          batch: batch,
+          outlets: this.outlets
+        },
+        closeOnNavigation: true
+      });
+      dialogRef.afterClosed().subscribe((result: any) => {
+      });
+    }, (error: any) => {
+    });
   }
 
   editNewlyAssigned(signBoardId: string) {
