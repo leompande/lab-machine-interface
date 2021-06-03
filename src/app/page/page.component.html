@@ -1,4 +1,4 @@
-<nav class="main-nav mat-elevation-z6">
+<nav class="main-nav mat-elevation-z2">
   <mat-toolbar class="toolbar no-print" color="primary">
     <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
       *ngIf="isHandset$ | async">
@@ -9,28 +9,15 @@
       *ngIf="!(isHandset$ | async)">
       <mat-icon class="secondary-color" aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
-    <!-- <span class="secondary-color">
-        <img src="assets/images/logo1.png" style="height: 44px; width: 130px; margin-left: 10px">
-      </span> -->
     <span
       style="display: inline-block; margin-top: 0px; margin-left: 17px; font-size: 33px;font-family: nunitoSemiBold;">
-      SBMS&nbsp; - &nbsp;
-    </span> <span *ngIf="!user|| user.organisation==''"> Sign Boards Management System</span> <span
-      *ngIf="user&& user.organisation!=''">{{user.organisation}}</span>&nbsp;&nbsp;<span
-      *ngIf="user&& user.organisation!='' && user.agency!=''" style="font-size: 14px;">{{user.agency}}</span>
+      EMR - Bio Equipments Integration Interface
+    </span>
 
     <!-- This fills the remaining space of the current row -->
     <span class="example-fill-remaining-space"></span>
 
-    <mat-menu #appMenu="matMenu">
-      <a (click)="logout()" mat-menu-item>Logout</a>
-    </mat-menu>
 
-    <button mat-button [matMenuTriggerFor]="appMenu">
-      <span class="secondary-color"><i class="fa fa-user-circle-o"> </i>
-        {{ user?.firstName }} {{ user?.lastName }}
-      </span>
-    </button>
   </mat-toolbar>
 </nav>
 <mat-sidenav-container class="sidenav-container">
@@ -42,9 +29,8 @@
       <ng-container>
         <ng-container>
           <ng-container *ngFor="let menu of menus">
-            <a mat-list-item [routerLink]="['/'+menu.url]" routerLinkActive="active-menu"
-              *ngIf="user?.user_level != 'normal'">
-              <img [src]="'/assets/icons/'+menu.icon" style="width:25px;height:25px">
+            <a mat-list-item [routerLink]="['/'+menu.url]" routerLinkActive="active-menu" style="font-family: nunitoLight!important;font-weight: bolder;">
+              <img [src]="'/assets/icons/'+menu.icon" style="width:25px;height:25px;">
               &nbsp; {{menu.name}}
             </a>
           </ng-container>

@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/signboard-private-operator'),
+      dir: require('path').join(__dirname, './coverage/intergration-interface'),
       subdir: '.',
       reporters: [
         { type: 'html' },

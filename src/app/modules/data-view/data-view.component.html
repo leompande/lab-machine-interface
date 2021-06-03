@@ -1,0 +1,16 @@
+<app-header [title]="'Data View'" [label]="'assets/icons/data-view.png'"></app-header>
+<div class="user-container">
+  <div class="display-pane">
+    <mat-tab-group>
+      <mat-tab label="{{machine}}" *ngFor="let machine of machines">
+
+        <ng-container *ngFor="let machineResult of results">
+          <div *ngIf="machineResult[machine]">
+            <vvs-main-data-table [tableList]="machineResult[machine]" [tableConfigurations]="tableConfigurations">
+            </vvs-main-data-table>
+          </div>
+        </ng-container>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>

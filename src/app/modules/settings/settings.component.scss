@@ -1,0 +1,29 @@
+
+.equipment-container{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  grid-auto-rows: minmax(100px, auto);
+  font-family: nunitoLight!important;
+}
+.equipment-card{
+  padding:5px;
+  // display: inline;
+  box-shadow:5px 5px 6px -6px rgba(0,0,0,0.46);
+  border-radius: 5px;
+  border: 1px solid rgba(0,0,0,0.46);
+  font-family: nunitoLight!important;
+  // width: 400px;
+}
+
+.user-container{
+  font-family: nunitoLight!important;
+}
+
+mat-label{
+  font-family: nunitoLight!important;
+}
+
+input{
+  font-family: nunitoLight!important;
+}

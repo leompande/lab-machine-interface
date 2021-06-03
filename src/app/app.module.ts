@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
 import { reducers, metaReducers } from './store';
 import { environment } from 'src/environments/environment';
 import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
@@ -20,42 +19,19 @@ import { HttpClientModule } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { PageComponent } from './page/page.component';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
-import { ApplicationComponent } from './modules/application/application.component';
-import { ReportComponent } from './modules/report/report.component';
-import { SettingComponent } from './modules/setting/setting.component';
 import { SharedModule } from './shared/shared.module';
-import { OrganisationComponent } from './modules/organisation/organisation.component';
 import { AgencyComponent } from './modules/agency/agency.component';
 import { AgencyContainerComponent } from './modules/agency/agency-container/agency-container.component';
-import { UserContainerComponent } from './modules/user/user-container/user-container.component';
-import { UserComponent } from './modules/user/user.component';
-import { OrganisationContainerComponent } from './modules/organisation/organisation-container/organisation-container.component';
-import { AddEditOrganisationComponent } from './modules/organisation/add-edit/add-edit.component';
 import { AddEditAgencyComponent } from './modules/agency/add-edit/add-edit.component';
-import { AddEditUserComponent } from './modules/user/add-edit/add-edit.component';
 import { MainDataTableComponent } from './shared/components/main-data-table/main-data-table.component';
-import { AddEditCampaignComponent } from './modules/campaign/add-edit/add-edit.component';
-import { SignBoardComponent } from './modules/sign-board/sign-board.component';
-import { SignBoardContainerComponent } from './modules/sign-board/sign-board-container/sign-board-container.component';
-import { SignBoardMoreComponent } from './modules/sign-board/sign-board-more/sign-board-more.component';
-import { OutletComponent } from './modules/outlet/outlet.component';
-import { OutletContainerComponent } from './modules/outlet/outlet-container/outlet-container.component';
-import { AddEditOutletComponent } from './modules/outlet/add-edit/add-edit.component';
 import { effects } from './store/effects';
-import { OutletMapPreviewComponent } from './modules/outlet/outlet-map-preview/outlet-map-preview.component';
-import { SignBoardBatchContainerComponent } from './modules/sign-board-batch/sign-board-bach-container/sign-board-batch-container.component';
-import { SignBoardBatchComponent } from './modules/sign-board-batch/sign-board-batch.component';
-import { AgencyBatchMoreComponent } from './modules/sign-board-batch/agency-batch-more/agency-batch-more.component';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { NgxShimmerLoadingModule } from 'ngx-shimmer-loading';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { BatchAssignmentContainerComponent } from './modules/batch-assignment/batch-assignment-container/batch-assignment-container.component';
-import { BatchAssignmentComponent } from './modules/batch-assignment/batch-assignment.component';
-import { AddEditBatchAssignmentComponent } from './modules/batch-assignment/add-edit/add-edit.component';
-import { OutletValueAssignmentComponent } from './shared/components/outlet-value-assignment/outlet-value-assignment.component';
-import { PreviewAssignmentComponent } from './modules/batch-assignment/preview-assignment/preview-assignment.component';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { DataViewComponent } from './modules/data-view/data-view.component';
+import { SettingsComponent } from './modules/settings/settings.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -73,37 +49,14 @@ export const MY_FORMATS = {
   declarations: [
     MainDataTableComponent,
     AppComponent,
-    LoginComponent,
     PageComponent,
     DashboardComponent,
-    ApplicationComponent,
-    ReportComponent,
-    SettingComponent,
-    OrganisationComponent,
     AgencyComponent,
     AgencyContainerComponent,
-    UserContainerComponent,
-    UserComponent,
-    OrganisationContainerComponent,
-    AddEditOrganisationComponent,
     AddEditAgencyComponent,
-    AddEditUserComponent,
-    AddEditCampaignComponent,
-    SignBoardComponent,
-    SignBoardContainerComponent,
-    SignBoardMoreComponent,
-    OutletComponent,
-    OutletContainerComponent,
-    AddEditOutletComponent,
-    OutletMapPreviewComponent,
-    SignBoardBatchComponent,
-    SignBoardBatchContainerComponent,
-    AgencyBatchMoreComponent,
-    BatchAssignmentComponent,
-    BatchAssignmentContainerComponent,
-    AddEditBatchAssignmentComponent,
-    OutletValueAssignmentComponent,
-    PreviewAssignmentComponent
+    DataViewComponent,
+    SettingsComponent,
+
   ],
   imports: [
     BrowserModule,

@@ -12,13 +12,10 @@ import { FormatNumberPipe } from './pipes/format-number.pipe';
 import { HeaderComponent } from './components/header/header.component';
 import { SaveAreaComponent } from './components/save-area/save-area.component';
 import { GoogleMapsModule } from '@angular/google-maps';
-import { OrgUnitFilterClosedComponent } from './components/org-unit-filter-closed/org-unit-filter-closed.component';
-import { OrgUnitFilterComponent } from './components/org-unit-filter/org-unit-filter.component';
 import { TreeModule } from '@circlon/angular-tree-component';
 import { DragDropDirective } from './directives/drag-drop.directive';
 import { FilterSignBoardPipe } from './pipes/filter-sign-board.pipe';
 import { NgxBarcode6Module } from 'ngx-barcode6';
-import { BoardCollectorComponent } from './components/board-collector/board-collector.component';
 import { AuthorizableActionDirective } from './directives/authorizable-action.directive';
 import { LoaderComponent } from './components/loader/loader.component';
 import { BatchMapperPipe } from './pipes/batch-mapper';
@@ -26,8 +23,6 @@ import { BatchMapperPipe } from './pipes/batch-mapper';
   declarations: [
     OneSidedMultiSelectComponent,
     TwoSidedMultiSelectComponent,
-    OrgUnitFilterClosedComponent,
-    OrgUnitFilterComponent,
     HeaderComponent,
     FilterItemsPipe,
     FilterMultPipe,
@@ -37,8 +32,7 @@ import { BatchMapperPipe } from './pipes/batch-mapper';
     FormatNumberPipe,
     DragDropDirective,
     FilterSignBoardPipe,
-    BatchMapperPipe,
-    BoardCollectorComponent,AuthorizableActionDirective, LoaderComponent],
+    BatchMapperPipe,AuthorizableActionDirective, LoaderComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -50,11 +44,8 @@ import { BatchMapperPipe } from './pipes/batch-mapper';
   ],
   exports: [
     MaterialModule,
-    BoardCollectorComponent,
     OneSidedMultiSelectComponent,
     TwoSidedMultiSelectComponent,
-    OrgUnitFilterClosedComponent,
-    OrgUnitFilterComponent,
     LoaderComponent,
     SaveAreaComponent,
     HeaderComponent,

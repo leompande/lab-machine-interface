@@ -1,5 +1,5 @@
-import { SignBoardBatch } from '../store/sign-board-batch/reducers/sign-board-batch';
 import * as _ from 'lodash';
+import { Result } from '../store/results/reducers/result';
 export function makeId(): string {
   let text = '';
   const possible_combinations = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -9,68 +9,43 @@ export function makeId(): string {
   return text;
 }
 
-export function prepareSignBoardData(indexNumber, signBoardBatch: SignBoardBatch | any): any {
-  let signBoard = {
-    id: makeId(),
-    bar_code: (signBoardBatch.batch_reference_number + '_' + indexNumber).replace("/", "_"),
-    batch_reference_number: signBoardBatch.batch_reference_number,
-    campaign_reference_number: signBoardBatch.campaign_reference_number,
-    payment_reference_number: '',
-    board_height: signBoardBatch.board_height,
-    board_width: signBoardBatch.board_width,
-    sign_board_image: '',
-    sign_board_status: 'PENDING',
-    outlet: signBoardBatch.outlet,
-    street_name: '',
-    longitude: '',
-    latitude: '',
-    government_status: '',
-    date_to_be_planted: signBoardBatch.start_date,
-    actual_planting_date: '',
-    submission_date: '',
-    survey_date: '',
-    verification_date: ''
-  };
 
 
-  return signBoard;
-}
-
-export function getVisualizationCategories(categoryType: string, metaData:any){
-  if (categoryType === 'pe'){
+export function getVisualizationCategories(categoryType: string, metaData: any) {
+  if (categoryType === 'pe') {
     const items = metaData.items;
     const dimensions = metaData.dimensions;
-    return dimensions.pe.map(peItem=>{
+    return dimensions.pe.map(peItem => {
       return items[peItem].name;
     });
   }
 }
 
-export function getVisualizationSeries(seriesType: string, filterType: string, metaData:any, rows:any[], headers:any[]){
+export function getVisualizationSeries(seriesType: string, filterType: string, metaData: any, rows: any[], headers: any[]) {
   const dimensions = metaData.dimensions;
   const items = metaData.items;
-  const indexOfPe = _.findIndex(headers,(item)=>item.name=='pe');
-  const indexOfOu = _.findIndex(headers,(item)=>item.name=='ou');
-  const indexOfDx = _.findIndex(headers,(item)=>item.name=='dx');
-  const indexOfValue = _.findIndex(headers,(item)=>item.name=='value');
-return dimensions.dx.map((dxItem:string)=>{
-  return {
-    name: items[dxItem].name,
-    data: dimensions.pe.map((peItem:string)=>{
-      const row = rows.find((row:any[])=>{
-        return row[indexOfPe] == peItem && row[indexOfDx] == dxItem;
-      });
-      return +row[indexOfValue];
-    })
-  }
-});
+  const indexOfPe = _.findIndex(headers, (item) => item.name == 'pe');
+  const indexOfOu = _.findIndex(headers, (item) => item.name == 'ou');
+  const indexOfDx = _.findIndex(headers, (item) => item.name == 'dx');
+  const indexOfValue = _.findIndex(headers, (item) => item.name == 'value');
+  return dimensions.dx.map((dxItem: string) => {
+    return {
+      name: items[dxItem].name,
+      data: dimensions.pe.map((peItem: string) => {
+        const row = rows.find((row: any[]) => {
+          return row[indexOfPe] == peItem && row[indexOfDx] == dxItem;
+        });
+        return +row[indexOfValue];
+      })
+    }
+  });
 }
 
-export function getSum(series, name){
-return series.find(serie=>serie.name==name).data.reduce((a,b)=>a+b, 0)
+export function getSum(series, name) {
+  return series.find(serie => serie.name == name).data.reduce((a, b) => a + b, 0)
 }
 
-export function combineChartVisualizationObject(categories,series){
+export function combineChartVisualizationObject(categories, series) {
   return {
 
     title: {
@@ -101,82 +76,6 @@ export function combineChartVisualizationObject(categories,series){
 
   };
 }
-
-
-
-var data = {
-  "trackedEntityType": "nEenWmSyUEp",
-  "orgUnit": "DiszpKrYNg8",
-  "attributes": [
-    {
-      "attribute": "w75KJ2mc4zz",
-      "value": "Joe"
-    },
-    {
-      "attribute": "zDhUuAYrxNC",
-      "value": "Rufus"
-    },
-    {
-      "attribute": "cejWyOfXge6",
-      "value": "Male"
-    }
-  ],
-  "enrollments": [
-    {
-      "orgUnit": "DiszpKrYNg8",
-      "program": "ur1Edk5Oe2n",
-      "enrollmentDate": "2017-09-15",
-      "incidentDate": "2017-09-15",
-      "events": [
-        {
-          "program": "ur1Edk5Oe2n",
-          "orgUnit": "DiszpKrYNg8",
-          "eventDate": "2017-10-17",
-          "status": "COMPLETED",
-          "storedBy": "admin",
-          "programStage": "EPEcjy3FWmI",
-          "coordinate": {
-            "latitude": "59.8",
-            "longitude": "10.9"
-          },
-          "dataValues": [
-            {
-              "dataElement": "qrur9Dvnyt5",
-              "value": "22"
-            },
-            {
-              "dataElement": "oZg33kd9taw",
-              "value": "Male"
-            }
-          ]
-        },
-        {
-          "program": "ur1Edk5Oe2n",
-          "orgUnit": "DiszpKrYNg8",
-          "eventDate": "2017-10-17",
-          "status": "COMPLETED",
-          "storedBy": "admin",
-          "programStage": "EPEcjy3FWmI",
-          "coordinate": {
-            "latitude": "59.8",
-            "longitude": "10.9"
-          },
-          "dataValues": [
-            {
-              "dataElement": "qrur9Dvnyt5",
-              "value": "26"
-            },
-            {
-              "dataElement": "oZg33kd9taw",
-              "value": "Female"
-            }
-          ]
-        }
-      ]
-    }
-  ]
-}
-
 
 export function get5Years(sign?: string, lastItem?: { id: string, value: number, name: string }, firstItem?: { id: string, value: number, name: string }) {
   let currentYear = new Date().getFullYear();
@@ -231,66 +130,103 @@ export function get5Years(sign?: string, lastItem?: { id: string, value: number,
 }
 
 
-export function getMonths(){
+export function getMonths() {
   return [
     {
       id: "January",
-      value:"01",
-      name:"January"
+      value: "01",
+      name: "January"
     },
     {
       id: "February",
-      value:"02",
-      name:"February"
+      value: "02",
+      name: "February"
     },
     {
       id: "March",
-      value:"03",
-      name:"March"
+      value: "03",
+      name: "March"
     },
     {
       id: "April",
-      value:"04",
-      name:"April"
+      value: "04",
+      name: "April"
     },
     {
       id: "May",
-      value:"05",
-      name:"May"
+      value: "05",
+      name: "May"
     },
     {
       id: "June",
-      value:"06",
-      name:"June"
+      value: "06",
+      name: "June"
     },
     {
       id: "July",
-      value:"07",
-      name:"July"
+      value: "07",
+      name: "July"
     },
     {
       id: "August",
-      value:"08",
-      name:"August"
+      value: "08",
+      name: "August"
     },
     {
       id: "September",
-      value:"09",
-      name:"September"
-    },{
+      value: "09",
+      name: "September"
+    }, {
       id: "October",
-      value:"10",
-      name:"October"
+      value: "10",
+      name: "October"
     },
     {
       id: "November",
-      value:"11",
-      name:"November"
+      value: "11",
+      name: "November"
     },
     {
       id: "December",
-      value:"12",
-      name:"December"
+      value: "12",
+      name: "December"
     }
   ]
+}
+
+
+export function getTableHeaders(result: Result) {
+  let headers = [];
+  Object.keys(result).forEach(resultItem=>{
+    headers.push({name:resultItem,label:resultItem,type:"string"});
+  });
+
+
+return headers;
+}
+
+export function getMachines(groupResults:any[]){
+  let headers = [];
+  groupResults.forEach((result)=>{
+    headers.push(Object.keys(result)[0]);
+  });
+
+  return headers;
+}
+
+export function groupData(results: Result[]) {
+  let groupResults = [];
+
+  results.forEach(result => {
+    var group = groupResults.find(groupItem => groupItem[result.machineName] != null);
+    if (group != null) {
+      group[result.machineName].push(result);
+    } else {
+      var sample = {};
+      sample[result.machineName] = [result];
+      groupResults.push(sample);
+    }
+
+  });
+  return groupResults;
 }

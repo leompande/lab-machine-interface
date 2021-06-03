@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "signboard-private-operator": {
+    "intergration-interface": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -28,7 +28,7 @@
               "highcharts",
               "highcharts/modules/exporting"
            ],
-            "outputPath": "dist/signboard-private-operator",
+            "outputPath": "dist/intergration-interface",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -78,18 +78,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "signboard-private-operator:build"
+            "browserTarget": "intergration-interface:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "signboard-private-operator:build:production"
+              "browserTarget": "intergration-interface:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "signboard-private-operator:build"
+            "browserTarget": "intergration-interface:build"
           }
         },
         "test": {
@@ -126,18 +126,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "signboard-private-operator:serve"
+            "devServerTarget": "intergration-interface:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "signboard-private-operator:serve:production"
+              "devServerTarget": "intergration-interface:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "signboard-private-operator",
+  "defaultProject": "intergration-interface",
   "cli": {
     "defaultCollection": "@ngrx/schematics",
     "analytics": false

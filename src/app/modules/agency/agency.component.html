@@ -5,13 +5,10 @@
         *ngIf="tableConfigurations.tableColumns"
         [tableConfigurations]="tableConfigurations"
         [tableList]="agencies"
-        (rowPreview)="printArrival($event)"
-        (rowUpdate)="updateAgency($event)"
-        (rowDelete)="deleteAgency($event)"
         [loading]="loading$ | async">
       </vvs-main-data-table>
     </div>
-    <button class="floating-action" (click)="openDialog()" mat-fab color="primary" aria-label="Example icon button with a delete icon">
+    <button class="floating-action" mat-fab color="primary" aria-label="Example icon button with a delete icon">
           <mat-icon>add</mat-icon>
     </button>
 </div>

@@ -3,8 +3,6 @@ import { AddEditAgencyComponent } from './add-edit/add-edit.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Agency } from 'src/app/store/agency/reducers/agency';
-import { AgencyService } from 'src/app/shared/services/model-services/agency.service';
-import { Organisation } from 'src/app/store/organisation/reducers/organisation';
 
 @Component({
   selector: 'app-agency',
@@ -15,8 +13,6 @@ export class AgencyComponent implements OnInit {
   @Input()
   agencies!: Agency[];
   @Input() agencyEntities: any;
-  @Input()
-  organisations!: Organisation[];
   @Input() organisationEntities: any;
   @Input() loading$: Observable<boolean>;
 
@@ -44,54 +40,9 @@ export class AgencyComponent implements OnInit {
     empty_msg: 'No Agencies'
   };
 
-  constructor(public dialog: MatDialog, private agencyService: AgencyService) { }
+  constructor(public dialog: MatDialog) { }
 
   ngOnInit(): void {
-  }
-
-
-
-  updateAgency(agencyId: string) {
-    const dialogRef = this.dialog.open(AddEditAgencyComponent, {
-      data: {
-        currentObject: this.agencies.find(agency => agency.id == agencyId),
-        organisations: this.organisations,
-        agencies: this.agencies
-      },
-      width: '80%',
-      maxHeight: '80%',
-      disableClose: true,
-      hasBackdrop: true,
-      closeOnNavigation: true
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-    });
-  }
-
-  printArrival(data:any){
-
-  }
-
-  async deleteAgency(agencyId: any) {
-    var agency = this.agencies.find(agent=>agent.id==agencyId);
-    await this.agencyService.deleteAgency(agency, this.agencies.filter(agent=>agent.organisationId==agency?.organisationId)).toPromise();
-  }
-
-  openDialog() {
-    const dialogRef = this.dialog.open(AddEditAgencyComponent, {
-      width: '95%',
-      maxHeight: '80%',
-      disableClose: true,
-      hasBackdrop: true, data: {
-        currentObject: null,
-        organisations: this.organisations,
-        agencies: this.agencies
-      },
-      closeOnNavigation: true
-    });
-    dialogRef.afterClosed().subscribe(result => {
-    });
   }
 
 

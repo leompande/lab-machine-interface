@@ -1,9 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormGroup, FormControl } from '@angular/forms';
-import { AgencyService } from 'src/app/shared/services/model-services/agency.service';
 import { Agency } from 'src/app/store/agency/reducers/agency';
-import { Organisation } from 'src/app/store/organisation/reducers/organisation';
 import { ListItem } from 'src/app/shared/components/one-sided-multi-select/one-sided-multi-select.component';
 import { makeId } from 'src/app/shared/helpers';
 
@@ -18,14 +16,9 @@ export class AddEditAgencyComponent implements OnInit {
   loading: boolean = false;
   availableItems: ListItem[] = [];
   selectedItems!: any[];
-  constructor(@Inject(MAT_DIALOG_DATA) public data: { currentObject: Agency, organisations: Organisation[], agencies: Agency[] }, private agencyService: AgencyService) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { currentObject: Agency,agencies: Agency[] }) {
     this.isUpdate = data.currentObject != null;
-    this.availableItems = (data.organisations||[]).map(organisation=>{
-      return {id: organisation.id,
-        name: organisation.name,
-        value:organisation.name,
-        chosed: false}
-    })
+
     this.form = new FormGroup({
       id: new FormControl(this.isUpdate ? data.currentObject.id : makeId()),
       name: new FormControl(this.isUpdate ? data.currentObject.name : ''),
@@ -56,7 +49,7 @@ export class AddEditAgencyComponent implements OnInit {
     const formValue = {
       ...this.form.value
     };
-    await this.agencyService.saveAgency({...formValue,organisationId:this.selectedItems[0].id,organisationName:this.selectedItems[0].name}, this.data.agencies).toPromise();
+
     this.loading = false;
     this.cancel();
   }
