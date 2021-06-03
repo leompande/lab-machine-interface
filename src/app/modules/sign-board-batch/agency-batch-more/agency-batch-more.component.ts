@@ -83,7 +83,6 @@ export class AgencyBatchMoreComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {  batch: SignBoardBatch, outlets: Outlet[] },
     private signBoardService: SignBoardBatchService, private store: Store<ApplicationState>) {
-    // this.boardItems = data.boardItems;
     this.batch = data.batch;
     this.outlets = data.outlets;
     this.planted_quantity = +this.batch.planted_quantity;

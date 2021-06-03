@@ -13,11 +13,13 @@ import { Store } from '@ngrx/store';
 import { LoadAssignedBoardBatches } from 'src/app/store/assigned-board-batches/actions/assigned-board-batch.actions';
 import { PreviewAssignmentComponent } from './preview-assignment/preview-assignment.component';
 import { OutletAssignment } from 'src/app/store/outlet-assignment/reducers/outlet-assignment';
+import { fadeIn } from 'src/app/shared/animations/router-animation';
 
 @Component({
   selector: 'app-batch-assignment',
   templateUrl: './batch-assignment.component.html',
-  styleUrls: ['./batch-assignment.component.scss']
+  styleUrls: ['./batch-assignment.component.scss'],
+  animations: [fadeIn]
 })
 export class BatchAssignmentComponent implements OnInit, OnChanges {
 
@@ -106,11 +108,13 @@ export class BatchAssignmentComponent implements OnInit, OnChanges {
   updateOutlet(boardBatchId: string) {
     const dialogRef = this.dialog.open(AddEditBatchAssignmentComponent, {
       data: {
-        currentObject: null,//this.assignedBoardBatches.find(boardBatch => boardBatch.id == boardBatchId),
+        currentObject: this.assignedBoardBatches.find(boardBatch => boardBatch.id == boardBatchId),
         campaigns: this.campaings,
         batches: this.batches,
         outlets: this.outlets,
-        agencies: this.agencies
+        agencies: this.agencies,
+        outletsAssignments: this.outletsAssignments,
+
       },
       width: '80%',
       maxHeight: '80%',
@@ -131,7 +135,8 @@ export class BatchAssignmentComponent implements OnInit, OnChanges {
         campaigns: this.campaings,
         batches: this.batches,
         outlets: this.outlets,
-        agencies: this.agencies
+        agencies: this.agencies,
+        outletsAssignments: this.outletsAssignments,
       },
       width: '95%',
       maxHeight: '80%',

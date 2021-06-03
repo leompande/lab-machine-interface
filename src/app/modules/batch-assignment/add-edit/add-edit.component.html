@@ -10,16 +10,17 @@
   <div class="form-body">
     <form [formGroup]="form">
       <div class="row">
+        {{data.currentObject|json}}
         <div class="col">
           <app-one-sided-multi-select [config]="campaignConfig" [items]="availableCampaigns"
-            (onChange)="selectCampaignChange($event)">
+            [selected]="selectedCampaigns" (onChange)="selectCampaignChange($event)">
           </app-one-sided-multi-select>
         </div>
       </div>
       <div @fadeIn class="row" *ngIf="campaignIsSelected == true">
         <div class="col">
-          <app-one-sided-multi-select [config]="agencyConfig" [items]="availableAgencies" [selected]="selectedAgencies"
-            (onChange)="selecteAgencyChange($event)">
+          <app-one-sided-multi-select [config]="agencyConfig" [items]="availableAgencies"
+            [selected]="selectedDataAgencies" (onChange)="selecteAgencyChange($event)">
           </app-one-sided-multi-select>
         </div>
         <div class="col">
@@ -104,8 +105,8 @@
   </div>
   <br />
   <div class="form-footer">
-    <app-save-area [isUpdate]="isUpdate" [isEnabled]="!hasAssignmentError && form.dirty && !showOrgUnitSelectionError" [loading]="loading"
-      (onCancel)="cancel()" (onSave)="save()">
+    <app-save-area [isUpdate]="isUpdate" [isEnabled]="!hasAssignmentError && form.dirty && !showOrgUnitSelectionError"
+      [loading]="loading" (onCancel)="cancel()" (onSave)="isUpdate==true?update():save()">
     </app-save-area>
     <button id="closeButton" mat-button mat-dialog-close style="display: none;">Cancel</button>
   </div>

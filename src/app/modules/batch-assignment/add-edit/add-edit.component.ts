@@ -47,6 +47,9 @@ export class AddEditBatchAssignmentComponent implements OnInit {
   availableCampaigns: ListItem[];
   availableBatches: ListItem[];
 
+  selectedCampaigns: ListItem[];
+  selectedDataAgencies: ListItem[] = [];
+
   filteredOutlets: Item[];
 
   campaignConfig: SelectConfig = {
@@ -105,13 +108,16 @@ export class AddEditBatchAssignmentComponent implements OnInit {
 
   assignedOutlets: { outlet: string, value: string }[] = [];
 
+  outletAssignemtList: OutletAssignment[];
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {
       currentObject: any,
       campaigns: Campaign[],
       batches: SignBoardBatch[],
       outlets: Outlet[],
-      agencies: Agency[]
+      agencies: Agency[],
+      outletsAssignments: OutletAssignment[]
     },
     private assignedBoardBatchService: AssignedBoardBatchService,
     private batchService: SignBoardBatchService,
@@ -124,6 +130,10 @@ export class AddEditBatchAssignmentComponent implements OnInit {
     this.batches = data.batches;
     this.outlets = data.outlets;
     this.agencies = data.agencies;
+    this.outletAssignemtList = data.outletsAssignments.filter(assignment => {
+      return assignment.batch_reference_number == data.currentObject.batch_reference_number;
+    });
+
     this.availableCampaigns = data.campaigns.map(campaign => {
       return {
         id: campaign.id,
@@ -132,6 +142,43 @@ export class AddEditBatchAssignmentComponent implements OnInit {
         chosed: false
       }
     });
+
+    if (data.currentObject) {
+      this.selectedBatch = data.currentObject;
+      this.startingOus.push(data.currentObject.organisation_unit_id);
+      this.selectedCampaigns = [
+        ...data.campaigns.filter((campaign) => campaign.reference == data.currentObject.campaign_reference_number).map((campaign) => {
+          this.campaignIsSelected = true;
+          return {
+            id: campaign.id,
+            name: campaign.campaign_name,
+            value: campaign.id,
+            chosed: false
+          }
+        })
+      ];
+      this.selectedDataAgencies = data.agencies.filter((agency: Agency) => agency.name == data.currentObject.agency_name).map((campaign) => {
+        this.campaignIsSelected = true;
+        return {
+          id: campaign.id,
+          name: campaign.name,
+          value: campaign.id,
+          chosed: false
+        }
+      });
+
+      const selectedBatchItems = this.batches.filter(batch => batch.campaign_reference_number == data.currentObject.campaign_reference_number);
+      this.availableBatches = selectedBatchItems.map(batch => {
+        return {
+          id: batch.id,
+          name: batch.batch_reference_number + " (" + batch.board_height + "x" + batch.board_width + ")",
+          value: batch.id,
+          chosed: false
+        }
+      });
+
+      this.selectedBatches = this.availableBatches.filter((batch) => batch.name.indexOf(data.currentObject.batch_reference_number) >= 0);
+    }
 
     this.availableAgencies = data.agencies.map(agency => {
       return {
@@ -158,7 +205,7 @@ export class AddEditBatchAssignmentComponent implements OnInit {
   }
 
   selectCampaignChange(event: any) {
-    if (event.length > 0) {
+    if (event && event.length > 0) {
       this.selectedBatches = [];
       this.campaignIsSelected = true;
       const selectedCampaign: Campaign = this.campaings.filter(campaign => campaign.id == event[0].id) ? this.campaings.filter(campaign => campaign.id == event[0].id)[0] : null;
@@ -166,7 +213,7 @@ export class AddEditBatchAssignmentComponent implements OnInit {
       this.availableBatches = selectedBatchItems.map(batch => {
         return {
           id: batch.id,
-          name: batch.batch_reference_number + " ("+batch.board_height+"x"+batch.board_width+")",
+          name: batch.batch_reference_number + " (" + batch.board_height + "x" + batch.board_width + ")",
           value: batch.id,
           chosed: false
         }
@@ -178,7 +225,7 @@ export class AddEditBatchAssignmentComponent implements OnInit {
   }
 
   selecteBatchChange(event: any) {
-    const availableBatch = this.batches.filter((batch:any) => batch.id == event[0].id);
+    const availableBatch = this.batches.filter((batch: any) => batch.id == event[0].id);
     const batch: SignBoardBatch = availableBatch[0];
     this.selectedBatch = batch;
     this.selectedBatches.push(batch);
@@ -277,20 +324,19 @@ export class AddEditBatchAssignmentComponent implements OnInit {
       }];
     });
 
-    try{
+    try {
       this.selectedBatch = {
         ...this.selectedBatch,
         assigned_quantity: this.selectedBatch.assigned_quantity != null ? (+this.selectedBatch.assigned_quantity) + formValue.assigned_quantity : formValue.assigned_quantity
       }
-    } catch(e){
+    } catch (e) {
 
     }
 
 
-    const response = await this.assignedBoardBatchService.saveUpdateAssignedBoardBatch(false, {...formValue,signboard_quantity: this.selectedBatch.assigned_quantity}, '', '').toPromise();
+    const response = await this.assignedBoardBatchService.saveUpdateAssignedBoardBatch(false, { ...formValue, signboard_quantity: this.selectedBatch.assigned_quantity }, '', '').toPromise();
     if (response['httpStatus'] == 'OK') {
       try {
-
         const updateReponse = await this.batchService.saveUpdateSignBoardBatch(true, this.selectedBatch, this.selectedBatch.trackedEntityInstance, null).toPromise();
         const outletAssignResponse = await this.outAssignmentService.saveOutletAssignments(assignemnts).toPromise();
         console.log(updateReponse);
@@ -304,6 +350,43 @@ export class AddEditBatchAssignmentComponent implements OnInit {
     this.store.dispatch(new LoadOutletAssignments());
     this.loading = false;
     this.cancel();
+  }
+
+  async update() {
+    this.loading = true;
+    const formValue = {
+      ...this.form.value,
+      organisation_unit_id: this.orgUnitData.districtId,
+      district: this.orgUnitData.district,
+      region: this.orgUnitData.region,
+      start_date: this.selectedBatch.start_date,
+      end_date: this.selectedBatch.end_date,
+      status: 'ACTIVE'
+    };
+    let assignemnts: OutletAssignment[] = [];
+    this.assignedOutlets.forEach(assignedOutlet => {
+      console.log(assignedOutlet);
+
+      // assignemnts = [...assignemnts, {
+      //   id: makeId(),
+      //   enrollment_id: makeId(),
+      //   organisation_unit_id: formValue.organisation_unit_id,
+      //   trackedEntityInstance: makeId(),
+      //   outlet: assignedOutlet.outlet,
+      //   campaign_reference_number: formValue.campaign_reference_number,
+      //   batch_reference_number: formValue.batch_reference_number,
+      //   latitude: formValue.latitude,
+      //   longitude: formValue.longitude,
+      //   assigned_quantity: assignedOutlet.value,
+      //   planted_quantity: '0',
+      //   board_height: formValue.board_height,
+      //   board_width: formValue.board_width,
+      //   planted_date: null,
+      //   start_date: formValue.start_date,
+      //   end_date: formValue.end_date,
+      //   status: "PENDING",
+      // }];
+    });
   }
 
   cancel() {

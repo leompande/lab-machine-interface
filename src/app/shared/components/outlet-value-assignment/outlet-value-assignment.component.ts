@@ -25,7 +25,6 @@ export class OutletValueAssignmentComponent implements OnInit {
   }
 
   updateOutletValue(outlet, event) {
-    console.log(outlet.id, event.target.value);
     this.error = {};
     if (event.target.value.length > 0) {
       this.outletValues = [
@@ -38,7 +37,6 @@ export class OutletValueAssignmentComponent implements OnInit {
     };
 
     const totalValue = this.outletValues.reduce((a, b) => a + (+b.value), 0);
-    console.log(this.outletValues);
     if (totalValue > this.assignedQuantity) {
       this.error[outlet.id] = true;
       this.hasError.emit(true);
