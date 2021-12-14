@@ -1,0 +1,9 @@
+<div class="menu-container">
+  <div *ngFor="let menu of menus" class="menu-card" (click)="navigateMenu(menu)">
+    <div>
+      <img src="/assets/icons/{{menu.image}}">
+    </div>
+    <div>{{menu.name}}</div>
+  </div>
+</div>
+

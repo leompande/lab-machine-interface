@@ -11,13 +11,10 @@
     </button>
     <span
       style="display: inline-block; margin-top: 0px; margin-left: 17px; font-size: 33px;font-family: nunitoSemiBold;">
-      EMR - Bio Equipments Integration Interface
+      AfyaCare - Bio Equipments Integration Interface
     </span>
 
-    <!-- This fills the remaining space of the current row -->
     <span class="example-fill-remaining-space"></span>
-
-
   </mat-toolbar>
 </nav>
 <mat-sidenav-container class="sidenav-container">
@@ -29,7 +26,8 @@
       <ng-container>
         <ng-container>
           <ng-container *ngFor="let menu of menus">
-            <a mat-list-item [routerLink]="['/'+menu.url]" routerLinkActive="active-menu" style="font-family: nunitoLight!important;font-weight: bolder;">
+            <a mat-list-item [routerLink]="['/'+menu.url]" routerLinkActive="active-menu"
+              style="font-family: nunitoLight!important;font-weight: bolder;">
               <img [src]="'/assets/icons/'+menu.icon" style="width:25px;height:25px;">
               &nbsp; {{menu.name}}
             </a>

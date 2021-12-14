@@ -1,0 +1,53 @@
+<div class="introduction">
+  <p>Patient Name: {{data.sample.patientName}}</p>
+  <p>Patient ID: {{data.sample.patientId}}</p>
+  <br />
+  <p>Order Number: {{data.sample.orderNumber}}</p>
+  <p>Order Date: {{data.sample.orderDate}}</p>
+  <br />
+  <p>Test Type: {{data.sample.sampleType}}</p>
+  <hr />
+  <div>
+    <div style="height: 400px;overflow-y: auto;">
+      <table class="table table-bordered table-condenced table-hover">
+        <thead>
+          <tr>
+            <th>
+              Name
+            </th>
+            <th>
+              Lab Results
+            </th>
+            <th>
+              Action/Status
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let parameter of data.parameters">
+            <td>{{parameter.parameterName}}</td>
+
+            <td>
+              <span *ngIf="parameter.deviceIdentifier==''" style="font-style: inherit;color:rgb(241, 10, 10);">Not
+                mapped with device parameter</span>
+
+              <span *ngIf="parameter.deviceIdentifier!='' && parameter.value!=''">
+                {{parameter.value}}
+              </span>
+              <span *ngIf="parameter.deviceIdentifier!='' && parameter.value==''"
+                style="font-style: inherit;color:rgb(173, 171, 171);">
+                No Value
+              </span>
+            </td>
+            <td>
+              <div class="sync-button" *ngIf="parameter.deviceIdentifier!='' && parameter.value!='' && parameter.isUploaded == 'false'"
+                (click)="syncFunction(parameter)">Send to AfyaCare</div>
+                <div class="update-button" *ngIf="parameter.deviceIdentifier!='' && parameter.value!='' && parameter.isUploaded == 'true'"
+                (click)="syncFunction(parameter)">Update to AfyaCare</div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

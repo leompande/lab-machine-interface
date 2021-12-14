@@ -5,8 +5,6 @@ import { ApplicationState } from '../store';
 import { routeAnimations } from '../shared/animations/router-animation';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { menus } from '../shared/constants';
-import { LoadAgencies } from '../store/agency/actions/agency.actions';
 
 @Component({
   selector: 'app-page',
@@ -18,7 +16,11 @@ export class PageComponent {
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
     .pipe(map(result => result.matches));
-  menus = [{ id: "data-view", url: "data-view", name: "Data View", icon: "data-view.png" }, { id: "settings", url: "settings", name: "Settings", icon: "settings.png" }];
+  menus = [
+    { id: "data-view", url: "data-view", name: "Data View", icon: "data-view.png" },
+    { id: "sample", url: "samples", name: "Samples", icon: "sample.png" },
+    { id: "settings", url: "settings", name: "Settings", icon: "settings.png" }
+  ];
   isOpen = true;
   loading$!: Observable<boolean>;
   constructor(
@@ -27,6 +29,4 @@ export class PageComponent {
   ) {
 
   }
-
-
 }

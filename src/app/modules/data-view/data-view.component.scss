@@ -1,0 +1,35 @@
+.result-card{
+  padding:5px;
+  margin:5px;
+  border: 1px solid #cccccc;
+  border-radius: 10px;
+  font-family: nunitoRegular;
+
+}
+
+.search-area{
+  padding:5px;
+  margin:5px;
+}
+
+.display-container{
+  font-size: 14px;
+  color:#3f3e3e
+}
+
+.display-pane{
+  width: 100hw;
+  overflow: auto;
+}
+
+.card-custom {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid grey;
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.loader{
+  margin-top: 20px;
+}

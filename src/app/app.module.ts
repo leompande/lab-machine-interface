@@ -32,6 +32,7 @@ import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { DataViewComponent } from './modules/data-view/data-view.component';
 import { SettingsComponent } from './modules/settings/settings.component';
+import { SampleManagerComponent } from './modules/sample-manager/sample-manager.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -55,7 +56,7 @@ export const MY_FORMATS = {
     AgencyContainerComponent,
     AddEditAgencyComponent,
     DataViewComponent,
-    SettingsComponent,
+    SampleManagerComponent
 
   ],
   imports: [

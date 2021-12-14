@@ -1,16 +1,25 @@
 <app-header [title]="'Data View'" [label]="'assets/icons/data-view.png'"></app-header>
 <div class="user-container">
   <div class="display-pane">
-    <mat-tab-group>
-      <mat-tab label="{{machine}}" *ngFor="let machine of machines">
-
-        <ng-container *ngFor="let machineResult of results">
-          <div *ngIf="machineResult[machine]">
-            <vvs-main-data-table [tableList]="machineResult[machine]" [tableConfigurations]="tableConfigurations">
-            </vvs-main-data-table>
+    <div class="loader" *ngIf="isFetching">
+      <app-loader [message]="'Loading data please waiting...'"></app-loader>
+    </div>
+    <ng-container *ngIf="!isFetching">
+      <div class="card-custom" *ngFor="let sample of samples" (click)="onViewMore(sample.id)">
+        <div class="label">
+          <div><span><i><b>Patient Name :</b></i> &nbsp;{{sample.patientName}}</span>, &nbsp;&nbsp;<span><i><b>Patient Id:</b></i> &nbsp;{{sample.patientId}}</span>.</div>
+          <div><span><i><b>Order Id:</b></i> &nbsp;{{sample.orderNumber}}</span>, &nbsp;&nbsp;<span><i><b>Order Date:</b></i> &nbsp;{{sample.orderDate|date}}</span>.</div>
+          <div><span><i><b>Test Type:</b></i> &nbsp;{{sample.sampleType}}</span>.</div>
+        </div>
+        <div @fadeIn class="contents" *ngIf="currentDiv == sample.id">
+          <hr/>
+          <div><b>Results:</b></div>
+          <br/>
+          <div *ngFor="let param of testParameters">
+            {{param.parameterName}} : {{param.value}}
           </div>
-        </ng-container>
-      </mat-tab>
-    </mat-tab-group>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>

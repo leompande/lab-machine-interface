@@ -1,0 +1,21 @@
+.menu-container{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  grid-auto-rows: minmax(100px, auto);
+  font-family: nunitoLight!important;
+  padding:5px;
+}
+.menu-card{
+  padding:5px;
+  box-shadow:4px 4px 5px -5px rgba(0,0,0,0.46);
+  border-radius: 10px;
+  border: 1px solid rgba(206, 204, 204, 0.46);
+  font-family: nunitoLight!important;
+  text-align: center;
+  cursor: pointer;
+}
+
+.menu-card:hover{
+  box-shadow:10px 10px 12px -12px rgba(0,0,0,0.46);
+}

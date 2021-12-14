@@ -1,0 +1,91 @@
+<div class="display-pane">
+  <mat-card class="model-card">
+    <mat-panel-title>
+      <div class="row">
+        <div class="col">
+          <p style="font-weight: bold;font-family: nunitoLight!important;">
+            <img [src]="'/assets/icons/devices.png'" style="width:20px;height:20px">&nbsp;&nbsp;Connected Bio
+            Equipments
+          </p>
+        </div>
+        <div class="col" style="text-align: right;">
+          <div class="custom-button" style="width:200px!important;display: inline-block;margin-bottom: 10px;"
+            (click)="reloadEquipments()">Update List</div>
+          <br />
+        </div>
+      </div>
+    </mat-panel-title>
+    <mat-divider></mat-divider>
+    <div>
+      <br />
+      <div class="equipment-container">
+        <div class="equipment-card" *ngFor="let equipment of devices">
+          <div>Name: {{equipment.name}}</div>
+          <div>Port: {{equipment.port}}</div>
+          <div>Connector: {{equipment.connector}}</div>
+          <div>Date Connected: {{equipment.lastConnectedDate}}</div>
+          <br />
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Baude Rate</mat-label>
+              <input matInput [(ngModel)]="equipment.baudRate" placeholder="Baude Rate" name="baudRate">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-checkbox [(ngModel)]="equipment.autoOpen" color="primary">
+              Auto Open
+            </mat-checkbox>
+          </div>
+          <br />
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Data Bits</mat-label>
+              <input matInput [(ngModel)]="equipment.dataBits" placeholder="Data Bits" name="dataBits">
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-checkbox [(ngModel)]="equipment.lock" color="primary">
+              Lock
+            </mat-checkbox>
+          </div>
+          <br />
+          <div>
+            <mat-checkbox [(ngModel)]="equipment.xon" color="primary">
+              xon
+            </mat-checkbox>
+          </div>
+          <br />
+          <div>
+            <mat-checkbox [(ngModel)]="equipment.xon" color="primary">
+              xany
+            </mat-checkbox>
+          </div>
+          <br />
+          <div>
+            <mat-checkbox [(ngModel)]="equipment.rtscts" color="primary">
+              rtscts
+            </mat-checkbox>
+          </div>
+          <br />
+          <div>
+            <mat-checkbox [(ngModel)]="equipment.xany" color="primary">
+              xany
+            </mat-checkbox>
+          </div>
+          <br />
+          <div>
+            <mat-form-field appearance="outline">
+              <mat-label>Device Type</mat-label>
+              <mat-select [(ngModel)]="equipment.deviceType" (selectionChange)="deviceChanged($event)">
+                <mat-option value="celldyne">Cell Dyne</mat-option>
+                <mat-option value="urinalysis">Urinalysis</mat-option>
+                <mat-option value="xray">Xray</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div *ngIf="devices.length==0">No Equipments Connected</div>
+      </div>
+    </div>
+  </mat-card>
+</div>

@@ -198,7 +198,7 @@ export function getMonths() {
 export function getTableHeaders(result: Result) {
   let headers = [];
   Object.keys(result).forEach(resultItem=>{
-    headers.push({name:resultItem,label:resultItem,type:"string"});
+    headers.push({name:resultItem,label:resultItem.toLocaleUpperCase(),type:"string"});
   });
 
 

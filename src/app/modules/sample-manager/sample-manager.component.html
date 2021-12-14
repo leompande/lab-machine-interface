@@ -1,0 +1,15 @@
+<mat-progress-bar *ngIf="isFetching" mode="indeterminate"></mat-progress-bar>
+<app-header [title]="'Samples'" [label]="'assets/icons/sample.png'"></app-header>
+<div class="user-container">
+  <div class="display-pane">
+    <div class="header-container">
+      <div class="refresh-button" (click)="fetchData()"><mat-icon appearance="outline">cloud_download_outline</mat-icon>&nbsp;Fetch Samples</div>
+    </div>
+    <div>
+    </div>
+    <div class="tab-container">
+      <vvs-main-data-table [tableList]="samples" [tableConfigurations]="tableConfigurations" (rowPreview)="onViewMore($event)">
+      </vvs-main-data-table>
+    </div>
+  </div>
+</div>

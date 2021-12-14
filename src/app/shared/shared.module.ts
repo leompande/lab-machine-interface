@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MaterialModule } from './modules/material.module';
 import { OneSidedMultiSelectComponent } from './components/one-sided-multi-select/one-sided-multi-select.component';
 import { TwoSidedMultiSelectComponent } from './components/two-sided-multi-select/two-sided-multi-select.component';
-import { FilterItemsPipe } from './pipes/filter-items.pipe';
+import { FilterItemsPipe, FilterResultPipe } from './pipes/filter-items.pipe';
 import { FilterMultPipe } from './pipes/filter-mult.pipe';
 import { SearchPipe } from './pipes/search.pipe';
 import { SplitToArrayPipe } from './pipes/split-to-array.pipe';
@@ -19,6 +19,8 @@ import { NgxBarcode6Module } from 'ngx-barcode6';
 import { AuthorizableActionDirective } from './directives/authorizable-action.directive';
 import { LoaderComponent } from './components/loader/loader.component';
 import { BatchMapperPipe } from './pipes/batch-mapper';
+import { ParameterViewComponent } from './components/parameter-view/parameter-view.component';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     OneSidedMultiSelectComponent,
@@ -30,9 +32,10 @@ import { BatchMapperPipe } from './pipes/batch-mapper';
     SaveAreaComponent,
     SplitToArrayPipe,
     FormatNumberPipe,
+    FilterResultPipe,
     DragDropDirective,
     FilterSignBoardPipe,
-    BatchMapperPipe,AuthorizableActionDirective, LoaderComponent],
+    BatchMapperPipe,AuthorizableActionDirective, LoaderComponent, ParameterViewComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -41,6 +44,7 @@ import { BatchMapperPipe } from './pipes/batch-mapper';
     GoogleMapsModule,
     TreeModule,
     NgxBarcode6Module,
+    HttpClientModule
   ],
   exports: [
     MaterialModule,
@@ -51,6 +55,7 @@ import { BatchMapperPipe } from './pipes/batch-mapper';
     HeaderComponent,
     FilterItemsPipe,
     FilterMultPipe,
+    FilterResultPipe,
     SearchPipe,
     DragDropDirective,
     FilterSignBoardPipe,

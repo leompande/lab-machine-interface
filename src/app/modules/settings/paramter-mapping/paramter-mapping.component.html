@@ -1,0 +1,83 @@
+<div class="display-pane">
+  <div>
+    <div class="row">
+      <div class="col">
+        <p style="font-weight: bolder;">
+          {{paramters?.display}}
+        </p>
+      </div>
+      <div class="col">
+        <div class="reset-button" (click)="resetMapping()"><img src="assets/icons/reset.png" style="width: 20px;">&nbsp;Reset Mapping</div>
+      </div>
+    </div>
+    <hr />
+    <mat-accordion class="example-headers-align" multi>
+      <mat-expansion-panel *ngFor="let depatment of paramters?.setMembers;let count = index">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <div style="font-size: 15px;font-weight: bolder;">
+              {{count+1}}. {{depatment.display}}
+            </div>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div>
+          <div>
+            <mat-tab-group>
+              <mat-tab label="{{departmentItem?.display}}"
+                *ngFor="let departmentItem of depatment?.setMembers; let parameterIndex = index">
+                <div style="padding-top: 20px;padding-bottom: 20px;font-weight: bolder;">{{departmentItem?.display}}
+                  Parameters Mapping</div>
+                <div>
+                  <ng-container *ngIf="departmentItem?.setMembers?.length>0">
+                    <table class="table table-bordered table-condenced">
+                      <thead>
+                        <tr>
+                          <th>No.</th>
+                          <th>EMR Parameter Name</th>
+                          <th>Machine Parameter Name</th>
+                          <th>
+
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of departmentItem?.setMembers;let memberIndex =index">
+                          <td>
+                            {{memberIndex+1}}
+                          </td>
+                          <td>
+                            {{item.display}}
+                          </td>
+                          <td>
+                            <mat-form-field appearance="outline" style="width: 150px!important;">
+                              <input type="text" value="{{item?.mapped}}" id="{{item.uuid}}" matInput>
+                            </mat-form-field>
+                          </td>
+                          <td>
+                            <div class="parameter-save" (click)="saveMapping(count,parameterIndex,memberIndex,item)">
+                              <span style="display: inline;" *ngIf="item.loading">
+                                Saving..
+                              </span>
+                              <span style="display: inline;" *ngIf="!item.loading">Save</span>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </ng-container>
+                  <ng-container *ngIf="departmentItem?.setMembers?.length==0">
+                    <div style="text-align: center;">
+                      No Parameters
+                    </div>
+                  </ng-container>
+
+                </div>
+              </mat-tab>
+            </mat-tab-group>
+          </div>
+        </div>
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
