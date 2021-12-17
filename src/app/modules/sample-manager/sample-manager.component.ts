@@ -102,8 +102,8 @@ export class SampleManagerComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    this.getSamples();
-    this.runInterval();
+    // this.getSamples();
+    // this.runInterval();
   }
 
   fetchData() {
@@ -117,9 +117,9 @@ export class SampleManagerComponent implements OnInit {
   }
 
   runInterval(){
-    setInterval(()=>{
-      this.getAllStaff();
-    },300000);
+    // setInterval(()=>{
+    //   this.getAllStaff();
+    // },300000);
   }
 
   async getAllStaff(){
