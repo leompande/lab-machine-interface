@@ -119,7 +119,7 @@ export class SampleManagerComponent implements OnInit {
   runInterval(){
     setInterval(()=>{
       this.getAllStaff();
-    },10000);
+    },300000);
   }
 
   async getAllStaff(){
