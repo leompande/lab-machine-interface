@@ -123,6 +123,7 @@ export class SampleManagerComponent implements OnInit {
   }
 
   async getAllStaff(){
+    this.isFetching = true;
     await this.http.get('/api/samples/get-from-afyacare').toPromise();
     var samples: Sample[] = await this.http.get('/api/samples').toPromise();
     var patients: any[] = await this.http.get('/api/patients').toPromise();
